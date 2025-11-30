@@ -129,13 +129,7 @@ test('dashboard shows LIVE indicator and calls /api/v1/metrics/system', async ({
   const body = await metricsResponse.json();
   test.expect(body && body.success === true, 'Expected API response success:true');
 
-  // For debugging, dump a short snippet of the current page HTML so CI logs show what rendered
-  try {
-    const html = await page.content();
-    console.log('PAGE_HTML_SNIPPET>', html.slice(0, 2000));
-  } catch (e) {
-    console.log('PAGE_HTML_SNIPPET> failed to read page content', e?.message ?? e);
-  }
+  // NOTE: removed verbose HTML snippet dump before pushing; keep screenshot-on-failure for CI artifacts
 
   // Check the UI contains text 'LIVE' (ViewHeader displays LIVE when metrics.isLive === true)
   // Allow more time in slower CI environments and capture a screenshot on failure
