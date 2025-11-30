@@ -1,0 +1,78 @@
+name: Build & Verify
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build & verify
+        run: npm run build:verify
+
+  e2e:
+    needs: build-verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start mock backend
+        run: |
+          node mock-backend/server.cjs &
+          echo $! > /tmp/mock.pid
+
+          # No longer need to inject a meta tag; Playwright's addInitScript handles runtime config.
+
+      - name: Start static server (serving dist)
+        run: |
+          npx http-server ./dist -p 3003 -a 127.0.0.1 &
+          echo $! > /tmp/preview.pid
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright smoke tests
+        run: TEST_BASE_URL=http://127.0.0.1:3003 npx playwright test tests/playwright/live.spec.js --reporter=list,html
+
+      - name: Upload Playwright artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            playwright-report/**
+            playwright-live-failure-*.png
+            test-results/**
+
+      - name: Tear down background processes
+        run: |
+          if [ -f /tmp/mock.pid ]; then kill $(cat /tmp/mock.pid) || true; fi
+          if [ -f /tmp/preview.pid ]; then kill $(cat /tmp/preview.pid) || true; fi
