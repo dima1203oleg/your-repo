@@ -10,7 +10,9 @@ const { firefox } = require('playwright');
     try {
       sessionStorage.setItem('predator_auth', 'true');
       sessionStorage.setItem('predator_auth_token', 'test-token');
-      globalThis.__APP_CONFIG__ = { NEXT_PUBLIC_API_URL: 'http://127.0.0.1:8001/api/v1' };
+      // Keep the runtime API root (do NOT include /api/v1 here) — code
+      // appends the /api/v1 path segments itself.
+      globalThis.__APP_CONFIG__ = { NEXT_PUBLIC_API_URL: 'http://127.0.0.1:8001' };
     } catch (e) {
       // ignore
     }

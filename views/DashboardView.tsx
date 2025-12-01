@@ -115,7 +115,7 @@ const DashboardView: React.FC = () => {
                 >
                     <Newspaper size={14} /> Ранкова Газета
                 </button>
-                <div className={`px-3 py-1.5 rounded border flex items-center gap-2 text-xs font-bold btn-3d ${
+                <div data-test="system-status" data-is-live={String(isLiveIndicator)} data-cpu={String(metrics.cpu)} className={`px-3 py-1.5 rounded border flex items-center gap-2 text-xs font-bold btn-3d ${
                     metrics.isLive 
                     ? 'bg-success-900/20 border-success-500/50 text-success-400' 
                     : 'bg-slate-800 border-slate-700 text-slate-400'

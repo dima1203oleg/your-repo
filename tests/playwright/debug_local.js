@@ -19,7 +19,8 @@ const { chromium } = require('playwright');
     try {
       sessionStorage.setItem('predator_auth', 'true');
       sessionStorage.setItem('predator_auth_token', 'test-token');
-      globalThis.__APP_CONFIG__ = { NEXT_PUBLIC_API_URL: 'http://127.0.0.1:8001/api/v1' };
+      // runtime API root — do NOT include '/api/v1' here (app will append it).
+      globalThis.__APP_CONFIG__ = { NEXT_PUBLIC_API_URL: 'http://127.0.0.1:8001' };
     } catch (e) {}
   });
 

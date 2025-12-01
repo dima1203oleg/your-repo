@@ -84,8 +84,25 @@ npm run dev:local
 
 Important: production builds must not embed local endpoints such as `http://localhost:8001` or placeholder tokens. To enable safe runtime configuration during deployment we support two methods:
 
-- Inject a small runtime config object before `index.html` loads. Example from your server: <script>window.__APP_CONFIG__ = { NEXT_PUBLIC_API_URL: 'https://api.example.com/api/v1' }</script>
-- Or add a meta tag into your served `index.html`: <meta name="api-base-url" content="https://api.example.com/api/v1" />
+* Inject a small runtime config object before `index.html` loads. IMPORTANT: the runtime `NEXT_PUBLIC_API_URL` should be the API root (do NOT include a trailing `/api/v1` segment) because the app code and some services append `/api/v1` when making calls.
+
+    Example (correct):
+
+    ```html
+    <script>window.__APP_CONFIG__ = { NEXT_PUBLIC_API_URL: 'https://api.example.com' }</script>
+    ```
+
+    Example (incorrect - double prefixing leads to 404s):
+
+    ```html
+    <script>window.__APP_CONFIG__ = { NEXT_PUBLIC_API_URL: 'https://api.example.com/api/v1' }</script>
+    ```
+
+* Or add a meta tag into your served `index.html`:
+
+    ```html
+    <meta name="api-base-url" content="https://api.example.com" />
+    ```
 
 When deployed, run the verification script after build in your CI pipeline to ensure no local/internal strings are present in the distributable:
 
@@ -98,6 +115,6 @@ CI Tip: Add `npm run build:verify` as the step after your `npm run build` to gat
 
 ## 5. Ризики та Зауваження
 
-*   **Multi-Arch:** Переконайтеся, що Docker buildx налаштований для збірки `linux/arm64` та `linux/amd64`.
-*   **Ресурси:** На Oracle Free Tier (24GB RAM) запускайте тільки легкі сервіси (Backend, UI). Важкі AI моделі повинні працювати на NVIDIA сервері.
-*   **Безпека:** Всі API ключі мають зберігатися в HashiCorp Vault (інтегровано через ExternalSecrets), а не в коді.
+* **Multi-Arch:** Переконайтеся, що Docker buildx налаштований для збірки `linux/arm64` та `linux/amd64`.
+* **Ресурси:** На Oracle Free Tier (24GB RAM) запускайте тільки легкі сервіси (Backend, UI). Важкі AI моделі повинні працювати на NVIDIA сервері.
+* **Безпека:** Всі API ключі мають зберігатися в HashiCorp Vault (інтегровано через ExternalSecrets), а не в коді.

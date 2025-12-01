@@ -57,8 +57,13 @@ export const useSystemMetrics = () => {
                 
                     if (isMounted.current && realMetrics) {
                         // Debugging: log when we set live metrics (helps e2e diagnostics)
-                        try { console.log('useSystemMetrics: fetched real metrics', { cpu: realMetrics.cpu?.usage, memory: realMetrics.memory?.used }); } catch(e) {}
-                    setMetrics({
+                        try {
+                            // stringify a small, safe representation so CI logs show useful
+                            // information instead of opaque JSHandle@object values.
+                            const snippet = { cpu: realMetrics?.cpu?.usage, memory: realMetrics?.memory?.used };
+                            console.log('useSystemMetrics: fetched real metrics', JSON.stringify(snippet));
+                        } catch(e) { console.log('useSystemMetrics: fetched real metrics (stringify failed)'); }
+                    const nextMetrics = {
                         cpu: realMetrics.cpu.usage,
                         memory: realMetrics.memory.used / 1024, // Convert MB to GB
                         gpu: { 
@@ -72,15 +77,20 @@ export const useSystemMetrics = () => {
                             egress: realMetrics.network.bandwidth / 200
                         },
                         isLive: true
-                    });
+                    };
+                    setMetrics(nextMetrics);
+                    try { console.log('useSystemMetrics: set live metrics', nextMetrics); } catch(e) {}
                 }
             } catch (error) {
                 try {
                     // Fallback до backend API: use getSystemMetrics normalization
                     const normalized = await getSystemMetrics();
                     if (isMounted.current && normalized) {
-                        try { console.log('useSystemMetrics: fallback normalized metrics', { cpu: normalized.cpu?.usage, memory: normalized.memory?.used }); } catch(e) {}
-                        setMetrics({
+                                try {
+                                    const snippet = { cpu: normalized?.cpu?.usage, memory: normalized?.memory?.used };
+                                    console.log('useSystemMetrics: fallback normalized metrics', JSON.stringify(snippet));
+                                } catch(e) { console.log('useSystemMetrics: fallback normalized metrics (stringify failed)'); }
+                        const fallbackMetrics = {
                             cpu: normalized.cpu.usage,
                             memory: normalized.memory.used / 1024,
                             gpu: { 
@@ -94,7 +104,9 @@ export const useSystemMetrics = () => {
                                 egress: normalized.network.bandwidth / 200 || 0
                             },
                             isLive: true
-                        });
+                        };
+                        setMetrics(fallbackMetrics);
+                        try { console.log('useSystemMetrics: set fallback metrics', fallbackMetrics); } catch(e) {}
                     } else {
                         throw new Error("Invalid format");
                     }

@@ -53,14 +53,23 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Run quick integration tests (contract)
+        # Run a focused Jest integration test against the running real-backend
+        run: npx jest tests/integration/systemMonitoring.test.js --runInBand --reporters=default
+
       - name: Run Playwright E2E
         env:
           TEST_BASE_URL: http://127.0.0.1:3003
         run: npx playwright test tests/playwright/live.spec.js --browser=firefox --reporter=dot
 
       - name: Upload Playwright artifacts
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-artifacts
-          path: playwright-report || ./playwright-report || real-backend.log || serve-proxy.log
+          path: |
+            playwright-report
+            test-results
+            screenshots
+            real-backend.log
+            serve-proxy.log
