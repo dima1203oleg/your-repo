@@ -34,3 +34,11 @@ Why this change?
 - The chart supports `existingSecret` / `existingSecretPasswordKey` patterns and ExternalSecrets integration; prefer those.
 
 If you need help creating ExternalSecret manifests for Vault in this repo, I can add an example `infra/helm/platform/examples/external-secret-predator.yaml` next.
+
+Developer convenience: dev-only secret creation
+---------------------------------------------
+If you are running a local dev cluster and prefer the chart to create a non-production `predator-secrets`
+Secret for you, the chart now supports an opt-in dev helper: set `devmode.createPredatorSecrets=true` in
+the values file for that environment (for example `values-dev-local.yaml`) and provide the non-production
+values under `devmode.predatorSecrets`. This is intentionally disabled by default and is not recommended
+for CI or production clusters — prefer ExternalSecrets or pre-created Secrets in those environments.

@@ -1,3 +1,17 @@
+# Development-only helpers
+devmode:
+  # Do not enable by default in CI/prod. When enabled the chart will create a
+  # namespaced K8s Secret called `predator-secrets` from the fields below.
+  # Intended only for quick local development clusters where you cannot run
+  # ExternalSecrets / Vault or pre-create secrets via CI.
+  createPredatorSecrets: false
+  predatorSecrets:
+    databaseUrl: ""
+    redisUrl: ""
+    postgresPassword: ""
+    redisPassword: ""
+    grafanaAdminPassword: ""
+
 # Default values for Predator Analytics Platform
 # This is a YAML-formatted file.
 

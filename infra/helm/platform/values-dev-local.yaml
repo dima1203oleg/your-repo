@@ -37,6 +37,18 @@ backend:
       value: "development"
     - name: DEBUG
       value: "true"
+
+# Dev-only helper: when true the chart will create a local predator-secrets
+# Secret using the sample values below. This is intended only for easy
+# local development (pa-dev / single-node k3d). Keep disabled in CI/prod.
+devmode:
+  createPredatorSecrets: true
+  predatorSecrets:
+    databaseUrl: "postgres://predator:dev-postgres-password@postgres:5432/predator_analytics"
+    redisUrl: "redis://:dev-redis-password@redis-master:6379"
+    postgresPassword: "dev-postgres-password"
+    redisPassword: "dev-redis-password"
+    grafanaAdminPassword: "dev-grafana-password"
   
   livenessProbe:
     httpGet:
