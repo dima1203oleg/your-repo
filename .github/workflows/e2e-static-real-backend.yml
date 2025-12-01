@@ -60,6 +60,9 @@ jobs:
       - name: Run Playwright E2E
         env:
           TEST_BASE_URL: http://127.0.0.1:3003
+          # Toggle strict UI checks (require LIVE) by setting this to 'true'
+          # in your CI environment when you want Playwright to be strict.
+          TEST_STRICT_LIVE: false
         run: npx playwright test tests/playwright/live.spec.js --browser=firefox --reporter=dot
 
       - name: Upload Playwright artifacts
