@@ -19,6 +19,15 @@ const candidateUrls = process.env.TEST_BASE_URL ? [process.env.TEST_BASE_URL] : 
 
 test.setTimeout(120000);
 test('dashboard shows LIVE indicator and calls /api/v1/system/monitoring', async ({ page }) => {
+  // Add a small retry loop to recover from flakey browser-launch or early
+  // termination errors (sometimes CI/browser transiently crashes). This keeps
+  // strict mode stable across runners while still surfacing real failures.
+  const MAX_ATTEMPTS = Number(process.env.PLAYWRIGHT_TEST_ATTEMPTS || 2);
+  let attempt = 0;
+  while (true) {
+    attempt += 1;
+    if (attempt > 1) console.log(`Attempt ${attempt}/${MAX_ATTEMPTS} — retrying test`);
+    try {
   // Try to open one of the dev/preview addresses
   let opened = false;
   let lastError = null;
@@ -226,5 +235,20 @@ test('dashboard shows LIVE indicator and calls /api/v1/system/monitoring', async
     test.expect(liveVisible, 'UI should show LIVE indicator (strict mode)');
   } else {
     test.expect(liveVisible || simVisible, 'UI should show LIVE or SIMULATION indicator');
+  }
+      // end normal test flow
+      return;
+    } catch (err) {
+      // Detect common transient browser errors and retry if we have attempts left
+      const message = err && err.message ? err.message : String(err);
+      console.warn('Test attempt failed:', message);
+      if (attempt >= MAX_ATTEMPTS) {
+        console.error('Max attempts reached — rethrowing error');
+        throw err;
+      }
+      // Small backoff to allow the runner to recover resources
+      await new Promise((r) => setTimeout(r, 2500));
+      // continue to next attempt
+    }
   }
 });

@@ -21,6 +21,8 @@ Notes / recommended next steps:
 1. Push the branch and open a PR so CI can run the full workflow (integration + Playwright). This is required to validate changes in the hosted environment.
 2. After CI stabilization, consider making the Playwright UI assert stricter again (e.g., require explicit LIVE status), and add more contract tests for other endpoints.
 
+3. Strict-mode candidate: a prepared candidate branch `copilot/strict-ready` enables `TEST_STRICT_LIVE=true` in the CI workflow. Before merging that branch, run the manual workflow `Verify STRICT Live mode (manual)` (Actions → verify-strict-live) to validate strict runs on GitHub runners across browsers.
+
   Tip: set `TEST_STRICT_LIVE=true` in your CI job environment before running Playwright to enable strict UI checks.
 
 Commands to push and create PR locally (if you have appropriate permissions):
