@@ -21,6 +21,8 @@ Notes / recommended next steps:
 1. Push the branch and open a PR so CI can run the full workflow (integration + Playwright). This is required to validate changes in the hosted environment.
 2. After CI stabilization, consider making the Playwright UI assert stricter again (e.g., require explicit LIVE status), and add more contract tests for other endpoints.
 
+  Tip: set `TEST_STRICT_LIVE=true` in your CI job environment before running Playwright to enable strict UI checks.
+
 Commands to push and create PR locally (if you have appropriate permissions):
 
 ```bash

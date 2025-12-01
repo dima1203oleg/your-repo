@@ -57,3 +57,15 @@ Example (incorrect — leads to double-prefixing and 404s):
    - `/api/v1/data/databases` — databases status (used to be `/api/v1/databases/status`)
 
 If you maintain other integrations or automation scripts that call legacy endpoints, update them or re-add compatible routes in the backend until all clients migrate.
+
+### Strict UI checks (optional)
+
+If you want CI to require the UI to show the explicit `LIVE` indicator (not just accept `SIMULATION`), enable the `TEST_STRICT_LIVE` environment variable in your CI job before running Playwright:_
+
+```bash
+export TEST_STRICT_LIVE=true
+# then run Playwright
+npx playwright test tests/playwright/live.spec.js --browser=firefox
+```
+
+Enabling `TEST_STRICT_LIVE` will make the e2e assertion require `LIVE` in the UI; useful once the API/UI integration is verified and you want stricter guarantees.
