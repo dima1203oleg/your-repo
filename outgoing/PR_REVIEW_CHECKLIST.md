@@ -19,5 +19,6 @@ This checklist helps maintainers and reviewers validate the change-set in `copil
 
 5) Post-merge tasks
    - After 3–4 successful CI runs, create a follow-up PR to set `TEST_STRICT_LIVE=true` in `.github/workflows/e2e-static-real-backend.yml` to re-enable strict UI checks.
+   - Optional: Before changing default CI, you can validate strict mode using the manual workflow: `.github/workflows/verify-strict-live.yml` (open the workflow in Actions and run `Verify STRICT Live mode (manual)` with `browser=firefox` or `chromium`).
 
 If you want me to prepare that follow-up PR (toggle strict=true), I can draft it now and mark it as blocked until the initial PR shows stable CI runs.
