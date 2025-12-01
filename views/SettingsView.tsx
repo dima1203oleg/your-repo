@@ -258,25 +258,40 @@ const SettingsView: React.FC = () => {
                       <div className="p-3 bg-slate-950 rounded border border-slate-800 text-center">
                           <div className="text-[10px] text-slate-500 uppercase mb-1">Fan Speed</div>
                           <div className="text-xl font-mono text-slate-200">{metrics.gpu.fan}%</div>
-                          <div className="w-full h-1 bg-slate-800 mt-2 rounded-full overflow-hidden">
-                              <div className="h-full bg-blue-500" style={{width: `${metrics.gpu.fan}%`}}></div>
-                          </div>
+                                                            <div className="w-full h-1 bg-slate-800 mt-2 rounded-full overflow-hidden">
+                                                                    <progress
+                                                                        value={metrics.gpu.fan}
+                                                                        max={100}
+                                                                        aria-label={`GPU fan speed ${metrics.gpu.fan}%`}
+                                                                        className="w-full h-1 appearance-none bg-blue-500 rounded"
+                                                                    />
+                                                            </div>
                       </div>
                       <div className="p-3 bg-slate-950 rounded border border-slate-800 text-center">
                           <div className="text-[10px] text-slate-500 uppercase mb-1">Temperature</div>
                           <div className={`text-xl font-mono ${metrics.gpu.temp > 80 ? 'text-red-500' : 'text-slate-200'}`}>
                               {metrics.gpu.temp}°C
                           </div>
-                          <div className="w-full h-1 bg-slate-800 mt-2 rounded-full overflow-hidden">
-                              <div className={`h-full ${metrics.gpu.temp > 80 ? 'bg-red-500' : 'bg-green-500'}`} style={{width: `${(metrics.gpu.temp / 90) * 100}%`}}></div>
-                          </div>
+                                                            <div className="w-full h-1 bg-slate-800 mt-2 rounded-full overflow-hidden">
+                                                                    <progress
+                                                                        value={(metrics.gpu.temp / 90) * 100}
+                                                                        max={100}
+                                                                        aria-label={`GPU temperature ${metrics.gpu.temp}C`}
+                                                                        className={`w-full h-1 appearance-none ${metrics.gpu.temp > 80 ? 'bg-red-500' : 'bg-green-500'} rounded`}
+                                                                    />
+                                                            </div>
                       </div>
                       <div className="p-3 bg-slate-950 rounded border border-slate-800 text-center">
                           <div className="text-[10px] text-slate-500 uppercase mb-1">Utilization</div>
                           <div className="text-xl font-mono text-slate-200">{metrics.gpu?.util ?? 0}%</div>
-                          <div className="w-full h-1 bg-slate-800 mt-2 rounded-full overflow-hidden">
-                              <div className="h-full bg-purple-500" style={{width: `${metrics.gpu?.util ?? 0}%`}}></div>
-                          </div>
+                                                            <div className="w-full h-1 bg-slate-800 mt-2 rounded-full overflow-hidden">
+                                                                    <progress
+                                                                        value={metrics.gpu?.util ?? 0}
+                                                                        max={100}
+                                                                        aria-label={`GPU utilization ${metrics.gpu?.util ?? 0}%`}
+                                                                        className="w-full h-1 appearance-none bg-purple-500 rounded"
+                                                                    />
+                                                            </div>
                       </div>
                   </div>
               </div>
@@ -289,9 +304,10 @@ const SettingsView: React.FC = () => {
           <TacticalCard title="White Label Configuration" className="panel-3d">
               <div className="space-y-6">
                   <div>
-                      <label className="text-xs font-bold text-slate-500 uppercase mb-2 block">Назва Порталу</label>
+                      <label htmlFor="brandName" className="text-xs font-bold text-slate-500 uppercase mb-2 block">Назва Порталу</label>
                       <input 
                           type="text" 
+                          id="brandName"
                           value={brandName}
                           onChange={(e) => setBrandName(e.target.value)}
                           className="w-full bg-slate-950 border border-slate-700 rounded p-2 text-sm text-slate-200 focus:border-primary-500 outline-none shadow-inner"
@@ -301,31 +317,35 @@ const SettingsView: React.FC = () => {
                   <div>
                       <label className="text-xs font-bold text-slate-500 uppercase mb-2 block">Акцентний Колір</label>
                       <div className="flex gap-3">
-                          {['#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ef4444'].map(color => (
-                              <button
-                                key={color}
-                                onClick={() => setBrandColor(color)}
-                                className={`w-8 h-8 rounded-full border-2 transition-all btn-3d ${brandColor === color ? 'border-white scale-110 shadow-lg' : 'border-transparent'}`}
-                                style={{ backgroundColor: color }}
-                              />
-                          ))}
-                          <input 
-                            type="color" 
-                            value={brandColor}
-                            onChange={(e) => setBrandColor(e.target.value)}
-                            className="w-8 h-8 bg-transparent border-0 p-0 cursor-pointer opacity-0 absolute"
-                          />
+                                                    {['#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ef4444'].map(color => (
+                                                            <button
+                                                                key={color}
+                                                                onClick={() => setBrandColor(color)}
+                                                                aria-label={`Select brand color ${color}`}
+                                                                title={`Select color ${color}`}
+                                                                className={`w-8 h-8 rounded-full border-2 transition-all btn-3d ${brandColor === color ? 'border-white scale-110 shadow-lg' : 'border-transparent'}`}
+                                                                style={{ backgroundColor: color }}
+                                                            />
+                                                    ))}
+                                                    <input 
+                                                        type="color" 
+                                                        aria-label="Choose custom brand color"
+                                                        value={brandColor}
+                                                        onChange={(e) => setBrandColor(e.target.value)}
+                                                        className="w-8 h-8 bg-transparent border-0 p-0 cursor-pointer opacity-0 absolute"
+                                                    />
                       </div>
                   </div>
 
                   <div>
                       <label className="text-xs font-bold text-slate-500 uppercase mb-2 block">Логотип Клієнта</label>
                       <div className="border-2 border-dashed border-slate-700 rounded-lg p-6 flex flex-col items-center justify-center hover:border-slate-500 transition-colors cursor-pointer relative bg-slate-950/50 panel-3d">
-                          <input 
-                            type="file" 
-                            className="absolute inset-0 opacity-0 cursor-pointer"
-                            onChange={(e) => e.target.files && setLogoFile(e.target.files[0])}
-                          />
+                                                    <input 
+                                                        type="file" 
+                                                        aria-label="Upload client logo"
+                                                        className="absolute inset-0 opacity-0 cursor-pointer"
+                                                        onChange={(e) => e.target.files && setLogoFile(e.target.files[0])}
+                                                    />
                           {logoFile ? (
                               <div className="flex items-center gap-2 text-success-500">
                                   <CheckCircle2 size={20} className="icon-3d-green" />
@@ -508,10 +528,11 @@ const SettingsView: React.FC = () => {
                       </div>
 
                       <div>
-                          <label className="text-xs font-bold text-slate-400 uppercase mb-2 block">Голос (Voice ID)</label>
-                          <select 
-                            value={ttsVoice}
-                            onChange={(e) => setTtsVoice(e.target.value)}
+                          <label htmlFor="ttsVoice" className="text-xs font-bold text-slate-400 uppercase mb-2 block">Голос (Voice ID)</label>
+                                                    <select 
+                                                        id="ttsVoice"
+                                                        value={ttsVoice}
+                                                        onChange={(e) => setTtsVoice(e.target.value)}
                             className="w-full bg-slate-950 border border-slate-700 rounded p-2 text-sm text-slate-200 focus:border-primary-500 outline-none shadow-inner"
                           >
                               <option value="dmytro_uk_v2">Dmytro - Deep Neural (Professional)</option>
@@ -711,19 +732,20 @@ const SettingsView: React.FC = () => {
                       </div>
                   </div>
                   <div>
-                      <label className="text-xs font-bold text-slate-500 uppercase mb-2 block">Часовий Пояс</label>
-                      <select 
-                          value={timezone}
-                          onChange={(e) => setTimezone(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-700 rounded p-3 text-sm text-slate-200 outline-none focus:border-primary-500"
-                      >
-                          <option value="Europe/Kiev">Europe/Kiev (GMT+2)</option>
-                          <option value="UTC">UTC</option>
-                          <option value="America/New_York">America/New_York</option>
-                      </select>
-                      <p className="text-[10px] text-slate-500 mt-2 flex items-center gap-1">
-                          <Clock size={10} /> Синхронізація з NTP серверами: Active
-                      </p>
+                              <label htmlFor="timezone" className="text-xs font-bold text-slate-500 uppercase mb-2 block">Часовий Пояс</label>
+                              <select 
+                                  id="timezone"
+                                  value={timezone}
+                                  onChange={(e) => setTimezone(e.target.value)}
+                                  className="w-full bg-slate-950 border border-slate-700 rounded p-3 text-sm text-slate-200 outline-none focus:border-primary-500"
+                              >
+                                  <option value="Europe/Kiev">Europe/Kiev (GMT+2)</option>
+                                  <option value="UTC">UTC</option>
+                                  <option value="America/New_York">America/New_York</option>
+                              </select>
+                              <p className="text-[10px] text-slate-500 mt-2 flex items-center gap-1">
+                                  <Clock size={10} /> Синхронізація з NTP серверами: Active
+                              </p>
                   </div>
               </div>
           </TacticalCard>
@@ -735,10 +757,11 @@ const SettingsView: React.FC = () => {
           <TacticalCard title="Налаштування Ранкової Газети" className="panel-3d">
               <div className="space-y-6">
                   <div>
-                      <label className="text-xs font-bold text-slate-500 uppercase mb-2 block">Час Відправки (Щодня)</label>
+                      <label htmlFor="gazetteTime" className="text-xs font-bold text-slate-500 uppercase mb-2 block">Час Відправки (Щодня)</label>
                       <div className="flex items-center gap-2 bg-slate-900 p-2 rounded border border-slate-800">
                           <Clock size={16} className="text-primary-500" />
                           <input 
+                              id="gazetteTime"
                               type="time" 
                               value={gazetteTime}
                               onChange={(e) => setGazetteTime(e.target.value)}
@@ -804,6 +827,7 @@ const SettingsView: React.FC = () => {
                                   </div>
                                   <input 
                                       type="checkbox" 
+                                      aria-label={`Include ${block.label} in gazette`}
                                       checked={(gazetteBlocks as any)[block.id]}
                                       onChange={() => setGazetteBlocks({...gazetteBlocks, [block.id]: !(gazetteBlocks as any)[block.id]})}
                                       className="accent-primary-500 w-4 h-4 rounded cursor-pointer"
@@ -844,13 +868,12 @@ const SettingsView: React.FC = () => {
                               <tr key={user.id} className="hover:bg-slate-800/30 transition-colors group">
                                   <td className="p-3">
                                       <div className="flex items-center gap-3">
-                                          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-[10px] border ${
-                                              user.role === 'OWNER' ? 'bg-red-900/20 text-red-400 border-red-900/50' :
-                                              user.role === 'ANALYST' ? 'bg-blue-900/20 text-blue-400 border-blue-900/50' :
-                                              'bg-amber-900/20 text-amber-400 border-amber-900/50'
-                                          }`}>
-                                              {user.name.charAt(0)}
-                                          </div>
+                                          {(() => {
+                                              const base = 'w-8 h-8 rounded-full flex items-center justify-center font-bold text-[10px] border';
+                                              if (user.role === 'OWNER') return <div className={`${base} bg-red-900/20 text-red-400 border-red-900/50`}>{user.name.charAt(0)}</div>;
+                                              if (user.role === 'ANALYST') return <div className={`${base} bg-blue-900/20 text-blue-400 border-blue-900/50`}>{user.name.charAt(0)}</div>;
+                                              return <div className={`${base} bg-amber-900/20 text-amber-400 border-amber-900/50`}>{user.name.charAt(0)}</div>;
+                                          })()}
                                           <div>
                                               <div className="font-bold text-slate-200">{user.name}</div>
                                               <div className="text-[10px] text-slate-500 font-mono">{user.email}</div>
@@ -858,15 +881,13 @@ const SettingsView: React.FC = () => {
                                       </div>
                                   </td>
                                   <td className="p-3">
-                                      <span className={`px-2 py-0.5 rounded text-[9px] font-bold border ${
-                                          user.role === 'OWNER' ? 'bg-red-900/10 text-red-400 border-red-900/30' :
-                                          user.role === 'ANALYST' ? 'bg-blue-900/10 text-blue-400 border-blue-900/30' :
-                                          'bg-amber-900/10 text-amber-400 border-amber-900/30'
-                                      }`}>
+                                      {(() => {
+                                          const base = 'px-2 py-0.5 rounded text-[9px] font-bold border';
+                                          if (user.role === 'OWNER') return <span className={`${base} bg-red-900/10 text-red-400 border-red-900/30`}>{user.role}</span>;
+                                          if (user.role === 'ANALYST') return <span className={`${base} bg-blue-900/10 text-blue-400 border-blue-900/30`}>{user.role}</span>;
+                                          return <span className={`${base} bg-amber-900/10 text-amber-400 border-amber-900/30`}>{user.role}</span>;
+                                      })()}
                                           {user.role}
-                                      </span>
-                                  </td>
-                                  <td className="p-3">
                                       {user.status === 'ACTIVE' ? (
                                           <div className="flex items-center gap-1.5 text-success-500 text-[10px] font-bold">
                                               <div className="w-1.5 h-1.5 rounded-full bg-success-500 shadow-[0_0_5px_lime]"></div> Active
@@ -894,11 +915,11 @@ const SettingsView: React.FC = () => {
                                   </td>
                                   <td className="p-3 text-right">
                                       <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                          <button className="p-1.5 bg-slate-900 border border-slate-700 rounded text-slate-400 hover:text-white hover:border-slate-500 transition-all btn-3d">
+                                          <button aria-label={`Edit ${user.name}`} title={`Edit ${user.name}`} className="p-1.5 bg-slate-900 border border-slate-700 rounded text-slate-400 hover:text-white hover:border-slate-500 transition-all btn-3d">
                                               <Settings size={12} />
                                           </button>
                                           {user.role !== 'OWNER' && (
-                                              <button className="p-1.5 bg-slate-900 border border-slate-700 rounded text-slate-400 hover:text-red-400 hover:border-red-900/50 transition-all btn-3d">
+                                              <button aria-label={`Delete ${user.name}`} title={`Delete ${user.name}`} className="p-1.5 bg-slate-900 border border-slate-700 rounded text-slate-400 hover:text-red-400 hover:border-red-900/50 transition-all btn-3d">
                                                   <Trash2 size={12} />
                                               </button>
                                           )}
@@ -924,8 +945,8 @@ const SettingsView: React.FC = () => {
                               </tr>
                           </thead>
                           <tbody className="divide-y divide-slate-800 text-xs font-mono">
-                              {ACCESS_MATRIX.map((row, i) => (
-                                  <tr key={i} className="hover:bg-slate-900/30">
+                              {ACCESS_MATRIX.map((row) => (
+                                  <tr key={row.module} className="hover:bg-slate-900/30">
                                       <td className="p-2 text-left font-bold text-slate-300">{row.module}</td>
                                       <td className="p-2">{row.owner ? <Check size={14} className="mx-auto text-success-500"/> : <XCircle size={14} className="mx-auto text-slate-700"/>}</td>
                                       <td className="p-2">{row.analyst ? <Check size={14} className="mx-auto text-success-500"/> : <XCircle size={14} className="mx-auto text-slate-700"/>}</td>

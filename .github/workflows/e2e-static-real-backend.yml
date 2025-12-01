@@ -9,6 +9,9 @@ on:
 jobs:
   e2e:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [firefox, chromium]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -64,7 +67,32 @@ jobs:
           # checks by default — run the 'Verify STRICT Live mode (manual)'
           # workflow first to validate (see outgoing/README.md) before merging.
           TEST_STRICT_LIVE: true
-        run: npx playwright test tests/playwright/live.spec.js --browser=firefox --reporter=dot
+        run: |
+          echo "Running Playwright tests for browser: ${{ matrix.browser }}"
+          # Run test and record exit code for diagnostics
+          npx playwright test tests/playwright/live.spec.js --browser=${{ matrix.browser }} --reporter=dot --retries=1 || RC=$?
+          echo "TEST_EXIT=${RC:-0}" > test_exit_code.txt || true
+          # keep exit code so subsequent diagnostic step can run and artifacts step still uploads
+          test -n "$RC" && exit $RC || true
+
+      - name: Chromium diagnostics (on failure)
+        if: matrix.browser == 'chromium' && failure()
+        run: |
+          echo "=== Collecting Chromium diagnostics ===" > chromium_diagnostics.txt
+          echo "Environment info:" >> chromium_diagnostics.txt
+          uname -a >> chromium_diagnostics.txt 2>&1 || true
+          echo "---- ps aux (head) ----" >> chromium_diagnostics.txt
+          ps aux | head -n 200 >> chromium_diagnostics.txt 2>&1 || true
+          echo "---- dmesg (last 200) ----" >> chromium_diagnostics.txt
+          dmesg | tail -n 200 >> chromium_diagnostics.txt 2>&1 || true
+          echo "---- /var/log/syslog (tail) ----" >> chromium_diagnostics.txt
+          (test -f /var/log/syslog && tail -n 200 /var/log/syslog) >> chromium_diagnostics.txt 2>&1 || true
+          echo "---- Playwright root dir listing ----" >> chromium_diagnostics.txt
+          ls -la ~/.cache/ms-playwright || true >> chromium_diagnostics.txt 2>&1
+          # Try to collect any chromium stderr logs from Playwright caches
+          echo "---- Attempt to capture Chromium stderr logs ----" >> chromium_diagnostics.txt
+          find ~/.cache/ms-playwright -type f -name "*.log" -maxdepth 3 -print -exec tail -n 200 {} \; >> chromium_diagnostics.txt 2>&1 || true
+
 
       - name: Upload Playwright artifacts
         if: always()
@@ -77,3 +105,23 @@ jobs:
             screenshots
             real-backend.log
             serve-proxy.log
+
+      - name: Post PR comment for Chromium failures
+        if: matrix.browser == 'chromium' && failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const runUrl = `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+            const message = `⚠️ Playwright Chromium tests failed in this run. Artifacts and diagnostics are attached: ${runUrl}\n\nPlease download *playwright-report*, *test-results*, *screenshots*, and the backend/proxy logs to investigate.`;
+            const pr = context.payload.pull_request && context.payload.pull_request.number;
+            if (pr) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr,
+                body: message
+              });
+            } else {
+              core.info('No pull_request context found — skipping PR comment');
+            }

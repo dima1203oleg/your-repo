@@ -109,7 +109,20 @@ export const LiveDeploymentColumn: React.FC<LiveDeploymentColumnProps> = ({ env,
                     </div>
                 </div>
                 <div className="mt-1 w-full h-1 bg-slate-800 rounded-full overflow-hidden">
-                    <div className={`h-full transition-all duration-1000 ${env.progress === 100 ? 'bg-green-500' : env.status === 'DEGRADED' ? 'bg-red-500' : 'bg-blue-500'}`} style={{width: `${env.progress}%`}}></div>
+                    {(() => {
+                        let progressClass = 'progress-blue';
+                        if (env.progress === 100) progressClass = 'progress-green';
+                        else if (env.status === 'DEGRADED') progressClass = 'progress-red';
+                        return (
+                            <progress
+                                className={`w-full h-full appearance-none ${progressClass}`}
+                                value={env.progress}
+                                max={100}
+                                aria-label={`Environment ${env.name} progress`}
+                            />
+                        );
+                    })()}
+                    <style>{`progress.progress-blue::-webkit-progress-value{background:#3b82f6}progress.progress-green::-webkit-progress-value{background:#22c55e}progress.progress-red::-webkit-progress-value{background:#ef4444}`}</style>
                 </div>
             </div>
 
@@ -152,8 +165,8 @@ export const LiveDeploymentColumn: React.FC<LiveDeploymentColumnProps> = ({ env,
             <div className="h-32 bg-[#050a14] border-t border-slate-800 p-2 font-mono text-[9px] overflow-y-auto custom-scrollbar relative">
                 <div className="absolute top-1 right-2 text-slate-600 uppercase font-bold text-[8px]">Live Log</div>
                 <div className="space-y-1">
-                    {logs.map((log, i) => (
-                        <div key={i} className={`break-words ${log.includes('Error') || log.includes('Crash') || log.includes('BackOff') ? 'text-red-400 font-bold' : 'text-slate-400'}`}>
+                    {logs.map((log) => (
+                        <div key={log} className={`break-words ${log.includes('Error') || log.includes('Crash') || log.includes('BackOff') ? 'text-red-400 font-bold' : 'text-slate-400'}`}>
                             {log}
                         </div>
                     ))}

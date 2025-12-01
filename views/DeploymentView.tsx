@@ -236,9 +236,14 @@ const DeploymentView: React.FC = () => {
                                                     <span className="text-slate-400">{e.name}</span>
                                                     <span className={`font-bold ${e.gitStatus === 'SYNCED' ? 'text-green-500' : 'text-yellow-500 animate-pulse'}`}>{e.gitStatus}</span>
                                                 </div>
-                                                <div className="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden mt-1">
-                                                    <div className={`h-full ${e.gitStatus === 'SYNCED' ? 'bg-green-500' : 'bg-yellow-500'}`} style={{width: `${e.gitStatus === 'SYNCED' ? 100 : 60}%`}}></div>
-                                                </div>
+                                                                                                <div className="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden mt-1">
+                                                                                                        <progress
+                                                                                                            value={e.gitStatus === 'SYNCED' ? 100 : 60}
+                                                                                                            max={100}
+                                                                                                            aria-label={`${e.name} sync progress`}
+                                                                                                            className={`w-full h-1.5 appearance-none ${e.gitStatus === 'SYNCED' ? 'bg-green-500' : 'bg-yellow-500'} rounded`}
+                                                                                                        />
+                                                                                                </div>
                                             </div>
                                         ))}
                                     </div>

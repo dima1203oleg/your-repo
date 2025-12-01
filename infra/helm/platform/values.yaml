@@ -1,0 +1,365 @@
+# Default values for Predator Analytics Platform
+# This is a YAML-formatted file.
+
+# Global configuration
+global:
+  imageRegistry: ghcr.io
+  imagePullSecrets:
+    - name: ghcr-secret
+  imageTag: "latest"
+  storageClass: "standard"
+  domain: "predator-analytics.local"
+
+# Backend service configuration
+backend:
+  enabled: true
+  image:
+    repository: your-org/predator-backend
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  
+  replicaCount: 1
+  
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  
+  service:
+    type: ClusterIP
+    port: 8000
+    targetPort: 8000
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: api.predator-analytics.local
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: backend-tls
+        hosts:
+          - api.predator-analytics.local
+  
+  env:
+    - name: DATABASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: database-url
+    - name: REDIS_URL
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: redis-url
+    - name: LOG_LEVEL
+      value: "INFO"
+    - name: ENVIRONMENT
+      value: "development"
+  
+  livenessProbe:
+    httpGet:
+      path: /healthz
+      port: 8000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  
+  readinessProbe:
+    httpGet:
+      path: /readyz
+      port: 8000
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
+
+# Frontend service configuration
+frontend:
+  enabled: true
+  image:
+    repository: your-org/predator-frontend
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  
+  replicaCount: 1
+  
+  resources:
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  
+  service:
+    type: ClusterIP
+    port: 3000
+    targetPort: 3000
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: app.predator-analytics.local
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: frontend-tls
+        hosts:
+          - app.predator-analytics.local
+  
+  env:
+    - name: REACT_APP_API_URL
+      value: "https://api.predator-analytics.local"
+    - name: REACT_APP_ENVIRONMENT
+      value: "development"
+
+# Agents service configuration
+agents:
+  enabled: true
+  image:
+    repository: your-org/predator-agents
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  
+  replicaCount: 1
+  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  
+  service:
+    type: ClusterIP
+    port: 9000
+    targetPort: 9000
+  
+  env:
+    - name: BACKEND_URL
+      value: "http://backend:8000"
+    - name: AGENT_MODE
+      value: "development"
+    - name: LOG_LEVEL
+      value: "INFO"
+
+# PostgreSQL configuration
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "predator123"
+    username: "predator"
+    database: "predator_analytics"
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
+      storageClass: "standard"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+
+# Redis configuration
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: "redis123"
+  master:
+    persistence:
+      enabled: true
+      size: 4Gi
+      storageClass: "standard"
+    resources:
+      limits:
+        cpu: 250m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
+# Ingress configuration
+ingress-nginx:
+  enabled: true
+  controller:
+    replicaCount: 1
+    config:
+      use-forwarded-headers: "true"
+      compute-full-forwarded-for: "true"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+
+# Monitoring configuration
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  grafana:
+    enabled: true
+    adminPassword: "predator123"
+    resources:
+      limits:
+        cpu: 300m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+  loki:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 8Gi
+    resources:
+      limits:
+        cpu: 300m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
+# Security configuration
+security:
+  enabled: true
+  falco:
+    enabled: true
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+  kyverno:
+    enabled: true
+    resources:
+      limits:
+        cpu: 300m
+        memory: 256Mi
+      requests:
+        cpu: 150m
+        memory: 128Mi
+  vault:
+    enabled: false  # Enable for production
+    resources:
+      limits:
+        cpu: 300m
+        memory: 256Mi
+      requests:
+        cpu: 150m
+        memory: 128Mi
+
+# ServiceMonitor configuration for Prometheus
+serviceMonitor:
+  enabled: true
+  namespace: "monitoring"
+  labels:
+    release: "prometheus"
+  interval: 30s
+  scrapeTimeout: 10s
+
+# PodDisruptionBudget configuration
+podDisruptionBudget:
+  enabled: true
+  backend:
+    minAvailable: 1
+  frontend:
+    minAvailable: 1
+  agents:
+    minAvailable: 0
+
+# Network policies
+networkPolicy:
+  enabled: true
+  ingress:
+    enabled: true
+  egress:
+    enabled: true
+
+# Pod security policies
+podSecurityPolicy:
+  enabled: true
+
+# Resource quotas
+resourceQuota:
+  enabled: false
+  requests:
+    cpu: "2"
+    memory: "4Gi"
+  limits:
+    cpu: "4"
+    memory: "8Gi"
+
+# Horizontal Pod Autoscaler
+hpa:
+  backend:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+  frontend:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
+
+# Vertical Pod Autoscaler
+vpa:
+  enabled: false
+  updateMode: "Auto"
+
+# Pod annotations
+podAnnotations: {}
+
+# Pod labels
+podLabels: {}
+
+# Node selector
+nodeSelector: {}
+
+# Tolerations
+tolerations: []
+
+# Affinity
+affinity: {}
+
+# Extra manifests
+extraManifests: []

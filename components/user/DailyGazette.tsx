@@ -296,10 +296,13 @@ export const DailyGazette = ({ onAskAI }: { onAskAI: (query: string) => void }) 
                     <div className="mt-5 flex items-center gap-3">
                         <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Виконання</div>
                         <div className="flex-1 h-1.5 bg-slate-900 rounded-full overflow-hidden shadow-inner">
-                            <div 
-                                className="h-full bg-green-500 transition-all duration-500 shadow-[0_0_10px_#22c55e]" 
-                                style={{ width: `${(tasks.filter(t => t.done).length / tasks.length) * 100}%` }}
-                            ></div>
+                            <progress
+                                className="w-full h-full appearance-none"
+                                value={Math.round((tasks.filter(t => t.done).length / tasks.length) * 100)}
+                                max={100}
+                                aria-label="Task completion progress"
+                            />
+                            <style>{`progress::-webkit-progress-value{background:#22c55e}`}</style>
                         </div>
                         <div className="text-[10px] font-mono text-green-500 font-bold">{(tasks.filter(t => t.done).length / tasks.length * 100).toFixed(0)}%</div>
                     </div>
@@ -323,13 +326,17 @@ export const DailyGazette = ({ onAskAI }: { onAskAI: (query: string) => void }) 
                         <div>
                             <h4 className="text-[10px] text-slate-500 font-bold uppercase mb-2">Рекомендації</h4>
                             <ul className="space-y-2">
-                                <li onClick={() => onAskAI("Показати чергу суден у порту Ізмаїл")} className="flex items-center gap-2 text-xs text-slate-300 hover:text-white cursor-pointer group p-2 hover:bg-slate-900 rounded transition-colors border border-transparent hover:border-slate-800 btn-3d text-left">
+                                <li>
+                                    <button type="button" onClick={() => onAskAI("Показати чергу суден у порту Ізмаїл")} className="w-full text-left flex items-center gap-2 text-xs text-slate-300 hover:text-white cursor-pointer group p-2 hover:bg-slate-900 rounded transition-colors border border-transparent hover:border-slate-800 btn-3d">
                                     <ChevronRight size={12} className="text-purple-500 group-hover:translate-x-1 transition-transform" />
                                     Черга суден Ізмаїл
+                                    </button>
                                 </li>
-                                <li onClick={() => onAskAI("Аналіз цін на пшеницю (FOB)")} className="flex items-center gap-2 text-xs text-slate-300 hover:text-white cursor-pointer group p-2 hover:bg-slate-900 rounded transition-colors border border-transparent hover:border-slate-800 btn-3d text-left">
+                                <li>
+                                    <button type="button" onClick={() => onAskAI("Аналіз цін на пшеницю (FOB)")} className="w-full text-left flex items-center gap-2 text-xs text-slate-300 hover:text-white cursor-pointer group p-2 hover:bg-slate-900 rounded transition-colors border border-transparent hover:border-slate-800 btn-3d">
                                     <ChevronRight size={12} className="text-purple-500 group-hover:translate-x-1 transition-transform" />
                                     Аналіз цін (FOB)
+                                    </button>
                                 </li>
                             </ul>
                         </div>

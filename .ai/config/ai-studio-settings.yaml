@@ -1,0 +1,167 @@
+# AI Studio Integration Settings for Predator Analytics
+# Цей файл налаштовує інтеграцію з Gemini AI Studio
+
+# Загальні налаштування
+settings:
+  repository: "Predator-Analytics"
+  default_branch: "main"
+  ai_branch_prefix: "ai/"
+  feature_branch_prefix: "feature/"
+  
+  # GitHub токен (має бути встановлений як secret в AI Studio)
+  github_token_env: "GITHUB_TOKEN"
+  
+  # Webhook для зворотного зв'язку
+  feedback_webhook_url: "${AI_STUDIO_WEBHOOK_URL}"
+  feedback_api_key: "${AI_STUDIO_API_KEY}"
+
+# Конвенції гілок
+branch_conventions:
+  ai_studio:
+    pattern: "ai/{scenario}-{date}"
+    example: "ai/live-dashboard-smoke-2025-12-01"
+    auto_merge: false
+    requires_review: true
+    
+  feature:
+    pattern: "feature/{description}"
+    example: "feature/add-metrics-dashboard"
+    auto_merge: false
+    requires_review: true
+
+# Формати AI-запитів
+request_formats:
+  smoke_test:
+    description: "Базовий smoke test для перевірки системи"
+    commands:
+      - "make health-check"
+      - "curl -f http://localhost:8000/healthz"
+      - "kubectl get pods -n pa-dev"
+    timeout: "5m"
+    
+  performance_test:
+    description: "Тест продуктивності API"
+    commands:
+      - "make test-performance"
+      - "ab -n 1000 -c 10 http://localhost:8000/api/v1/metrics"
+    timeout: "10m"
+    
+  security_scan:
+    description: "Сканування безпеки"
+    commands:
+      - "make security-scan"
+      - "trivy fs --severity HIGH,CRITICAL ."
+    timeout: "15m"
+
+# Середовища для деплою
+environments:
+  dev-local:
+    cluster: "pa-dev"
+    namespace: "pa-dev"
+    auto_sync: true
+    requires_approval: false
+    
+  lab-gpu:
+    cluster: "pa-lab-gpu"
+    namespace: "pa-lab"
+    auto_sync: true
+    requires_approval: false
+    
+  prod-oracle:
+    cluster: "pa-oracle-prod"
+    namespace: "pa-prod"
+    auto_sync: false
+    requires_approval: true
+
+# Правила для AI агентів
+agent_rules:
+  # ЗАБОРОНЕНО: ніколи не симулювати результати
+  forbidden_actions:
+    - "Не симулювати результати тестів"
+    - "Не створювати фейкові .ai/reports"
+    - "Не деплоїти напряму в кластери"
+    - "Не змінювати production без PR"
+    
+  # ОБОВ'ЯЗКОВО: завжди створювати proper requests
+  required_actions:
+    - "Створювати .ai/requests/*.yaml для реальних дій"
+    - "Робити commit + push для всіх змін"
+    - "Створювати Pull Request для review"
+    - "Чекати на CI результати"
+    
+  # Рекомендовані практики
+  best_practices:
+    - "Використовувати описові імена для гілок"
+    - "Додавати детальні описи в PR"
+    - "Перевіряти CI статус перед merge"
+    - "Використовувати proper error handling"
+
+# Шаблони для генерації
+templates:
+  ai_request:
+    metadata:
+      id: "{{scenario}}-{{timestamp}}"
+      created_by: "ai-studio"
+      target_env: "dev-local"
+      created_at: "{{timestamp}}"
+    spec:
+      scenario: "{{scenario}}"
+      description: "{{description}}"
+      commands: []
+      success_criteria: []
+      timeout: "5m"
+
+# Моніторинг та алерти
+monitoring:
+  alerts:
+    - name: "ai_request_failed"
+      condition: "status == 'failed'"
+      action: "notify_developers"
+      
+    - name: "ci_pipeline_failed"
+      condition: "workflow_run.conclusion == 'failure'"
+      action: "create_incident"
+
+# Інтеграції
+integrations:
+  slack:
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    channel: "#predator-analytics"
+    
+  email:
+    smtp_server: "${SMTP_SERVER}"
+    recipients:
+      - "dev-team@predator-analytics.local"
+      
+  jira:
+    url: "${JIRA_URL}"
+    project: "PA"
+    auto_create_issues: true
+
+# Розширення для різних типів запитів
+extensions:
+  lora_training:
+    description: "LoRA модель тренування"
+    requires_gpu: true
+    environment: "lab-gpu"
+    commands:
+      - "python scripts/train_lora.py --config {{config_file}}"
+      - "python scripts/validate_model.py"
+    timeout: "2h"
+    
+  etl_pipeline:
+    description: "ETL pipeline для даних"
+    environment: "lab-gpu"
+    commands:
+      - "python etl/pipeline.py --date {{date}}"
+      - "python etl/validate.py --output {{output_path}}"
+    timeout: "1h"
+    
+  security_audit:
+    description: "Повний аудит безпеки"
+    environment: "prod-oracle"
+    commands:
+      - "trivy image --severity HIGH,CRITICAL ghcr.io/your-org/predator-backend:latest"
+      - "kubectl get pods -n pa-prod -o yaml | kube-score score -"
+      - "falco -c /etc/falco/rules.yaml"
+    timeout: "30m"

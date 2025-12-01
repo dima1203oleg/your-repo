@@ -1,0 +1,32 @@
+metadata:
+  id: "security-scan-2025-12-01"
+  created_by: "gemini-studio"
+  target_env: "dev-local"
+  created_at: "2025-12-01T12:00:00Z"
+  
+spec:
+  scenario: "security-test"
+  description: "Security vulnerability scan and compliance check"
+  
+  commands:
+    - "trivy image --format json --output trivy-scan.json ghcr.io/your-org/predator-backend:latest"
+    - "nmap -p 3000,8000 localhost"
+    - "curl -k https://localhost:3000/api/v1/users"  # Test for HTTPS enforcement
+    - "sqlmap -u 'http://localhost:8000/api/v1/data?id=1' --batch"  # SQL injection test
+    - "nikto -h http://localhost:3000"
+    - "kubectl auth can-i --list --as=system:anonymous"
+  
+  success_criteria:
+    - "trivy: no critical vulnerabilities"
+    - "nmap: only expected ports open"
+    - "sqlmap: no SQL injection vulnerabilities"
+    - "nikto: no high-risk findings"
+  
+  timeout: "25m"
+  
+  retry_policy:
+    max_retries: 1
+    backoff: "linear"
+    
+  artifacts:
+    reports: ["trivy-report", "nmap-report", "security-scan"]

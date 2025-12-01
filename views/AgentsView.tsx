@@ -92,9 +92,14 @@ const AgentsView: React.FC = () => {
                                         <span>Efficiency</span>
                                         <span className="text-white font-mono">{agent.efficiency}%</span>
                                     </div>
-                                    <div className="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden shadow-inner">
-                                        <div className="h-full bg-blue-500 shadow-[0_0_10px_#3b82f6]" style={{ width: `${agent.efficiency}%` }}></div>
-                                    </div>
+                                                                        <div className="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden shadow-inner">
+                                                                                <progress
+                                                                                    value={agent.efficiency}
+                                                                                    max={100}
+                                                                                    aria-label={`${agent.name} efficiency ${agent.efficiency}%`}
+                                                                                    className="w-full h-1.5 appearance-none bg-blue-500 shadow-[0_0_10px_#3b82f6] rounded"
+                                                                                />
+                                                                        </div>
                                     <div className="text-[10px] text-slate-500 truncate font-mono border-t border-slate-800/50 pt-2 mt-2">
                                         Last: {agent.lastAction}
                                     </div>

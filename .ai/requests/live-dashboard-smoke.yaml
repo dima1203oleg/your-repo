@@ -1,0 +1,39 @@
+metadata:
+  id: "live-dashboard-smoke-2025-12-01"
+  created_by: "gemini-studio"
+  target_env: "dev-local"
+  created_at: "2025-12-01T10:00:00Z"
+  
+spec:
+  scenario: "smoke-test"
+  description: "Verify live dashboard functionality and API endpoints"
+  
+  commands:
+    - "helm upgrade --install platform-dev-local infra/helm/platform --values infra/helm/platform/values-dev.yaml --namespace predator-dev --create-namespace"
+    - "npm run build"
+    - "npm run preview &"
+    - "sleep 30"  # Wait for startup
+    - "npx playwright test tests/smoke/live-dashboard.spec.ts --project=chromium"
+    - "curl -f http://localhost:3000/api/v1/metrics/live"
+    - "curl -f http://localhost:3000/healthz"
+    - "kubectl get pods -n predator-dev -o wide"
+    - "kubectl logs -n predator-dev deployment/predator-backend --tail=50"
+  
+  success_criteria:
+    - "playwright: 0 failures"
+    - "api: 200 OK response for /api/v1/metrics/live"
+    - "api: 200 OK response for /healthz"
+    - "k8s: all pods ready"
+    - "logs: no error messages"
+  
+  timeout: "15m"
+  
+  retry_policy:
+    max_retries: 2
+    backoff: "exponential"
+    
+  artifacts:
+    logs: true
+    metrics: true
+    screenshots: true
+    reports: ["playwright", "k8s-status"]

@@ -1,0 +1,41 @@
+apiVersion: v2
+name: platform
+description: Predator Analytics Platform - Complete application stack
+type: application
+version: 0.1.0
+appVersion: "18.4.6"
+home: https://github.com/YOUR_USER/Predator-Analytics
+sources:
+  - https://github.com/YOUR_USER/Predator-Analytics
+maintainers:
+  - name: Predator Analytics Team
+    email: team@predator-analytics.local
+dependencies:
+  - name: postgresql
+    version: 12.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: redis
+    version: 17.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+  - name: ingress-nginx
+    version: 4.x.x
+    repository: https://kubernetes.github.io/ingress-nginx
+    condition: ingress-nginx.enabled
+  - name: monitoring
+    version: 0.1.0
+    condition: monitoring.enabled
+  - name: security
+    version: 0.1.0
+    condition: security.enabled
+keywords:
+  - analytics
+  - monitoring
+  - ai
+  - ml
+  - dashboard
+annotations:
+  category: Analytics
+  licenses: MIT
+  deployable: "true"

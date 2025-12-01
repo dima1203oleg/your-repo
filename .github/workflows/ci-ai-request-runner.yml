@@ -1,0 +1,211 @@
+name: AI Request Runner (Mac M3 / dev-local)
+
+on:
+  push:
+    paths:
+      - ".ai/requests/**"
+  workflow_dispatch:
+    inputs:
+      request_file:
+        description: "Шлях до .ai/requests/*.yaml (необов'язково, тоді буде взято останній змінений)"
+        required: false
+        default: ""
+
+jobs:
+  detect-request:
+    name: Detect AI request file
+    runs-on: ubuntu-latest
+    outputs:
+      request_file: ${{ steps.detect.outputs.request_file }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Detect changed .ai/requests file
+        id: detect
+        run: |
+          # Якщо файл передано вручну через workflow_dispatch
+          if [ -n "${{ github.event.inputs.request_file }}" ]; then
+            echo "Using request file from input: ${{ github.event.inputs.request_file }}"
+            echo "request_file=${{ github.event.inputs.request_file }}" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Якщо push – знайти змінені файли в .ai/requests
+          git fetch --no-tags --prune --depth=2 origin +${{ github.ref }}:${{ github.ref }} || true
+
+          if [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "^.ai/requests/" || true)
+          else
+            CHANGED=$(git diff --name-only HEAD~1 HEAD | grep "^.ai/requests/" || true)
+          fi
+
+          echo "Changed request files:"
+          echo "${CHANGED}"
+
+          FILE=$(echo "$CHANGED" | head -n1)
+
+          if [ -z "$FILE" ]; then
+            echo "No .ai/requests/*.yaml files found in this push."
+            echo "request_file=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "Using request file: $FILE"
+          echo "request_file=$FILE" >> $GITHUB_OUTPUT
+
+  run-request-on-mac:
+    name: Run AI request on Mac M3
+    needs: detect-request
+    if: needs.detect-request.outputs.request_file != ''
+    runs-on: [self-hosted, mac-m3, pa-dev]
+    env:
+      REQUEST_FILE: ${{ needs.detect-request.outputs.request_file }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Show selected request file
+        run: |
+          echo "Using AI request file: $REQUEST_FILE"
+          cat "$REQUEST_FILE"
+
+      - name: Install yq (якщо немає)
+        run: |
+          if ! command -v yq >/dev/null 2>&1; then
+            echo "yq not found, installing via brew..."
+            brew update || true
+            brew install yq || true
+          fi
+          yq --version || true
+
+      - name: Parse request metadata
+        id: parse
+        run: |
+          ID=$(yq '.metadata.id' "$REQUEST_FILE")
+          TARGET_ENV=$(yq '.metadata.target_env' "$REQUEST_FILE")
+
+          if [ "$ID" = "null" ] || [ -z "$ID" ]; then
+            echo "ERROR: .metadata.id в $REQUEST_FILE не заданий"
+            exit 1
+          fi
+
+          echo "Parsed id: $ID"
+          echo "Parsed target_env: $TARGET_ENV"
+
+          echo "id=$ID" >> $GITHUB_OUTPUT
+          echo "target_env=$TARGET_ENV" >> $GITHUB_OUTPUT
+
+      - name: Prepare report directory
+        run: |
+          mkdir -p .ai/reports
+          echo "REPORT_DIR=.ai/reports" >> $GITHUB_ENV
+
+      - name: Ensure dev-local cluster if needed
+        if: steps.parse.outputs.target_env == 'dev-local'
+        run: |
+          echo "Target env is dev-local – перевіряю кластер..."
+          if [ -f Makefile ]; then
+            make k8s-dev-up || echo "Warning: make k8s-dev-up завершився з помилкою"
+          else
+            echo "Makefile не знайдено, пропускаю auto-up кластера."
+          fi
+
+      - name: Execute actions from request
+        id: run_actions
+        run: |
+          ID="${{ steps.parse.outputs.id }}"
+          REPORT_FILE=".ai/reports/${ID}-result.yaml"
+
+          echo "Створюю початковий report: $REPORT_FILE"
+
+          # Початковий файл результату
+          cat > "$REPORT_FILE" <<'EOF'
+metadata:
+  request_id: "$ID"
+  request_file: "$REQUEST_FILE"
+  target_env: "${{ steps.parse.outputs.target_env }}"
+  git_sha: "${{ github.sha }}"
+  git_branch: "${{ github.ref_name }}"
+  workflow_run: "${{ github.run_id }}"
+status: "running"
+started_at: "$(date -u +\"%Y-%m-%dT%H:%M:%SZ\")"
+results: {}
+artifacts: {}
+EOF
+
+          # Отримати кількість actions
+          ACTION_COUNT=$(yq '.spec.commands | length' "$REQUEST_FILE")
+          echo "Знайдено commands: $ACTION_COUNT"
+
+          OVERALL_STATUS="success"
+
+          i=0
+          while [ $i -lt $ACTION_COUNT ]; do
+            CMD=$(yq ".spec.commands[$i]" "$REQUEST_FILE")
+
+            echo "---------------------"
+            echo "Виконую крок #$i"
+            echo "Команда: $CMD"
+            echo "---------------------"
+
+            START_TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+            START_SEC=$(date +%s)
+
+            # Виконати команду, зберегти лог
+            LOG_FILE="/tmp/ai_action_${ID}_${i}.log"
+            set +e
+            bash -lc "$CMD" >"$LOG_FILE" 2>&1
+            EXIT_CODE=$?
+            set -e
+
+            END_TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+            END_SEC=$(date +%s)
+            DURATION=$((END_SEC - START_SEC))
+
+            echo "Крок #$i завершився з кодом $EXIT_CODE"
+
+            if [ $EXIT_CODE -ne 0 ]; then
+              OVERALL_STATUS="failed"
+            fi
+
+            # Витягнути кілька останніх рядків логів
+            LOG_SNIPPET=$(tail -n 20 "$LOG_FILE" | sed 's/:/ -/g' | sed 's/"/'\''/g')
+
+            # Додати action в YAML
+            yq -i ".results.command_$i = {status: \"success\", command: \"$CMD\", exit_code: $EXIT_CODE, duration_seconds: $DURATION, started_at: \"$START_TS\", finished_at: \"$END_TS\", log_tail: \"$LOG_SNIPPET\"}" "$REPORT_FILE"
+
+            i=$((i + 1))
+          done
+
+          # Оновити загальний статус
+          yq -i ".status = \"$OVERALL_STATUS\"" "$REPORT_FILE"
+          yq -i ".completed_at = \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"" "$REPORT_FILE"
+
+          echo "Фінальний статус: $OVERALL_STATUS"
+          echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
+
+      - name: Show report
+        run: |
+          echo "==== Згенерований report ===="
+          cat "${{ steps.run_actions.outputs.report_file }}"
+          echo "============================="
+
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ai-request-report-${{ steps.parse.outputs.id }}
+          path: ${{ steps.run_actions.outputs.report_file }}
+
+      - name: Commit report back to repo (optional)
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          ID="${{ steps.parse.outputs.id }}"
+          REPORT_FILE="${{ steps.run_actions.outputs.report_file }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add "$REPORT_FILE"
+          git commit -m "AI report for $ID [skip ci]" || echo "Нема що комітити"
+          git push || echo "Не вдалося зробити push (можливо, немає прав)"

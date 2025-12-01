@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pa-platform-dev-local
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: CreateNamespace=true
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+spec:
+  project: dev-local
+  source:
+    repoURL: "https://github.com/YOUR_USER/Predator-Analytics.git"
+    targetRevision: develop          # або конкретна гілка / тег
+    path: infra/helm/platform
+    helm:
+      valueFiles:
+        - values-dev-local.yaml      # лежить у infra/helm/platform/
+      releaseName: platform-dev-local
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: pa-dev                # основний namespace для платформи
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas

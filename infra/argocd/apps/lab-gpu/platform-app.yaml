@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pa-platform-lab-gpu
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: CreateNamespace=true
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+spec:
+  project: lab-gpu
+  source:
+    repoURL: "https://github.com/YOUR_USER/Predator-Analytics.git"
+    targetRevision: develop
+    path: infra/helm/platform
+    helm:
+      valueFiles:
+        - values-lab-gpu.yaml
+      releaseName: platform-lab-gpu
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: pa-lab
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+      jsonPointers:
+        - /spec/minReplicas
+        - /spec/maxReplicas

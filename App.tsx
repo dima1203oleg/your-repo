@@ -40,7 +40,16 @@ function App() {
     return isAuth === 'true' ? 'RUNNING' : 'BOOTING';
   });
   
-  const [activeTab, setActiveTab] = useState<TabView>(TabView.DASHBOARD);
+  const [activeTab, setActiveTab] = useState<TabView>(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab');
+      if (tab && (Object.values(TabView) as string[]).includes(tab)) return tab as TabView;
+    } catch (e) {
+      // ignore, fallback to default
+    }
+    return TabView.DASHBOARD;
+  });
 
   const handleBootComplete = () => {
     setAppState('LOGIN');

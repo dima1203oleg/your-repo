@@ -1,0 +1,177 @@
+name: AI Feedback Sender (Gemini AI Studio webhook)
+
+on:
+  push:
+    paths:
+      - ".ai/reports/**"
+  workflow_dispatch:
+    inputs:
+      report_file:
+        description: "Шлях до .ai/reports/*.yaml (опціонально, за замовчуванням — останній змінений)"
+        required: false
+        default: ""
+
+jobs:
+  detect-report:
+    name: Detect AI report file
+    runs-on: ubuntu-latest
+    outputs:
+      report_file: ${{ steps.detect.outputs.report_file }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install yq
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+          yq --version
+
+      - name: Detect changed .ai/reports file
+        id: detect
+        run: |
+          # Якщо файл задано явно через workflow_dispatch
+          if [ -n "${{ github.event.inputs.report_file }}" ]; then
+            echo "Using report file from input: ${{ github.event.inputs.report_file }}"
+            echo "report_file=${{ github.event.inputs.report_file }}" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          git fetch --no-tags --prune --depth=2 origin +${{ github.ref }}:${{ github.ref }} || true
+
+          if [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "^.ai/reports/" || true)
+          else
+            CHANGED=$(git diff --name-only HEAD~1 HEAD | grep "^.ai/reports/" || true)
+          fi
+
+          echo "Changed report files:"
+          echo "${CHANGED}"
+
+          FILE=$(echo "$CHANGED" | head -n1)
+
+          if [ -z "$FILE" ]; then
+            echo "No .ai/reports/*.yaml files found in this push."
+            echo "report_file=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "Using report file: $FILE"
+          echo "report_file=$FILE" >> $GITHUB_OUTPUT
+
+  send-feedback:
+    name: Send feedback to AI Studio
+    needs: detect-report
+    if: needs.detect-report.outputs.report_file != ''
+    runs-on: ubuntu-latest
+    env:
+      REPORT_FILE: ${{ needs.detect-report.outputs.report_file }}
+      AI_STUDIO_WEBHOOK_URL: ${{ secrets.AI_STUDIO_WEBHOOK_URL }}
+      AI_STUDIO_API_KEY: ${{ secrets.AI_STUDIO_API_KEY }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Ensure yq & jq
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq
+          if ! command -v yq >/dev/null 2>&1; then
+            sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+            sudo chmod +x /usr/local/bin/yq
+          fi
+          yq --version
+          jq --version
+
+      - name: Show report file
+        run: |
+          echo "Using report file: $REPORT_FILE"
+          cat "$REPORT_FILE"
+
+      - name: Build JSON payload
+        id: build
+        run: |
+          if [ -z "$AI_STUDIO_WEBHOOK_URL" ]; then
+            echo "AI_STUDIO_WEBHOOK_URL is not set. Exiting."
+            exit 1
+          fi
+
+          ID=$(yq '.metadata.request_id' "$REPORT_FILE")
+          STATUS=$(yq '.status' "$REPORT_FILE")
+          TARGET_ENV=$(yq '.metadata.target_env' "$REPORT_FILE")
+          STARTED=$(yq '.metadata.started_at' "$REPORT_FILE")
+          FINISHED=$(yq '.metadata.completed_at' "$REPORT_FILE")
+          RESULTS=$(yq '.results' "$REPORT_FILE" -o=json)
+
+          REPO="${{ github.repository }}"
+          BRANCH="${{ github.ref_name }}"
+          COMMIT_SHA="${{ github.sha }}"
+          HTML_URL="https://github.com/${REPO}/commit/${COMMIT_SHA}"
+
+          echo "ID: $ID"
+          echo "STATUS: $STATUS"
+          echo "TARGET_ENV: $TARGET_ENV"
+
+          SUMMARY="Status: ${STATUS}, env: ${TARGET_ENV}"
+
+          PAYLOAD=$(jq -n \
+            --arg id "$ID" \
+            --arg status "$STATUS" \
+            --arg target_env "$TARGET_ENV" \
+            --arg started_at "$STARTED" \
+            --arg finished_at "$FINISHED" \
+            --arg repo "$REPO" \
+            --arg branch "$BRANCH" \
+            --arg commit "$COMMIT_SHA" \
+            --arg html_url "$HTML_URL" \
+            --arg summary "$SUMMARY" \
+            --argjson results "$RESULTS" \
+            '{
+              id: $id,
+              status: $status,
+              target_env: $target_env,
+              started_at: $started_at,
+              finished_at: $finished_at,
+              repo: $repo,
+              branch: $branch,
+              commit: $commit,
+              html_url: $html_url,
+              summary: $summary,
+              results: $results
+            }')
+
+          echo "$PAYLOAD" > /tmp/ai_feedback_payload.json
+          echo "payload_file=/tmp/ai_feedback_payload.json" >> $GITHUB_OUTPUT
+
+      - name: Send POST to AI Studio webhook
+        run: |
+          echo "Sending feedback to AI Studio webhook: $AI_STUDIO_WEBHOOK_URL"
+          cat "${{ steps.build.outputs.payload_file }}"
+
+          # Заголовки
+          HEADERS=(-H "Content-Type: application/json")
+          if [ -n "$AI_STUDIO_API_KEY" ]; then
+            HEADERS+=(-H "Authorization: Bearer $AI_STUDIO_API_KEY")
+          fi
+
+          HTTP_CODE=$(curl -sS -w "%{http_code}" -o /tmp/ai_feedback_response.json \
+            -X POST "$AI_STUDIO_WEBHOOK_URL" \
+            "${HEADERS[@]}" \
+            --data-binary @"${{ steps.build.outputs.payload_file }}")
+
+          echo "HTTP status: $HTTP_CODE"
+          echo "Response body:"
+          cat /tmp/ai_feedback_response.json || echo "no body"
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "AI Studio webhook returned non-2xx status"
+            exit 1
+          fi
+
+      - name: Print short summary
+        run: |
+          echo "✅ Feedback успішно відправлено в AI Studio."
+          echo "Звіт: $REPORT_FILE"
+          echo "Commit: https://github.com/${{ github.repository }}/commit/${{ github.sha }}"

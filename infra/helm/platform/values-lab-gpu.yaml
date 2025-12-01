@@ -1,0 +1,402 @@
+# Lab-GPU values for staging environment with NVIDIA GPU support
+
+# Global overrides for lab-gpu
+global:
+  imageTag: "latest"
+  domain: "predator-analytics.lab"
+  storageClass: "fast-ssd"
+
+# Backend - staging with GPU support
+backend:
+  replicaCount: 2
+  image:
+    tag: "latest"
+  
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+      nvidia.com/gpu: 1  # GPU support
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+      nvidia.com/gpu: 1
+  
+  env:
+    - name: DATABASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: database-url
+    - name: REDIS_URL
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: redis-url
+    - name: LOG_LEVEL
+      value: "INFO"
+    - name: ENVIRONMENT
+      value: "staging"
+    - name: GPU_ENABLED
+      value: "true"
+    - name: CUDA_VISIBLE_DEVICES
+      value: "0"
+  
+  nodeSelector:
+    gpu-node: "true"
+  
+  tolerations:
+    - key: "nvidia.com/gpu"
+      operator: "Exists"
+      effect: "NoSchedule"
+  
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: gpu-node
+            operator: In
+            values:
+            - "true"
+
+# Frontend - staging with higher resources
+frontend:
+  replicaCount: 2
+  image:
+    tag: "latest"
+  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  
+  env:
+    - name: REACT_APP_API_URL
+      value: "https://api.predator-analytics.lab"
+    - name: REACT_APP_ENVIRONMENT
+      value: "staging"
+    - name: REACT_APP_GPU_FEATURES
+      value: "true"
+
+# Agents - ML/AI agents with GPU support
+agents:
+  replicaCount: 2
+  image:
+    tag: "latest"
+  
+  resources:
+    limits:
+      cpu: 4000m
+      memory: 4Gi
+      nvidia.com/gpu: 1
+    requests:
+      cpu: 2000m
+      memory: 2Gi
+      nvidia.com/gpu: 1
+  
+  env:
+    - name: BACKEND_URL
+      value: "http://backend:8000"
+    - name: AGENT_MODE
+      value: "staging"
+    - name: LOG_LEVEL
+      value: "INFO"
+    - name: GPU_ENABLED
+      value: "true"
+    - name: CUDA_VISIBLE_DEVICES
+      value: "0"
+    - name: ML_MODEL_PATH
+      value: "/models/llama-2-7b"
+  
+  nodeSelector:
+    gpu-node: "true"
+  
+  tolerations:
+    - key: "nvidia.com/gpu"
+      operator: "Exists"
+      effect: "NoSchedule"
+  
+  persistence:
+    enabled: true
+    storageClass: "fast-ssd"
+    size: 20Gi
+    mountPath: "/models"
+
+# PostgreSQL - staging with better performance
+postgresql:
+  enabled: true
+  auth:
+    existingSecret: "predator-secrets"
+    secretKeys:
+      adminPasswordKey: postgres-password
+      userPasswordKey: postgres-password
+  primary:
+    persistence:
+      enabled: true
+      size: 20Gi
+      storageClass: "fast-ssd"
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 2Gi
+      requests:
+        cpu: 1000m
+        memory: 1Gi
+    extraConfig: |
+      # Performance tuning for staging
+      shared_buffers = '512MB'
+      effective_cache_size = '1GB'
+      maintenance_work_mem = '128MB'
+      checkpoint_completion_target = 0.9
+      wal_buffers = '16MB'
+      default_statistics_target = 100
+
+# Redis - staging with persistence
+redis:
+  enabled: true
+  auth:
+    existingSecret: "predator-secrets"
+    existingSecretPasswordKey: redis-password
+  master:
+    persistence:
+      enabled: true
+      size: 8Gi
+      storageClass: "fast-ssd"
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    extraConfig: |
+      # Performance tuning
+      maxmemory 512mb
+      maxmemory-policy allkeys-lru
+      save 900 1
+      save 300 10
+      save 60 10000
+
+# Ingress - staging with proper TLS
+ingress-nginx:
+  enabled: true
+  controller:
+    replicaCount: 2
+    service:
+      type: LoadBalancer
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    config:
+      use-forwarded-headers: "true"
+      compute-full-forwarded-for: "true"
+      proxy-body-size: "50m"
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    nodeSelector:
+      ingress: "true"
+    tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "ingress"
+        effect: "NoSchedule"
+
+# Monitoring - full stack for staging
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: "fast-ssd"
+  grafana:
+    enabled: true
+    adminPassword: "predator123"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    persistence:
+      enabled: true
+      size: 2Gi
+      storageClass: "fast-ssd"
+  loki:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 20Gi
+      storageClass: "fast-ssd"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+
+# Security - enabled for staging
+security:
+  enabled: true
+  falco:
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  kyverno:
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  vault:
+    enabled: false  # Enable in production
+
+# ServiceMonitor - enabled for staging
+serviceMonitor:
+  enabled: true
+  interval: 15s
+  scrapeTimeout: 10s
+
+# PodDisruptionBudget - enabled for staging
+podDisruptionBudget:
+  enabled: true
+  backend:
+    minAvailable: 1
+  frontend:
+    minAvailable: 1
+  agents:
+    minAvailable: 1
+
+# Network policies - enabled for staging
+networkPolicy:
+  enabled: true
+  ingress:
+    enabled: true
+  egress:
+    enabled: true
+
+# Pod security policies - enabled for staging
+podSecurityPolicy:
+  enabled: true
+
+# Resource quotas - enabled for staging
+resourceQuota:
+  enabled: true
+  requests:
+    cpu: "4"
+    memory: "8Gi"
+  limits:
+    cpu: "8"
+    memory: "16Gi"
+
+# HPA - enabled for staging
+hpa:
+  backend:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+  frontend:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 70
+  agents:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
+
+# VPA - enabled for staging
+vpa:
+  enabled: true
+  updateMode: "Auto"
+
+# Node selector for GPU nodes
+nodeSelector:
+  environment: "staging"
+
+# Tolerations for dedicated nodes
+tolerations:
+  - key: "environment"
+    operator: "Equal"
+    value: "staging"
+    effect: "NoSchedule"
+
+# Affinity for staging nodes
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - backend
+        topologyKey: kubernetes.io/hostname
+
+# Extra manifests for staging
+extraManifests:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: ml-models-pvc
+      namespace: pa-lab
+    spec:
+      accessModes:
+      - ReadWriteMany
+      storageClassName: fast-ssd
+      resources:
+        requests:
+          storage: 50Gi
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: gpu-config
+      namespace: pa-lab
+    data:
+      gpu-settings.yaml: |
+        nvidia.com/gpu: "1"
+        cuda_version: "12.1"
+        driver_version: "535.104.05"
+
+# Staging-specific annotations
+podAnnotations:
+  predator-analytics.io/environment: "staging"
+  predator-analytics.io/cluster: "pa-lab-gpu"
+  predator-analytics.io/gpu-enabled: "true"
+
+# Staging-specific labels
+podLabels:
+  environment: "staging"
+  cluster: "pa-lab-gpu"
+  gpu-enabled: "true"

@@ -1,6 +1,7 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
+import { api } from '../services/api';
 import { TacticalCard } from '../components/TacticalCard';
 import { ViewHeader } from '../components/ViewHeader';
 import { 
@@ -56,18 +57,82 @@ const SystemBrainView: React.FC = () => {
         }
     };
 
-    const startDebate = () => {
+    // Map model ids to Tailwind color tokens so UI doesn't rely on inline styles
+    const modelColorToken: Record<string, string> = {
+        m1: 'blue-400',
+        m2: 'purple-400',
+        m3: 'yellow-400',
+        m4: 'red-400',
+        m5: 'green-400',
+        m6: 'orange-400',
+        arbiter: 'white'
+    };
+
+    const getModelTextClass = (id?: string) => {
+        if (!id) return 'text-slate-400';
+        const token = modelColorToken[id] ?? null;
+        return token ? `text-${token}` : 'text-slate-400';
+    };
+
+    const getModelBorderClass = (id?: string, isActive?: boolean) => {
+        if (!isActive) return 'border-slate-700';
+        const token = id ? (modelColorToken[id] ?? null) : null;
+        return token ? `border-${token}` : 'border-white';
+    };
+
+    const startDebate = async () => {
         if (!topic.trim()) return;
+
+        // Reset state for a new live debate
         setPhase('PROPOSING');
         setMessages([]);
         setProgress(0);
-        
-        // Reset models
         setModels(prev => prev.map(m => ({ ...m, status: 'IDLE', currentThought: undefined })));
         setArbiter({ ...ARBITER, status: 'IDLE', currentThought: undefined });
 
-        // Simulate Debate Flow (Ukrainian)
-        runComplexDebateUA(topic);
+        try {
+            // Ask backend to start an evolution/debate cycle; if network fails, the api layer falls back to mock
+            await api.startEvolutionCycle();
+
+            // Poll for evolution/debate status until returned active=false or phase back to IDLE
+            const poll = setInterval(async () => {
+                try {
+                    const status = await api.getEvolutionStatus();
+                    if (!status) return;
+
+                    // status: { phase, logs, progress, active }
+                    setPhase((status.phase || 'IDLE') as DebatePhase);
+                    setProgress(status.progress || 0);
+
+                    // Map logs into messages (append only new entries)
+                    if (Array.isArray(status.logs) && status.logs.length) {
+                        // Create messages from log lines — avoid duplicates
+                        const existingIds = new Set(messages.map(m => m.id));
+                        const newMsgs = status.logs
+                            .filter((l: string) => !existingIds.has(l))
+                            .map((l: string, idx: number) => ({ id: `evo-${Date.now()}-${idx}`, modelId: 'arbiter', modelName: 'Evolution', type: 'ARGUMENT' as const, content: l, timestamp: new Date() }));
+
+                        if (newMsgs.length) setMessages(prev => [...prev, ...newMsgs]);
+                    }
+
+                    // If the backend reports the evolution as not active, stop polling
+                    if (status.active === false || status.phase === 'IDLE') {
+                        clearInterval(poll);
+                        setPhase('DEPLOYMENT');
+                    }
+                } catch (e) {
+                    // stop polling on repeated errors — fallback to client simulation
+                    clearInterval(poll);
+                    console.warn('Debate polling failed, falling back to client simulator', e);
+                    runComplexDebateUA(topic);
+                }
+            }, 1000);
+
+        } catch (e) {
+            // If starting the evolution cycle fails, fall back to the local simulator
+            console.warn('startEvolutionCycle failed, using local simulation', e);
+            runComplexDebateUA(topic);
+        }
     };
 
     const runComplexDebateUA = async (query: string) => {
@@ -241,7 +306,6 @@ const SystemBrainView: React.FC = () => {
                                 const y = Math.sin(angle * (Math.PI / 180)) * radius;
                                 
                                 const isActive = model.status !== 'IDLE' && model.status !== 'WAITING';
-                                const isThinking = model.status === 'THINKING';
 
                                 return (
                                     <div 
@@ -262,11 +326,7 @@ const SystemBrainView: React.FC = () => {
                                                 {(isActive || phase === 'SYNTHESIS') && <div className="absolute top-0 left-0 w-full h-full bg-primary-500/50 animate-[pulse_1s_infinite]"></div>}
                                             </div>
 
-                                            <div className={`w-14 h-14 rounded-full border-2 flex items-center justify-center bg-slate-900 transition-all duration-300 ${
-                                                isActive 
-                                                ? 'scale-110 shadow-[0_0_20px_currentColor]' 
-                                                : 'border-slate-700'
-                                            }`} style={{ borderColor: isActive ? model.color : undefined, color: isActive ? model.color : '#64748b' }}>
+                                            <div className={`w-14 h-14 rounded-full border-2 flex items-center justify-center bg-slate-900 transition-all duration-300 ${isActive ? 'scale-110 shadow-[0_0_20px_currentColor]' : ''} ${getModelBorderClass(model.id, isActive)}`}>
                                                 <span className="font-bold text-lg">{model.avatar}</span>
                                             </div>
                                             
@@ -288,14 +348,20 @@ const SystemBrainView: React.FC = () => {
                         </div>
 
                         {/* Phase Indicator */}
-                        <div className="absolute bottom-4 left-4 flex items-center gap-4">
-                            <div className="bg-slate-900/80 border border-slate-700 px-3 py-1.5 rounded-full text-xs font-mono text-slate-400 flex items-center gap-2">
-                                <Activity size={12} className={phase !== 'IDLE' ? 'text-primary-500 animate-pulse' : ''} />
+                            <div className="absolute bottom-4 left-4 flex items-center gap-4">
+                                <div className="bg-slate-900/80 border border-slate-700 px-3 py-1.5 rounded-full text-xs font-mono text-slate-400 flex items-center gap-2">
+                                <Activity size={12} className={phase === 'IDLE' ? '' : 'text-primary-500 animate-pulse'} />
                                 PHASE: <span className="text-white font-bold">{phase}</span>
                             </div>
                             {phase !== 'IDLE' && (
                                 <div className="w-32 h-2 bg-slate-800 rounded-full overflow-hidden">
-                                    <div className="h-full bg-primary-500 transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                                    <progress
+                                        className="w-full h-full appearance-none"
+                                        value={progress}
+                                        max={100}
+                                        aria-label="Debate progress"
+                                    />
+                                    <style>{`progress::-webkit-progress-value{background:#06b6d4}`}</style>
                                 </div>
                             )}
                         </div>
@@ -316,17 +382,14 @@ const SystemBrainView: React.FC = () => {
                                     Очікування початку дебатів...
                                 </div>
                             )}
-                            {messages.map((msg) => (
-                                <div key={msg.id} className={`flex flex-col gap-1 p-2 rounded border animate-in slide-in-from-right-2 ${
-                                    msg.type === 'FINAL_VERDICT' || msg.type === 'CONSENSUS' ? 'bg-purple-900/10 border-purple-500/30' :
-                                    msg.type === 'CRITIQUE' ? 'bg-red-900/10 border-red-900/30' :
-                                    'bg-slate-900 border-slate-800'
-                                }`}>
-                                    <div className="flex justify-between items-center">
-                                        <span className={`text-[10px] font-bold uppercase flex items-center gap-1 ${
-                                            msg.modelId === 'arbiter' ? 'text-white' : 
-                                            models.find(m => m.id === msg.modelId)?.color || 'text-slate-400'
-                                        }`} style={{ color: msg.modelId !== 'arbiter' && msg.modelId !== 'SYSTEM' ? models.find(m => m.id === msg.modelId)?.color : undefined }}>
+                            {messages.map((msg) => {
+                                let msgTypeClass = 'bg-slate-900 border-slate-800';
+                                if (msg.type === 'FINAL_VERDICT' || msg.type === 'CONSENSUS') msgTypeClass = 'bg-purple-900/10 border-purple-500/30';
+                                else if (msg.type === 'CRITIQUE') msgTypeClass = 'bg-red-900/10 border-red-900/30';
+                                return (
+                                    <div key={msg.id} className={`flex flex-col gap-1 p-2 rounded border animate-in slide-in-from-right-2 ${msgTypeClass}`}>
+                                        <div className="flex justify-between items-center">
+                                        <span className={`text-[10px] font-bold uppercase flex items-center gap-1 ${msg.modelId === 'arbiter' ? 'text-white' : getModelTextClass(msg.modelId)}`}>
                                             {msg.modelId === 'arbiter' && <Scale size={10} />}
                                             {msg.modelName}
                                         </span>
@@ -337,7 +400,7 @@ const SystemBrainView: React.FC = () => {
                                         {msg.content}
                                     </p>
                                 </div>
-                            ))}
+                            )})}
                         </div>
                     </TacticalCard>
 

@@ -21,7 +21,7 @@
     "test": "jest --config jest.config.cjs",
     "test:watch": "jest --config jest.config.cjs --watch",
     "test:coverage": "jest --config jest.config.cjs --coverage",
-    "test:e2e": "TEST_BASE_URL=http://127.0.0.1:3003 npx playwright test tests/playwright/live.spec.js --browser=firefox --reporter=list",
+    "test:e2e": "TEST_BASE_URL=http://127.0.0.1:3003 npx playwright test tests/playwright --browser=firefox --reporter=list",
     "serve:dist": "node scripts/serve-with-proxy.js",
     "start:real": "node real-backend/server.js",
     "test:e2e:local": "npm run build && (node real-backend/server.js & ) && (node scripts/serve-with-proxy.js & ) && TEST_BASE_URL=http://127.0.0.1:3003 npx playwright test tests/playwright/live.spec.js --browser=firefox --reporter=list",

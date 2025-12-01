@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: prod-oracle
+  namespace: argocd
+spec:
+  description: "Production Oracle OKE / k3s проект"
+  sourceRepos:
+    - "https://github.com/YOUR_USER/Predator-Analytics.git"
+  destinations:
+    - namespace: "*"
+      server: "https://kubernetes.default.svc"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  # Додаткові політики доступу можна обмежити для безпеки
+  namespaceResourceBlacklist:
+    - group: ""
+      kind: "Secret"
+  orphanedResources:
+    warn: true
+  roles:
+    - name: prod-oracle-admin
+      description: "Admin access to prod-oracle project"
+      policies:
+        - p, proj:prod-oracle:prod-oracle-admin, applications, *, prod-oracle/*, allow
+        - p, proj:prod-oracle:prod-oracle-admin, clusters, *, *, allow
+      groups:
+        - "github:predator-analytics-sre"
+        - "github:ops-team"
+        - "github:security-team"
+  syncWindows:
+    - kind: allow
+      schedule: "0 2 * * 1-5"  # Mon-Fri 2 AM UTC
+      duration: "2h"
+      applications:
+        - "*"
+    - kind: deny
+      schedule: "0 18 * * 6,0"  # Sat-Sun 6 PM UTC
+      duration: "12h"
+      applications:
+        - "*"

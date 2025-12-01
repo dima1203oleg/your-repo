@@ -1,0 +1,125 @@
+name: CI Build and Security Scan
+on:
+  push:
+    branches: [feature/*, ai/*, develop, main]
+  pull_request:
+    branches: [develop, main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: predator-analytics
+
+jobs:
+  build-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        component: [backend, frontend, agents]
+        include:
+          - component: backend
+            dockerfile: backend/Dockerfile
+            context: backend/
+          - component: frontend
+            dockerfile: frontend/Dockerfile
+            context: frontend/
+          - component: agents
+            dockerfile: agents/Dockerfile
+            context: agents/
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.component }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+            
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.component }}:${{ steps.meta.outputs.version }}
+          format: spdx-json
+          output-file: sbom-${{ matrix.component }}.spdx.json
+          
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v3
+        with:
+          name: sbom-${{ matrix.component }}
+          path: sbom-${{ matrix.component }}.spdx.json
+          
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@v0.25.0
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.component }}:${{ steps.meta.outputs.version }}
+          format: 'sarif'
+          output: 'trivy-${{ matrix.component }}.sarif'
+          
+      - name: Upload Trivy results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-${{ matrix.component }}.sarif'
+
+  sign-images:
+    needs: build-matrix
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main')
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v2
+        
+      - name: Sign images
+        env:
+          COSIGN_EXPERIMENTAL: 1
+        run: |
+          for component in backend frontend agents; do
+            IMAGE="${{ env.REGISTRY }}/${{ github.repository }}/${component}:${{ github.sha }}"
+            cosign sign --yes $IMAGE
+          done
+
+  generate-attestation:
+    needs: build-matrix
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v2
+        
+      - name: Generate attestation
+        env:
+          COSIGN_EXPERIMENTAL: 1
+        run: |
+          for component in backend frontend agents; do
+            IMAGE="${{ env.REGISTRY }}/${{ github.repository }}/${component}:${{ github.sha }}"
+            cosign attest --yes --keyless $IMAGE --predicate https://raw.githubusercontent.com/sigstore/cosign/main/spec/attestations/predicates/slsa/v1.json --type slsaprovenance
+          done

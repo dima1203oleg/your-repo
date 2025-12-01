@@ -596,9 +596,14 @@ const IntegrationView: React.FC = () => {
                                       </span>
                                   </td>
                                   <td className="p-3">
-                                      <div className="w-16 h-1.5 bg-slate-900 rounded-full overflow-hidden">
-                                          <div className={`h-full ${item.qualityScore > 90 ? 'bg-green-500' : 'bg-yellow-500'}`} style={{width: `${item.qualityScore}%`}}></div>
-                                      </div>
+                                                                            <div className="w-16 h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                                                                                    <progress
+                                                                                        value={item.qualityScore}
+                                                                                        max={100}
+                                                                                        aria-label={`Quality ${item.qualityScore}%`}
+                                                                                        className={`w-full h-1.5 appearance-none ${item.qualityScore > 90 ? 'bg-green-500' : 'bg-yellow-500'} rounded`}
+                                                                                    />
+                                                                            </div>
                                   </td>
                                   <td className="p-3 text-slate-400">{item.owner}</td>
                                   <td className="p-3 text-right">

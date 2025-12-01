@@ -74,10 +74,13 @@ const BootScreen: React.FC<BootScreenProps> = ({ onComplete }) => {
               <span>{progress.toFixed(0)}%</span>
            </div>
            <div className="w-full h-3 bg-slate-900 rounded border border-slate-700 p-0.5 shadow-inner">
-              <div 
-                className="h-full bg-gradient-to-r from-primary-600 to-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.8)] transition-all duration-300 rounded-sm" 
-                style={{ width: `${progress}%` }}
-              ></div>
+              <progress
+                className="w-full h-full appearance-none bg-transparent rounded-sm"
+                value={Math.round(progress)}
+                max={100}
+                aria-label="Boot progress"
+              />
+              <style>{`progress[value]::-webkit-progress-value{background:linear-gradient(90deg,#0ea5a5,#06b6d4);transition:width .3s}progress{color:transparent}`}</style>
            </div>
         </div>
 
@@ -86,8 +89,8 @@ const BootScreen: React.FC<BootScreenProps> = ({ onComplete }) => {
             <div className="absolute top-0 right-0 p-2 opacity-50">
                 <Terminal size={14} className="text-slate-500" />
             </div>
-            {logs.map((log, i) => (
-              <div key={i} className="text-slate-300 animate-in slide-in-from-left-4 duration-300 flex gap-2">
+            {logs.map((log) => (
+              <div key={log} className="text-slate-300 animate-in slide-in-from-left-4 duration-300 flex gap-2">
                  <span className="text-primary-500 font-bold">➜</span> 
                  <span className={log.includes('OK') || log.includes('READY') ? 'text-white' : 'text-slate-400'}>{log}</span>
               </div>

@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dev-local
+  namespace: argocd
+spec:
+  description: "Dev-local проект для MacBook M3 (pa-dev кластер)"
+  sourceRepos:
+    - "https://github.com/YOUR_USER/Predator-Analytics.git"
+  destinations:
+    - namespace: "*"
+      server: "https://kubernetes.default.svc"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceBlacklist:
+    - group: ""
+      kind: "Secret"
+  orphanedResources:
+    warn: true
+  roles:
+    - name: dev-local-admin
+      description: "Admin access to dev-local project"
+      policies:
+        - p, proj:dev-local:dev-local-admin, applications, *, dev-local/*, allow
+        - p, proj:dev-local:dev-local-admin, clusters, *, *, allow
+      groups:
+        - "github:predator-analytics-developers"
+        - "github:ai-studio-agents"

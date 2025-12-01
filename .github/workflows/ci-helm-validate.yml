@@ -1,0 +1,129 @@
+name: CI Helm Validation
+on:
+  push:
+    branches: [develop, main]
+    paths:
+      - 'infra/helm/**'
+  pull_request:
+    branches: [develop, main]
+    paths:
+      - 'infra/helm/**'
+  workflow_dispatch:
+
+jobs:
+  helm-lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        chart: [platform, backend, frontend, agents, monitoring]
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'v3.13.0'
+          
+      - name: Add Helm repos
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+          helm repo update
+          
+      - name: Helm lint
+        run: |
+          cd infra/helm/${{ matrix.chart }}
+          helm lint .
+          
+      - name: Helm template (dev)
+        run: |
+          cd infra/helm/${{ matrix.chart }}
+          helm template ${{ matrix.chart }}-dev . \
+            --values values-dev.yaml \
+            --values values-override.yaml \
+            --namespace predator-dev \
+            --dry-run
+          
+      - name: Helm template (lab)
+        run: |
+          cd infra/helm/${{ matrix.chart }}
+          helm template ${{ matrix.chart }}-lab . \
+            --values values-lab.yaml \
+            --values values-gpu.yaml \
+            --namespace predator-lab \
+            --dry-run
+          
+      - name: Helm template (prod)
+        run: |
+          cd infra/helm/${{ matrix.chart }}
+          helm template ${{ matrix.chart }}-prod . \
+            --values values-prod.yaml \
+            --values values-oracle.yaml \
+            --namespace predator-prod \
+            --dry-run
+
+  kubeconform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'v3.13.0'
+          
+      - name: Install kubeconform
+        run: |
+          wget https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
+          tar xzf kubeconform-linux-amd64.tar.gz
+          sudo mv kubeconform /usr/local/bin/
+          
+      - name: Validate manifests
+        run: |
+          for chart in platform backend frontend agents monitoring; do
+            echo " Validating $chart chart..."
+            cd infra/helm/$chart
+            
+            # Dev environment
+            helm template $chart-dev . --values values-dev.yaml | \
+              kubeconform -strict -summary -kubernetes-version 1.28
+              
+            # Lab environment  
+            helm template $chart-lab . --values values-lab.yaml | \
+              kubeconform -strict -summary -kubernetes-version 1.28
+              
+            # Prod environment
+            helm template $chart-prod . --values values-prod.yaml | \
+              kubeconform -strict -summary -kubernetes-version 1.28
+              
+            cd - > /dev/null
+          done
+
+  policy-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'v3.13.0'
+          
+      - name: Install conftest
+        run: |
+          wget https://github.com/open-policy-agent/conftest/releases/latest/download/conftest_Linux_x86_64.tar.gz
+          tar xzf conftest_Linux_x86_64.tar.gz
+          sudo mv conftest /usr/local/bin/
+          
+      - name: Run policy tests
+        run: |
+          # Test policies against generated manifests
+          for chart in platform backend frontend agents; do
+            echo "🔍 Testing policies for $chart..."
+            cd infra/helm/$chart
+            
+            helm template $chart . --values values-prod.yaml | \
+              conftest test -p ../../policy -
+              
+            cd - > /dev/null
+          done

@@ -1,0 +1,520 @@
+# Production values for Oracle Cloud OKE environment
+
+# Global overrides for production
+global:
+  imageTag: "latest"
+  domain: "predator-analytics.prod"
+  storageClass: "oracle-bv-ssd"
+  imageRegistry: "ghcr.io"
+
+# Backend - production with high availability
+backend:
+  replicaCount: 3
+  image:
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+  
+  env:
+    - name: DATABASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: database-url
+    - name: REDIS_URL
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: redis-url
+    - name: LOG_LEVEL
+      value: "WARN"
+    - name: ENVIRONMENT
+      value: "production"
+    - name: SENTRY_DSN
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: sentry-dsn
+    - name: NEW_RELIC_LICENSE_KEY
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: newrelic-key
+  
+  livenessProbe:
+    httpGet:
+      path: /healthz
+      port: 8000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  
+  readinessProbe:
+    httpGet:
+      path: /readyz
+      port: 8000
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
+  
+  startupProbe:
+    httpGet:
+      path: /healthz
+      port: 8000
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 30
+
+# Frontend - production with CDN support
+frontend:
+  replicaCount: 3
+  image:
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  
+  env:
+    - name: REACT_APP_API_URL
+      value: "https://api.predator-analytics.prod"
+    - name: REACT_APP_ENVIRONMENT
+      value: "production"
+    - name: REACT_APP_SENTRY_DSN
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: frontend-sentry-dsn
+  
+  service:
+    type: ClusterIP
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/rate-limit: "100"
+      nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "https://predator-analytics.prod"
+      nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+      nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+    hosts:
+      - host: app.predator-analytics.prod
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: frontend-tls-prod
+        hosts:
+          - app.predator-analytics.prod
+
+# Agents - production with monitoring
+agents:
+  replicaCount: 2
+  image:
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+  
+  env:
+    - name: BACKEND_URL
+      value: "https://api.predator-analytics.prod"
+    - name: AGENT_MODE
+      value: "production"
+    - name: LOG_LEVEL
+      value: "INFO"
+    - name: SENTRY_DSN
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: agents-sentry-dsn
+
+# PostgreSQL - production with external managed service
+postgresql:
+  enabled: false  # Use external Oracle Database service
+  
+# Redis - production with external managed service
+redis:
+  enabled: false  # Use external Oracle Cache service
+
+# External database configuration (Oracle Database)
+externalDatabase:
+  enabled: true
+  host: "predator-db.oraclecloud.com"
+  port: 1521
+  user: "predator_prod"
+  database: "PREDATOR_PROD"
+  existingSecret: "predator-secrets"
+  existingSecretPasswordKey: oracle-db-password
+
+# External Redis configuration (Oracle Cache)
+externalRedis:
+  enabled: true
+  host: "predator-redis.oraclecloud.com"
+  port: 6379
+  existingSecret: "predator-secrets"
+  existingSecretPasswordKey: oracle-redis-password
+
+# Ingress - production with Oracle Load Balancer
+ingress-nginx:
+  enabled: true
+  controller:
+    replicaCount: 3
+    service:
+      type: LoadBalancer
+      annotations:
+        service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+        service.beta.kubernetes.io/oci-load-balancer-min-size: "10"
+        service.beta.kubernetes.io/oci-load-balancer-max-size: "100"
+        service.beta.kubernetes.io/oci-load-balancer-ssl-certificates: "predator-ssl-cert"
+        service.beta.kubernetes.io/oci-load-balancer-ssl-verify: "true"
+    config:
+      use-forwarded-headers: "true"
+      compute-full-forwarded-for: "true"
+      proxy-body-size: "100m"
+      client-max-body-size: "100m"
+      ssl-protocols: "TLSv1.2 TLSv1.3"
+      ssl-ciphers: "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
+      ssl-prefer-server-ciphers: "true"
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 2Gi
+      requests:
+        cpu: 1000m
+        memory: 1Gi
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
+    tolerations:
+    - key: "node-role.kubernetes.io/worker"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+
+# Monitoring - full production stack
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 2Gi
+      requests:
+        cpu: 1000m
+        memory: 1Gi
+    persistence:
+      enabled: true
+      size: 50Gi
+      storageClass: "oracle-bv-ssd"
+    retention: "30d"
+  grafana:
+    enabled: true
+    adminPassword: "predator123"
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: "oracle-bv-ssd"
+    service:
+      type: LoadBalancer
+      annotations:
+        service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+        service.beta.kubernetes.io/oci-load-balancer-min-size: "10"
+        service.beta.kubernetes.io/oci-load-balancer-max-size: "50"
+  loki:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 100Gi
+      storageClass: "oracle-bv-ssd"
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    retention: "30d"
+  tempo:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 20Gi
+      storageClass: "oracle-bv-ssd"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+
+# Security - full production security
+security:
+  enabled: true
+  falco:
+    enabled: true
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+  kyverno:
+    enabled: true
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+  vault:
+    enabled: true
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    ha:
+      enabled: true
+      replicas: 3
+    ui:
+      enabled: true
+      serviceType: LoadBalancer
+
+# ServiceMonitor - full production monitoring
+serviceMonitor:
+  enabled: true
+  interval: 15s
+  scrapeTimeout: 10s
+  namespace: "monitoring"
+  labels:
+    release: "prometheus"
+
+# PodDisruptionBudget - high availability
+podDisruptionBudget:
+  enabled: true
+  backend:
+    minAvailable: 2
+  frontend:
+    minAvailable: 2
+  agents:
+    minAvailable: 1
+
+# Network policies - strict security
+networkPolicy:
+  enabled: true
+  ingress:
+    enabled: true
+  egress:
+    enabled: true
+  defaultDenyIngress: true
+  defaultDenyEgress: false
+
+# Pod security policies - production security
+podSecurityPolicy:
+  enabled: true
+
+# Resource quotas - production limits
+resourceQuota:
+  enabled: true
+  requests:
+    cpu: "8"
+    memory: "16Gi"
+  limits:
+    cpu: "16"
+    memory: "32Gi"
+
+# HPA - production auto-scaling
+hpa:
+  backend:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 60
+        policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+      scaleDown:
+        stabilizationWindowSeconds: 300
+        policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+  frontend:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+  agents:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+
+# VPA - production resource optimization
+vpa:
+  enabled: true
+  updateMode: "Auto"
+
+# Pod Topology Spread Constraints - high availability
+topologySpreadConstraints:
+  enabled: true
+  maxSkew: 1
+  topologyKey: "topology.kubernetes.io/zone"
+  whenUnsatisfiable: "DoNotSchedule"
+
+# Node selector - production nodes
+nodeSelector:
+  environment: "production"
+  node-role.kubernetes.io/worker: "true"
+
+# Tolerations - production nodes
+tolerations:
+  - key: "environment"
+    operator: "Equal"
+    value: "production"
+    effect: "NoSchedule"
+  - key: "node-role.kubernetes.io/worker"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+
+# Affinity - production high availability
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - backend
+      topologyKey: "kubernetes.io/hostname"
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - frontend
+      topologyKey: "topology.kubernetes.io/zone"
+
+# Extra manifests for production
+extraManifests:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: backend-external
+      namespace: pa-prod
+      annotations:
+        service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+        service.beta.kubernetes.io/oci-load-balancer-ssl-certificates: "predator-ssl-cert"
+    spec:
+      type: LoadBalancer
+      selector:
+        app: backend
+      ports:
+      - port: 443
+        targetPort: 8000
+        protocol: TCP
+  - apiVersion: policy/v1
+    kind: PodDisruptionBudget
+    metadata:
+      name: backend-pdb
+      namespace: pa-prod
+    spec:
+      minAvailable: 2
+      selector:
+        matchLabels:
+          app: backend
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    metadata:
+      name: backend-rollout
+      namespace: pa-prod
+    spec:
+      replicas: 3
+      strategy:
+        canary:
+          steps:
+          - setWeight: 10
+          - pause: {duration: 5m}
+          - setWeight: 30
+          - pause: {duration: 10m}
+          - setWeight: 60
+          - pause: {duration: 10m}
+          - setWeight: 100
+          canaryService: backend-canary
+          stableService: backend
+          trafficRouting:
+            istio:
+              virtualService:
+                name: backend-vsvc
+                routes:
+                - primary
+          analysis:
+            templates:
+            - templateName: success-rate
+            args:
+            - name: service-name
+              value: backend-canary
+            startingStep: 2
+            interval: 5m
+
+# Production-specific annotations
+podAnnotations:
+  predator-analytics.io/environment: "production"
+  predator-analytics.io/cluster: "pa-oracle-prod"
+  predator-analytics.io/security-level: "high"
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "8000"
+  prometheus.io/path: "/metrics"
+
+# Production-specific labels
+podLabels:
+  environment: "production"
+  cluster: "pa-oracle-prod"
+  security-level: "high"
+  app.kubernetes.io/part-of: "predator-analytics"

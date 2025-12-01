@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pa-platform-prod-oracle
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: CreateNamespace=true
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: prod-oracle
+  source:
+    repoURL: "https://github.com/YOUR_USER/Predator-Analytics.git"
+    targetRevision: main
+    path: infra/helm/platform
+    helm:
+      valueFiles:
+        - values-prod-oracle.yaml
+      releaseName: platform-prod-oracle
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: pa-prod
+  syncPolicy:
+    automated: {}    # вимкнено для production - ручний sync
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - RespectIgnoreDifferences=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 10m
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+      jsonPointers:
+        - /spec/minReplicas
+        - /spec/maxReplicas
+  hooks:
+    - type: Sync
+      hook:
+        # Pre-sync hook for database migrations
+        command: ["/bin/sh", "-c"]
+        args: ["echo 'Running pre-sync database migrations...'"]
+    - type: Sync
+      hook:
+        # Post-sync hook for health checks
+        command: ["/bin/sh", "-c"]
+        args: ["echo 'Running post-sync health checks...'"]

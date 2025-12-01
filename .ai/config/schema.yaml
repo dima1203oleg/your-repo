@@ -1,0 +1,222 @@
+# AI Request Schema Definition
+# Defines the structure for .ai/requests/*.yaml files
+
+request_schema:
+  metadata:
+    id:
+      type: string
+      required: true
+      description: "Unique identifier for the request"
+      pattern: "^[a-z0-9-]+$"
+      
+    created_by:
+      type: string
+      required: true
+      description: "Who created the request (gemini-studio, manual-vscode, etc.)"
+      enum: ["gemini-studio", "manual-vscode", "copilot", "human-developer"]
+      
+    target_env:
+      type: string
+      required: true
+      description: "Target environment for execution"
+      enum: ["dev-local", "lab-gpu", "prod-oracle"]
+      
+    created_at:
+      type: string
+      required: true
+      description: "ISO 8601 timestamp when request was created"
+      format: "date-time"
+      
+  spec:
+    scenario:
+      type: string
+      required: true
+      description: "Type of test scenario"
+      enum: ["smoke-test", "integration-test", "performance-test", "security-test", "load-test"]
+      
+    description:
+      type: string
+      required: true
+      description: "Human-readable description of what the request does"
+      
+    commands:
+      type: array
+      required: true
+      description: "List of bash commands to execute"
+      items:
+        type: string
+        min_items: 1
+        max_items: 20
+        
+    success_criteria:
+      type: array
+      required: true
+      description: "Success conditions for the request"
+      items:
+        type: string
+        pattern: "^[a-z]+: .+$"
+        
+    timeout:
+      type: string
+      required: false
+      description: "Maximum execution time"
+      default: "10m"
+      pattern: "^\\d+[m|h]$"
+      
+    retry_policy:
+      type: object
+      required: false
+      properties:
+        max_retries:
+          type: integer
+          minimum: 0
+          maximum: 5
+          default: 1
+        backoff:
+          type: string
+          enum: ["linear", "exponential"]
+          default: "linear"
+          
+    artifacts:
+      type: object
+      required: false
+      properties:
+        logs:
+          type: boolean
+          default: false
+        metrics:
+          type: boolean
+          default: false
+        screenshots:
+          type: boolean
+          default: false
+        reports:
+          type: array
+          items:
+            type: string
+
+# Report Schema Definition
+# Defines the structure for .ai/reports/*.yaml files
+
+report_schema:
+  metadata:
+    request_id:
+      type: string
+      required: true
+      description: "ID of the original request"
+      
+    request_file:
+      type: string
+      required: true
+      description: "Path to the original request file"
+      
+    target_env:
+      type: string
+      required: true
+      description: "Environment where the request was executed"
+      
+    git_sha:
+      type: string
+      required: true
+      description: "Git commit SHA"
+      
+    git_branch:
+      type: string
+      required: true
+      description: "Git branch name"
+      
+    workflow_run:
+      type: string
+      required: true
+      description: "GitHub Actions workflow run ID"
+      
+  status:
+    type: string
+    required: true
+    description: "Overall execution status"
+    enum: ["running", "success", "failed", "timeout"]
+    
+  started_at:
+    type: string
+    required: true
+    description: "ISO 8601 timestamp when execution started"
+    format: "date-time"
+    
+  completed_at:
+    type: string
+    required: false
+    description: "ISO 8601 timestamp when execution completed"
+    format: "date-time"
+    
+  duration:
+    type: string
+    required: false
+    description: "Total execution duration in human-readable format"
+    pattern: "^\\d+[s|m|h]$"
+    
+  results:
+    type: object
+    required: false
+    description: "Detailed results per command"
+    additionalProperties:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["success", "failed"]
+        command:
+          type: string
+        exit_code:
+          type: integer
+        duration_seconds:
+          type: integer
+        started_at:
+          type: string
+          format: "date-time"
+        finished_at:
+          type: string
+          format: "date-time"
+        log_tail:
+          type: string
+          description: "Last 20 lines of command output"
+          
+  artifacts:
+    type: object
+    required: false
+    properties:
+      playwright_report:
+        type: string
+        description: "URL to Playwright report"
+      k8s_logs:
+        type: string
+        description: "Path to Kubernetes logs"
+      cluster_status:
+        type: string
+        description: "Path to cluster status"
+      metrics_file:
+        type: string
+        description: "Path to metrics data"
+      screenshots:
+        type: array
+        items:
+          type: string
+          description: "Path to screenshot files"
+          
+  summary:
+    type: object
+    required: false
+    properties:
+      total_commands:
+        type: integer
+      successful_commands:
+        type: integer
+      failed_commands:
+        type: integer
+      key_findings:
+        type: array
+        items:
+          type: string
+      recommendations:
+        type: array
+        items:
+          type: string

@@ -1,0 +1,15 @@
+{
+  "id": "e2e-job-1764594729642",
+  "status": "RUNNING",
+  "progress": 100,
+  "logs": [
+    "[RUNNER] Job accepted. Preparing test environment...",
+    "[RUNNER] Starting Chrome Headless...",
+    "[RUNNER] Running auth.spec.ts — Login Flow",
+    "[RUNNER] Running etl.spec.ts — ETL Validation",
+    "[RUNNER] Running api_latency.spec.ts — Latency checks",
+    "[RUNNER] Running vector.spec.ts — Vector search",
+    "[RUNNER] All specs passed. Generating report...",
+    "[RUNNER] Completed. Uploading artifacts."
+  ]
+}

@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pa-platform-dev-local-appset
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: CreateNamespace=true
+spec:
+  generators:
+    - git:
+        repoURL: "https://github.com/YOUR_USER/Predator-Analytics.git"
+        revision: HEAD
+        branches:
+          - "ai/*"
+          - "feature/*"
+  template:
+    metadata:
+      name: "pa-dev-{{branchNormalized}}"
+      annotations:
+        argocd.argoproj.io/sync-options: CreateNamespace=true
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+    spec:
+      project: dev-local
+      source:
+        repoURL: "https://github.com/YOUR_USER/Predator-Analytics.git"
+        targetRevision: "{{branch}}"
+        path: infra/helm/platform
+        helm:
+          valueFiles:
+            - values-dev-local.yaml
+          releaseName: "platform-dev-{{branchNormalized}}"
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: "pa-dev-{{branchNormalized}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
+        retry:
+          limit: 2
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+      ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          jsonPointers:
+            - /spec/replicas
+  sync:
+    compareOptions:
+      ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          jsonPointers:
+            - /spec/replicas

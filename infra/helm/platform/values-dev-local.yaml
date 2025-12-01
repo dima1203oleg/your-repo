@@ -1,0 +1,271 @@
+# Dev-local values for MacBook M3 development environment
+
+# Global overrides for dev-local
+global:
+  imageTag: "latest"
+  domain: "predator-analytics.localhost"
+  storageClass: "standard"
+
+# Backend - minimal resources for local development
+backend:
+  replicaCount: 1
+  image:
+    tag: "latest"
+  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  
+  env:
+    - name: DATABASE_URL
+      value: "postgresql://predator:predator123@postgresql:5432/predator_analytics"
+    - name: REDIS_URL
+      value: "redis://:redis123@redis-master:6379/0"
+    - name: LOG_LEVEL
+      value: "DEBUG"
+    - name: ENVIRONMENT
+      value: "development"
+    - name: DEBUG
+      value: "true"
+  
+  livenessProbe:
+    httpGet:
+      path: /healthz
+      port: 8000
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  
+  readinessProbe:
+    httpGet:
+      path: /readyz
+      port: 8000
+    initialDelaySeconds: 5
+    periodSeconds: 5
+
+# Frontend - development mode with hot reload
+frontend:
+  replicaCount: 1
+  image:
+    tag: "latest"
+  
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  
+  env:
+    - name: REACT_APP_API_URL
+      value: "http://api.predator-analytics.localhost:8000"
+    - name: REACT_APP_ENVIRONMENT
+      value: "development"
+    - name: REACT_APP_DEBUG
+      value: "true"
+  
+  service:
+    type: NodePort  # Allow external access from Mac
+    nodePort: 30000
+
+# Agents - minimal for development
+agents:
+  replicaCount: 1
+  image:
+    tag: "latest"
+  
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  
+  env:
+    - name: BACKEND_URL
+      value: "http://backend:8000"
+    - name: AGENT_MODE
+      value: "development"
+    - name: LOG_LEVEL
+      value: "DEBUG"
+
+# PostgreSQL - smaller for development
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "predator123"
+    username: "predator"
+    database: "predator_analytics"
+  primary:
+    persistence:
+      enabled: true
+      size: 4Gi  # Smaller for dev
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+
+# Redis - minimal for development
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: "redis123"
+  master:
+    persistence:
+      enabled: true
+      size: 2Gi  # Smaller for dev
+    resources:
+      limits:
+        cpu: 250m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
+# Ingress - simple for local development
+ingress-nginx:
+  enabled: true
+  controller:
+    replicaCount: 1
+    service:
+      type: NodePort  # Allow external access
+      nodePorts:
+        http: 30080
+        https: 30443
+    config:
+      use-forwarded-headers: "true"
+      compute-full-forwarded-for: "true"
+    resources:
+      limits:
+        cpu: 300m
+        memory: 256Mi
+      requests:
+        cpu: 150m
+        memory: 128Mi
+
+# Monitoring - minimal for development
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    resources:
+      limits:
+        cpu: 300m
+        memory: 256Mi
+      requests:
+        cpu: 150m
+        memory: 128Mi
+  grafana:
+    enabled: true
+    adminPassword: "predator123"
+    service:
+      type: NodePort
+      nodePort: 30100
+    resources:
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+  loki:
+    enabled: false  # Disable for dev to save resources
+
+# Security - minimal for development
+security:
+  enabled: false  # Disable security components for dev
+  falco:
+    enabled: false
+  kyverno:
+    enabled: false
+  vault:
+    enabled: false
+
+# ServiceMonitor - enable for development
+serviceMonitor:
+  enabled: true
+  interval: 30s
+
+# PodDisruptionBudget - disable for dev
+podDisruptionBudget:
+  enabled: false
+
+# Network policies - disable for dev
+networkPolicy:
+  enabled: false
+
+# Pod security policies - disable for dev
+podSecurityPolicy:
+  enabled: false
+
+# Resource quotas - disable for dev
+resourceQuota:
+  enabled: false
+
+# HPA - disable for dev
+hpa:
+  backend:
+    enabled: false
+  frontend:
+    enabled: false
+
+# VPA - disable for dev
+vpa:
+  enabled: false
+
+# Node selector - no specific requirements for dev
+nodeSelector: {}
+
+# Tolerations - no specific requirements for dev
+tolerations: []
+
+# Affinity - no specific requirements for dev
+affinity: {}
+
+# Extra manifests for development
+extraManifests:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: backend-dev-nodeport
+      namespace: pa-dev
+    spec:
+      type: NodePort
+      selector:
+        app: backend
+      ports:
+        - port: 8000
+          targetPort: 8000
+          nodePort: 30001
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: frontend-dev-nodeport
+      namespace: pa-dev
+    spec:
+      type: NodePort
+      selector:
+        app: frontend
+      ports:
+        - port: 3000
+          targetPort: 3000
+          nodePort: 30002
+
+# Development-specific annotations
+podAnnotations:
+  predator-analytics.io/environment: "dev-local"
+  predator-analytics.io/cluster: "pa-dev"
+
+# Development-specific labels
+podLabels:
+  environment: "dev-local"
+  cluster: "pa-dev"

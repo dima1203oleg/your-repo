@@ -1,0 +1,31 @@
+metadata:
+  id: "manual-etl-pipeline-2025-12-01"
+  created_by: "manual-vscode"
+  target_env: "dev-local"
+  created_at: "2025-12-01T13:00:00Z"
+  
+spec:
+  scenario: "integration-test"
+  description: "Manual test for new ETL pipeline and API status endpoint"
+  
+  commands:
+    - "make k8s-dev-up"
+    - "helm upgrade --install platform-dev-local infra/helm/platform --values infra/helm/platform/values-dev.yaml --namespace predator-dev --create-namespace"
+    - "pytest tests/etl/test_etl_pipeline.py -q"
+    - "curl -sS http://localhost:8000/api/v1/etl/status || echo 'etl_status_failed'"
+    - "kubectl logs -n predator-dev deployment/predator-backend --tail=20 | grep -i etl"
+  
+  success_criteria:
+    - "pytest: all tests pass"
+    - "api: 200 OK response for /api/v1/etl/status"
+    - "logs: ETL processes running without errors"
+  
+  timeout: "12m"
+  
+  retry_policy:
+    max_retries: 1
+    backoff: "linear"
+    
+  artifacts:
+    logs: true
+    reports: ["pytest", "etl-status"]

@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: lab-gpu
+  namespace: argocd
+spec:
+  description: "Staging / Lab GPU проект"
+  sourceRepos:
+    - "https://github.com/YOUR_USER/Predator-Analytics.git"
+  destinations:
+    - namespace: "*"
+      server: "https://kubernetes.default.svc"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  orphanedResources:
+    warn: true
+  roles:
+    - name: lab-gpu-admin
+      description: "Admin access to lab-gpu project"
+      policies:
+        - p, proj:lab-gpu:lab-gpu-admin, applications, *, lab-gpu/*, allow
+        - p, proj:lab-gpu:lab-gpu-admin, clusters, *, *, allow
+      groups:
+        - "github:predator-analytics-developers"
+        - "github:ml-engineers"
+        - "github:gpu-operators"
