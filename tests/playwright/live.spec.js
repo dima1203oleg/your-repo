@@ -198,10 +198,20 @@ test('dashboard shows LIVE indicator and calls /api/v1/system/monitoring', async
   // UI check: prefer the 'LIVE' indicator, but tolerate 'SIMULATION' when the
   // environment legitimately falls back to demo data. This prevents CI flakiness
   // while still asserting a metrics payload was received.
-  // Wait for either LIVE or SIMULATION and assert we saw one of them. Capture
-  // a screenshot on failure so CI artifacts are helpful.
+  // Allow toggling strict UI checks via TEST_STRICT_LIVE env var.
+  // When enabled the test will require the UI to show 'LIVE' explicitly.
+  const STRICT_LIVE = process.env.TEST_STRICT_LIVE === 'true';
+  console.log('TEST_STRICT_LIVE=', STRICT_LIVE);
+
+  // Wait for either LIVE or SIMULATION (or only LIVE in strict mode) and
+  // assert we saw one of them. Capture a screenshot on failure so CI
+  // artifacts are helpful.
   try {
-    await page.waitForSelector('text=LIVE, text=SIMULATION', { timeout: 45000 });
+    if (STRICT_LIVE) {
+      await page.waitForSelector('text=LIVE', { timeout: 45000 });
+    } else {
+      await page.waitForSelector('text=LIVE, text=SIMULATION', { timeout: 45000 });
+    }
   } catch (err) {
     try { await page.screenshot({ path: `playwright-live-failure-${Date.now()}.png`, fullPage: true }); console.log('Saved screenshot for debugging'); } catch(e){ console.log('Failed saving screenshot', e && e.message ? e.message : e); }
     // The UI didn't render the status indicator within the timeout. This is
@@ -212,5 +222,9 @@ test('dashboard shows LIVE indicator and calls /api/v1/system/monitoring', async
 
   const liveVisible = await page.isVisible('text=LIVE');
   const simVisible = await page.isVisible('text=SIMULATION');
-  test.expect(liveVisible || simVisible, 'UI should show LIVE or SIMULATION indicator');
+  if (STRICT_LIVE) {
+    test.expect(liveVisible, 'UI should show LIVE indicator (strict mode)');
+  } else {
+    test.expect(liveVisible || simVisible, 'UI should show LIVE or SIMULATION indicator');
+  }
 });
