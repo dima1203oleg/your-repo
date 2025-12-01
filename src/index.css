@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Project-level overrides that previously lived in index.html can be added here as needed. */
+
+/* Keep a minimal reset for any missing runtime CSS */
+html, body, #root { height: 100%; }
+body { margin: 0; }
