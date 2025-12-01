@@ -40,7 +40,7 @@ const runtimeApiFromMeta = typeof globalThis !== 'undefined' && (globalThis as a
 export const API_BASE_URL = (
     process.env.NODE_ENV === 'development'
         ? (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001/api/v1')
-        : (process.env.NEXT_PUBLIC_API_URL || runtimeApiFromWindow || runtimeApiFromMeta || '')
+        : (process.env.NEXT_PUBLIC_API_URL || runtimeApiFromWindow || runtimeApiFromMeta || '/api/v1')
 );
 
 // Fallback to direct real data sources if backend is unavailable
@@ -128,6 +128,13 @@ const logApiError = (op: string, err: unknown) => {
     try { console.error(`[api] ${op} failed`, err); } catch { /* best-effort logging */ }
 };
 
+// Normalize Axios responses to return either the `data` wrapper or raw data.
+// Many backend endpoints return { success: true, data: { ... } } — normalize to
+// return the inner `data` object when present to keep frontend callers consistent.
+const normalizeAxiosResponse = (res: any) => {
+    return (res && res.data && res.data.data !== undefined) ? res.data.data : res.data;
+};
+
 // Helper to simulate risk forecast generation since it's dynamic
 const generateMockRiskForecast = (): RiskForecast[] => {
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -141,31 +148,24 @@ const generateMockRiskForecast = (): RiskForecast[] => {
 // ... export api methods ...
 export const api = {
     // --- EVOLUTION / NAS (REAL) ---
-    startEvolutionCycle: async () => {
-        try {
-            const res = await apiClient.post('/evolution/cycle');
-            return res.data;
-        } catch (e) {
-            console.error("NAS Start Failed", e);
-            throw e;
-        }
+    startEvolutionCycle: async (problem?: string) => {
+        const res = await apiClient.post('/evolution/start', { problem });
+        return res.data;
     },
     getEvolutionStatus: async () => {
-        try {
-            const res = await apiClient.get('/evolution/status');
-            return res.data; // { phase: string, logs: string[], progress: number, active: boolean }
-        } catch (e) {
-            logApiError('getEvolutionStatus', e);
-            return { phase: 'IDLE', logs: ['[ERROR] Connection to NAS Engine failed.'], progress: 0, active: false };
-        }
+        const res = await apiClient.get('/evolution/status');
+        return normalizeAxiosResponse(res); // { phase: string, logs: string[], progress: number, active: boolean }
     },
 
     getSecrets: async () => {
         try {
             const res = await apiClient.get('/secrets');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getSecrets', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_SECRETS;
         }
     },
@@ -175,6 +175,9 @@ export const api = {
             return true;
         } catch (e) {
             logApiError('saveSecret', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return true;
         }
     },
@@ -184,6 +187,9 @@ export const api = {
             return true;
         } catch (e) {
             logApiError('validateSecret', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return true;
         }
     },
@@ -201,7 +207,7 @@ export const api = {
     getConnectors: async () => {
         try {
             const res = await apiClient.get('/connectors');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getConnectors', e);
             // Використовуємо реальні API українських сервісів
@@ -233,66 +239,84 @@ export const api = {
     getTelegramBots: async () => {
         try {
             const res = await apiClient.get('/bots');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getTelegramBots', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_TELEGRAM_BOTS;
         }
     },
     getLLMConfig: async () => {
         try {
             const res = await apiClient.get('/llm/config');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getLLMConfig', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_LLM_CONFIG;
         }
     },
     getDataCatalog: async () => {
         try {
             const res = await apiClient.get('/data/catalog');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getDataCatalog', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_DATA_CATALOG;
         }
     },
     getUserTemplates: async () => {
         try {
             const res = await apiClient.get('/data/templates');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getUserTemplates', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_USER_TEMPLATES;
         }
     },
     getAutoDatasets: async () => {
         try {
             const res = await apiClient.get('/data/auto');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getAutoDatasets', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_AUTO_DATASETS;
         }
     },
     getDashboardOverview: async () => {
         try {
             const res = await apiClient.get('/dashboard/overview');
-            // Many backends return { success: true, data: { ... } }.
-            // Normalize to return the inner `data` when present to match
-            // frontend expectations (jobs/services on the returned object).
-            return res.data?.data ?? res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getDashboardOverview', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return { jobs: MOCK_ETL_JOBS, services: MOCK_SERVICES };
         }
     },
     getDatabases: async () => {
         try {
             const res = await apiClient.get('/data/databases');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getDatabases', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             // Використовуємо реальний статус баз даних
             return await getDatabaseStatus();
         }
@@ -300,25 +324,31 @@ export const api = {
     getVectors: async () => {
         try {
             const res = await apiClient.get('/data/vectors');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getVectors', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_VECTORS;
         }
     },
     getWafLogs: async () => {
         try {
             const res = await apiClient.get('/security/waf');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getWafLogs', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_WAF_LOGS;
         }
     },
     getSecurityLogs: async () => {
         try {
             const res = await apiClient.get('/security/audit');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getSecurityLogs', e);
             // Використовуємо реальні логи безпеки
@@ -328,28 +358,37 @@ export const api = {
     getRiskForecast: async () => {
         try {
             const res = await apiClient.get('/analytics/forecast');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getRiskForecast', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return generateMockRiskForecast();
         }
     },
     getSectorData: async (sector: string) => {
         try {
             const res = await apiClient.get(`/analytics/sector/${sector}`);
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError(`getSectorData:${sector}`, e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return (MOCK_SECTOR_DATA as any)[sector] || { ticker: [], graphNodes: {} };
         }
     },
     runDeepAnalysis: async (query: string, sector: string) => {
         try {
             const res = await apiClient.post('/analytics/deepscan', { query, sector });
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('runDeepAnalysis', e);
             // Mock response
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return {
                 riskScore: 0.85,
                 findings: [
@@ -363,18 +402,25 @@ export const api = {
     getAgentConfigs: async () => {
         try {
             const res = await apiClient.get('/agents/configs');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getAgentConfigs', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_AGENT_CONFIGS;
         }
     },
     getClusterStatus: async () => {
         try {
             const res = await apiClient.get('/infra/cluster');
-            return res.data;
+            // The cluster API may use wrapper -> normalize
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getClusterStatus', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             // Використовуємо реальний статус кластера
             return await getClusterStatus();
         }
@@ -382,9 +428,12 @@ export const api = {
     getPodLogs: async (podId: string) => {
         try {
             const res = await apiClient.get(`/infra/pods/${podId}/logs`);
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError(`getPodLogs:${podId}`, e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return [
                 "[INFO] Starting application...",
                 "[INFO] Connected to DB",
@@ -396,55 +445,73 @@ export const api = {
     restartPod: async (podId: string) => {
         try {
             const res = await apiClient.post(`/infra/pods/${podId}/restart`);
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError(`restartPod:${podId}`, e);
             // In case backend fails, return a simulated accepted response
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return { jobId: `pod-restart-${podId}-${Date.now()}`, podId, status: 'RESTARTING' };
         }
     },
     deletePod: async (podId: string) => {
         try {
             const res = await apiClient.post(`/infra/pods/${podId}/delete`);
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError(`deletePod:${podId}`, e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return { jobId: `pod-delete-${podId}-${Date.now()}`, podId, status: 'TERMINATING' };
         }
     },
     triggerDrift: async () => {
         try {
             const res = await apiClient.post('/infra/drift/start');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('triggerDrift', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return { opId: `drift-start-${Date.now()}`, status: 'DRIFTING' };
         }
     },
     healDrift: async () => {
         try {
             const res = await apiClient.post('/infra/drift/heal');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('healDrift', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return { opId: `drift-heal-${Date.now()}`, status: 'HEALING' };
         }
     },
     getMonitoringTargets: async () => {
         try {
             const res = await apiClient.get('/monitoring/targets');
-            return res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getMonitoringTargets', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_TARGETS;
         }
     },
     getE2ETestJobs: async () => {
         try {
             const res = await apiClient.get('/infra/tests');
-            return res.data; // array of { id, status, progress, logs }
+            return normalizeAxiosResponse(res); // array of { id, status, progress, logs }
         } catch (e) {
             logApiError('getE2ETestJobs', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return [];
         }
     },
@@ -464,6 +531,9 @@ export const api = {
             return res.data;
         } catch (e) {
             logApiError('getLLMBenchmarks', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_BENCHMARKS;
         }
     },
@@ -473,6 +543,9 @@ export const api = {
             return res.data;
         } catch (e) {
             logApiError('getAutoMLExperiments', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_AUTOML_EXPERIMENTS;
         }
     },
@@ -482,6 +555,9 @@ export const api = {
             return res.data;
         } catch (e) {
             logApiError('askOpponent', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return {
                 answer: "Based on available data from open registries, there is a strong correlation between the entity and fiscal risks. Recommended further audit.",
                 sources: [
@@ -504,6 +580,9 @@ export const api = {
         } catch (e) {
             logApiError('askLLM', e);
             // Fallback response when backend fails
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return {
                 assistant: "Пробачте, зараз недоступний LLM. Ось попередній аналіз: на основі доступних даних виявлено 0.78 ризик — рекомендую глибший аналіз.",
                 meta: { confidence: 0.78, model: { name: model || 'local-fallback', mode: 'LOCAL' } }
@@ -516,6 +595,9 @@ export const api = {
             return res.data;
         } catch (e) {
             logApiError('getEnvironments', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_ENVIRONMENTS;
         }
     },
@@ -525,6 +607,9 @@ export const api = {
             return res.data;
         } catch (e) {
             logApiError('getPipelines', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return MOCK_PIPELINES;
         }
     },
@@ -534,6 +619,9 @@ export const api = {
             return true;
         } catch (e) {
             logApiError(`syncEnvironment:${id}`, e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return true;
         }
     },
@@ -543,6 +631,9 @@ export const api = {
             return true;
         } catch (e) {
             logApiError(`triggerPipeline:${type}`, e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return true;
         }
     },
@@ -550,40 +641,50 @@ export const api = {
     runE2ETests: async () => {
         try {
             const res = await apiClient.post('/infra/tests/run');
-            // Normalize response shape: backend uses { success: true, data: {...} } wrapper
-            return res.data?.data ?? res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('runE2ETests', e);
             // Fallback: emulate a started job
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return { jobId: `sim-job-${Date.now()}`, status: 'RUNNING', logs: ['[SIM] Test runner started (fallback)'] };
         }
     },
     getE2ETestStatus: async (jobId: string) => {
         try {
             const res = await apiClient.get(`/infra/tests/${jobId}/status`);
-            return (res.data && res.data.data) ? res.data.data : res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getE2ETestStatus', e);
             // Best-effort fallback: treat job as completed if unknown in offline mode
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return { id: jobId, status: 'COMPLETED', progress: 100, logs: ['[SIM] Completed (offline fallback)'] };
         }
     },
     getE2EJobArtifacts: async (jobId: string) => {
         try {
             const res = await apiClient.get(`/infra/tests/${jobId}/artifacts`);
-            return res.data?.data ?? res.data; // array of { name, size, modified }
+            return normalizeAxiosResponse(res); // array of { name, size, modified }
         } catch (e) {
             logApiError('getE2EJobArtifacts', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return [];
         }
     },
     getE2EJobArtifact: async (jobId: string, name: string) => {
         try {
             const res = await apiClient.get(`/infra/tests/${jobId}/artifacts/${encodeURIComponent(name)}`, { responseType: 'text' });
-            // For text responses we return the raw string — if wrapped, unwrap the inner data
-            return res.data?.data ?? res.data;
+            return normalizeAxiosResponse(res);
         } catch (e) {
             logApiError('getE2EJobArtifact', e);
+            if (IS_TRUTH_ONLY_MODE) {
+                throw e;
+            }
             return null;
         }
     },
@@ -593,6 +694,25 @@ export const api = {
     connectE2ETestStream: (jobId: string, onEvent: (msg: any) => void, opts?: { maxRetries?: number, baseDelayMs?: number }) => {
         try {
             const path = `/api/v1/infra/tests/${jobId}/stream`;
+            // Build robust SSE URL using API_BASE_URL. API_BASE_URL may be:
+            //  - absolute (https://api.../api/v1)
+            //  - relative (/api/v1)
+            // We want final path like: <API_BASE_URL>/infra/tests/${jobId}/stream
+            const buildSseUrl = (p: string) => {
+                const base = (API_BASE_URL || '').replace(/\/$/, '');
+                // prefer full path without duplicating /api/v1
+                if (!base) return p;
+                // ensure we don't double the /api/v1 segment; if base already contains p's leading segment
+                // strip leading / from p then append
+                const normalized = p.startsWith('/') ? p : `/${p}`;
+                // If base already ends with '/api/v1' and normalized starts with '/api/v1' then avoid duplication
+                if (base.endsWith('/api/v1') && normalized.startsWith('/api/v1')) {
+                    return base + normalized.replace('/api/v1', '');
+                }
+                return base + normalized;
+            };
+
+            const path = `/infra/tests/${jobId}/stream`;
 
             const maxRetries = opts?.maxRetries ?? 6;
             const baseDelay = opts?.baseDelayMs ?? 500; // 500ms base
@@ -617,7 +737,21 @@ export const api = {
             const open = () => {
                 if (closed) return;
                 // @ts-ignore - EventSource exists in browser
-                es = new EventSource(path);
+                // Determine final SSE URL and attach optional token if requested
+                let url = buildSseUrl(path);
+                // Optionally include token in query string if requested by caller — this is opt-in
+                const includeTokenInQuery = !!opts?.includeTokenInQuery;
+                try {
+                    const token = (typeof globalThis !== 'undefined' && (globalThis as any).sessionStorage) ? (globalThis as any).sessionStorage.getItem('predator_auth_token') : null;
+                    if (includeTokenInQuery && token) {
+                        const sep = url.includes('?') ? '&' : '?';
+                        // use access_token query param, backend should accept this form when headers are unavailable
+                        url = `${url}${sep}access_token=${encodeURIComponent(token)}`;
+                    }
+                } catch (e) { /* ignore token read errors */ }
+
+                // @ts-ignore - EventSource exists in browser
+                es = new EventSource(url, { withCredentials: !!opts?.withCredentials });
 
                 es.onmessage = (ev: MessageEvent) => {
                     try {
