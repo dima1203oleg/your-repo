@@ -37,6 +37,18 @@ Why this change?
 
 If you need help creating ExternalSecret manifests for Vault in this repo, I can add an example `infra/helm/platform/examples/external-secret-predator.yaml` next.
 
+Note about ArgoCD Projects & Secret creation
+-------------------------------------------------
+Some ArgoCD Projects may explicitly forbid creation of Kubernetes `Secret` resources (for example `namespaceResourceBlacklist` contains `kind: Secret`). When an ArgoCD Project blocks Secrets, the chart must not attempt to create `predator-secrets` during a sync because ArgoCD will reject that resource.
+
+Recommended approaches when ArgoCD blocks Secrets:
+
+- Use the supplied GitHub Actions workflow `.github/workflows/create-predator-secret.yml` to populate the `predator-secrets` in the target namespace *before* ArgoCD tries to apply the Helm release.
+- Install ExternalSecrets + ClusterSecretStore (Vault) and deploy `ExternalSecret` objects; ExternalSecrets operator (running in-cluster) will create the K8s Secret outside ArgoCD's repo manifests and bypass project-level blacklist.
+- Alternatively, patch the AppProject policy to allow Secret creation in non-production dev projects — only do this if acceptable policy-wise.
+
+The chart ships with an opt-in dev-mode that can create a local `predator-secrets` secret for convenience, but this option is intentionally disabled by default for ArgoCD-driven deployments. Check `values-dev-local.yaml` and your ArgoCD Project rules before enabling.
+
 Recommended quick install (ExternalSecrets operator)
 -------------------------------------------------
 - Install ExternalSecrets Helm chart or operator in your cluster, for example:
