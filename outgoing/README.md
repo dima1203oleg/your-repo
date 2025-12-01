@@ -71,3 +71,15 @@ chmod +x outgoing/run-local-ci.sh
 ```
 
 Logs are emitted to `/tmp/real-backend.log` and `/tmp/static-proxy.log` while the script runs.
+
+---
+
+### Strict-ready candidate
+
+This repo includes a prepared candidate branch that enables the CI default `TEST_STRICT_LIVE=true`.
+Files included for that candidate branch (for maintainers who want to try enabling strict mode):
+
+- `copilot_strict_ready_changes.patch` — patch you can `git am` to apply the strict-ready change-set
+- `copilot_strict_ready.bundle` — bundle containing the strict-ready refs
+
+Important: Before merging strict mode into the default CI, run the manual workflow `Verify STRICT Live mode (manual)` (Actions → verify-strict-live) to validate strict runs across the runner environment.
