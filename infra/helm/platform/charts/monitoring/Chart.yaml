@@ -1,0 +1,8 @@
+apiVersion: v2
+name: monitoring
+description: Minimal placeholder for monitoring subchart (dev-only)
+type: library
+version: 0.1.0
+appVersion: "0.1.0"
+annotations:
+  placeholder: "true"
