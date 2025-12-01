@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser Console Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-8">
+    <h1 class="text-3xl font-bold mb-6">🔍 Аналіз помилок в браузері</h1>
+    
+    <div class="space-y-6">
+        <div id="test-results" class="bg-gray-800 p-6 rounded-lg">
+            <h2 class="text-xl font-bold mb-4 text-blue-400">Тестування API</h2>
+            <div id="api-tests">Тестування...</div>
+        </div>
+        
+        <div id="console-errors" class="bg-gray-800 p-6 rounded-lg">
+            <h2 class="text-xl font-bold mb-4 text-yellow-400">Console Errors</h2>
+            <div id="errors-list">Перевірка...</div>
+        </div>
+        
+        <div id="performance" class="bg-gray-800 p-6 rounded-lg">
+            <h2 class="text-xl font-bold mb-4 text-green-400">Продуктивність</h2>
+            <div id="perf-data">Аналіз...</div>
+        </div>
+    </div>
+    
+    <script>
+        // Capture console errors
+        const originalError = console.error;
+        const originalLog = console.log;
+        const errors = [];
+        const logs = [];
+        
+        console.error = function(...args) {
+            errors.push(args.join(' '));
+            originalError.apply(console, args);
+        };
+        
+        console.log = function(...args) {
+            logs.push(args.join(' '));
+            originalLog.apply(console, args);
+        };
+        
+        // Test API endpoints
+        async function testAPIs() {
+            const tests = [
+                { name: 'Backend Health', url: 'http://localhost:8001/health' },
+                { name: 'Proxy Health', url: 'http://127.0.0.1:3003/health' },
+                { name: 'Monitoring Health', url: 'http://localhost:3004/health' },
+                { name: 'Backend Connectors', url: 'http://localhost:8001/api/v1/connectors' },
+                { name: 'Proxy Connectors', url: 'http://127.0.0.1:3003/api/v1/connectors' }
+            ];
+            
+            const results = [];
+            
+            for (const test of tests) {
+                try {
+                    const startTime = performance.now();
+                    const response = await fetch(test.url);
+                    const endTime = performance.now();
+                    const data = await response.json();
+                    
+                    results.push({
+                        name: test.name,
+                        status: response.ok ? '✅ SUCCESS' : '❌ FAILED',
+                        responseTime: Math.round(endTime - startTime),
+                        statusCode: response.status,
+                        data: data
+                    });
+                } catch (error) {
+                    results.push({
+                        name: test.name,
+                        status: '❌ ERROR',
+                        error: error.message,
+                        responseTime: 0
+                    });
+                }
+            }
+            
+            return results;
+        }
+        
+        // Performance analysis
+        function analyzePerformance() {
+            const navigation = performance.getEntriesByType('navigation')[0];
+            const resources = performance.getEntriesByType('resource');
+            
+            return {
+                pageLoad: Math.round(navigation.loadEventEnd - navigation.loadEventStart),
+                domReady: Math.round(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart),
+                resources: resources.length,
+                slowResources: resources.filter(r => r.duration > 1000).length
+            };
+        }
+        
+        // Run all tests
+        async function runAnalysis() {
+            try {
+                // API Tests
+                const apiResults = await testAPIs();
+                document.getElementById('api-tests').innerHTML = apiResults.map(test => `
+                    <div class="mb-2 p-2 rounded ${test.status.includes('SUCCESS') ? 'bg-green-800' : 'bg-red-800'}">
+                        <div class="font-bold">${test.name}: ${test.status}</div>
+                        <div class="text-xs">
+                            ${test.responseTime ? `Response time: ${test.responseTime}ms` : ''}
+                            ${test.statusCode ? ` | Status: ${test.statusCode}` : ''}
+                            ${test.error ? ` | Error: ${test.error}` : ''}
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Console errors
+                document.getElementById('errors-list').innerHTML = errors.length > 0 
+                    ? errors.map(err => `<div class="text-red-400 text-sm mb-1">❌ ${err}</div>`).join('')
+                    : '<div class="text-green-400">✅ No console errors detected</div>';
+                
+                // Performance
+                const perf = analyzePerformance();
+                document.getElementById('perf-data').innerHTML = `
+                    <div class="space-y-2">
+                        <div>Page Load: ${perf.pageLoad}ms</div>
+                        <div>DOM Ready: ${perf.domReady}ms</div>
+                        <div>Resources: ${perf.resources}</div>
+                        <div>Slow Resources (>1s): ${perf.slowResources}</div>
+                    </div>
+                `;
+                
+                // Final verdict
+                const successCount = apiResults.filter(r => r.status.includes('SUCCESS')).length;
+                const totalTests = apiResults.length;
+                const healthStatus = successCount >= totalTests * 0.8 ? 'HEALTHY' : 'NEEDS ATTENTION';
+                
+                document.body.insertAdjacentHTML('beforeend', `
+                    <div class="fixed top-4 right-4 p-4 rounded-lg ${healthStatus === 'HEALTHY' ? 'bg-green-800' : 'bg-yellow-800'}">
+                        <div class="font-bold text-lg">System Status: ${healthStatus}</div>
+                        <div class="text-sm">${successCount}/${totalTests} tests passed</div>
+                    </div>
+                `);
+                
+            } catch (error) {
+                console.error('Analysis failed:', error);
+                document.getElementById('test-results').innerHTML = `<div class="text-red-400">❌ Analysis failed: ${error.message}</div>`;
+            }
+        }
+        
+        // Run analysis when page loads
+        window.addEventListener('load', runAnalysis);
+        
+        // Log page info
+        console.log('Browser Analysis Started');
+        console.log('User Agent:', navigator.userAgent);
+        console.log('Viewport:', window.innerWidth + 'x' + window.innerHeight);
+    </script>
+</body>
+</html>

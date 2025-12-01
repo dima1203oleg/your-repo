@@ -1,0 +1,66 @@
+name: E2E (static build + real-backend)
+
+on:
+  push:
+    branches: [ master, feat/e2e-http-server-playwright ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Start real backend
+        run: |
+          nohup node real-backend/server.js &> real-backend.log &
+
+      - name: Serve dist with proxy
+        run: |
+          nohup node scripts/serve-with-proxy.js &> serve-proxy.log &
+
+      - name: Wait for real backend health
+        run: |
+          for i in {1..30}; do
+            if curl -sS http://127.0.0.1:8001/health >/dev/null 2>&1; then
+              echo backend ready && break;
+            fi
+            sleep 1
+          done
+
+      - name: Wait for static server
+        run: |
+          for i in {1..30}; do
+            if curl -sS http://127.0.0.1:3003/ >/dev/null 2>&1; then
+              echo static ready && break;
+            fi
+            sleep 1
+          done
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright E2E
+        env:
+          TEST_BASE_URL: http://127.0.0.1:3003
+        run: npx playwright test tests/playwright/live.spec.js --browser=firefox --reporter=dot
+
+      - name: Upload Playwright artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: playwright-report || ./playwright-report || real-backend.log || serve-proxy.log

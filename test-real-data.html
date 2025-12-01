@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Real Data Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-8">
+    <h1 class="text-2xl font-bold mb-4">Перевірка Реальних Даних</h1>
+    <div id="results" class="space-y-4"></div>
+    
+    <script type="module">
+        // Import real data sources functions
+        async function testRealDataSources() {
+            const results = document.getElementById('results');
+            
+            // Test NBU API
+            try {
+                const nbuResponse = await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json');
+                const nbuData = await nbuResponse.json();
+                results.innerHTML += `
+                    <div class="bg-green-900 p-4 rounded">
+                        <h3 class="font-bold text-green-300">✅ НБУ API - РЕАЛЬНІ ДАНІ</h3>
+                        <p class="text-sm">Отримано ${nbuData.length} курсів валют</p>
+                        <p class="text-xs">${nbuData[0]?.txt || 'N/A'}</p>
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML += `
+                    <div class="bg-red-900 p-4 rounded">
+                        <h3 class="font-bold text-red-300">❌ НБУ API - ПОМИЛКА</h3>
+                        <p class="text-sm">${error.message}</p>
+                    </div>
+                `;
+            }
+            
+            // Test Prozorro API
+            try {
+                const prozorroResponse = await fetch('https://public.api.openprocurement.org/api/2.5/tenders?limit=5');
+                const prozorroData = await prozorroResponse.json();
+                results.innerHTML += `
+                    <div class="bg-green-900 p-4 rounded">
+                        <h3 class="font-bold text-green-300">✅ Prozorro API - РЕАЛЬНІ ДАНІ</h3>
+                        <p class="text-sm">Отримано ${prozorroData.data?.length || 0} тендерів</p>
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML += `
+                    <div class="bg-red-900 p-4 rounded">
+                        <h3 class="font-bold text-red-300">❌ Prozorro API - ПОМИЛКА</h3>
+                        <p class="text-sm">${error.message}</p>
+                    </div>
+                `;
+            }
+            
+            // Test Customs API
+            try {
+                const customsResponse = await fetch('https://open-api.customs.gov.ua/api/v1/declarations', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'User-Agent': 'Predator-Analytics/1.0'
+                    }
+                });
+                if (customsResponse.ok) {
+                    const customsData = await customsResponse.json();
+                    results.innerHTML += `
+                        <div class="bg-green-900 p-4 rounded">
+                            <h3 class="font-bold text-green-300">✅ ДМСУ API - РЕАЛЬНІ ДАНІ</h3>
+                            <p class="text-sm">API доступний</p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${customsResponse.status}`);
+                }
+            } catch (error) {
+                results.innerHTML += `
+                    <div class="bg-yellow-900 p-4 rounded">
+                        <h3 class="font-bold text-yellow-300">⚠️ ДМСУ API - НЕДОСТУПНИЙ</h3>
+                        <p class="text-sm">${error.message}</p>
+                    </div>
+                `;
+            }
+            
+            // Test Tax Service API
+            try {
+                const taxResponse = await fetch('https://cabinet.tax.gov.ua/api/v1/public/registry');
+                if (taxResponse.ok) {
+                    results.innerHTML += `
+                        <div class="bg-green-900 p-4 rounded">
+                            <h3 class="font-bold text-green-300">✅ ДПС API - РЕАЛЬНІ ДАНІ</h3>
+                            <p class="text-sm">API доступний</p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${taxResponse.status}`);
+                }
+            } catch (error) {
+                results.innerHTML += `
+                    <div class="bg-yellow-900 p-4 rounded">
+                        <h3 class="font-bold text-yellow-300">⚠️ ДПС API - НЕДОСТУПНИЙ</h3>
+                        <p class="text-sm">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Run tests
+        testRealDataSources();
+        
+        // Test predator app API
+        fetch('http://localhost:8001/api/v1/connectors')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('results').innerHTML += `
+                    <div class="bg-blue-900 p-4 rounded">
+                        <h3 class="font-bold text-blue-300">🔗 Predator Backend</h3>
+                        <p class="text-sm">${JSON.stringify(data)}</p>
+                    </div>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('results').innerHTML += `
+                    <div class="bg-red-900 p-4 rounded">
+                        <h3 class="font-bold text-red-300">❌ Predator Backend - ПОМИЛКА</h3>
+                        <p class="text-sm">${error.message}</p>
+                    </div>
+                `;
+            });
+    </script>
+</body>
+</html>

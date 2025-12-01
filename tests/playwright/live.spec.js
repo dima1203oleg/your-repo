@@ -17,7 +17,7 @@ const candidateUrls = process.env.TEST_BASE_URL ? [process.env.TEST_BASE_URL] : 
   'http://localhost:4173'
 ];
 
-test('dashboard shows LIVE indicator and calls /api/v1/metrics/system', async ({ page }) => {
+test('dashboard shows LIVE indicator and calls /api/v1/system/monitoring', async ({ page }) => {
   // Try to open one of the dev/preview addresses
   let opened = false;
   let lastError = null;
@@ -61,21 +61,21 @@ test('dashboard shows LIVE indicator and calls /api/v1/metrics/system', async ({
       page.on('console', msg => console.log('PAGE_CONSOLE>', msg.text()));
       page.on('requestfailed', req => console.log('REQ_FAILED', req.url(), req.failure()?.errorText));
       page.on('request', req => {
-        if (req.url().includes('/metrics/system') || req.url().includes('/api/v1/metrics/system')) {
+        if (req.url().includes('/system/monitoring') || req.url().includes('/api/v1/system/monitoring')) {
           console.log('observed-request', req.method(), req.url());
         }
       });
 
       // log any metrics responses we see for debugging
       page.on('response', r => {
-        if (r.url().includes('/metrics/system') || r.url().includes('/api/v1/metrics/system')) {
+        if (r.url().includes('/system/monitoring') || r.url().includes('/api/v1/system/monitoring')) {
           // Print for CI logs
           console.log('observed-response', r.status(), r.url());
         }
       });
 
       respWait = page.waitForResponse(
-        (r) => (r.url().includes('/api/v1/metrics/system') || r.url().includes('/metrics/system')) && r.status() === 200,
+        (r) => (r.url().includes('/api/v1/system/monitoring') || r.url().includes('/system/monitoring')) && r.status() === 200,
         { timeout: 30000 }
       );
 
@@ -122,12 +122,14 @@ test('dashboard shows LIVE indicator and calls /api/v1/metrics/system', async ({
   }
   if (!metricsResponse) {
     metricsResponse = await page.waitForResponse(
-      (r) => (r.url().includes('/api/v1/metrics/system') || r.url().includes('/metrics/system')) && r.status() === 200,
+      (r) => (r.url().includes('/api/v1/system/monitoring') || r.url().includes('/system/monitoring')) && r.status() === 200,
       { timeout: 30000 }
     );
   }
   const body = await metricsResponse.json();
-  test.expect(body && body.success === true, 'Expected API response success:true');
+  // Support both wrapper { success: true, data: ... } and plain payload from real backend
+  const payload = (body && body.success === true && body.data !== undefined) ? body.data : body;
+  test.expect(payload && (payload.cpu !== undefined || Array.isArray(payload)), 'Expected API response payload (metrics object or array)');
 
   // NOTE: removed verbose HTML snippet dump before pushing; keep screenshot-on-failure for CI artifacts
 

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Real Data Status Check</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-8">
+    <h1 class="text-3xl font-bold mb-6">🔍 Перевірка Реальних Даних Predator Analytics</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-gray-800 p-6 rounded-lg">
+            <h2 class="text-xl font-bold mb-4 text-blue-400">Frontend Status</h2>
+            <div id="frontend-status" class="text-sm space-y-2">
+                <p>Frontend: http://127.0.0.1:3002</p>
+                <div id="frontend-result">Перевірка...</div>
+            </div>
+        </div>
+        
+        <div class="bg-gray-800 p-6 rounded-lg">
+            <h2 class="text-xl font-bold mb-4 text-green-400">Backend Status</h2>
+            <div class="text-sm space-y-2">
+                <p>Backend: http://localhost:8001</p>
+                <div id="backend-result">Перевірка...</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-8 bg-gray-800 p-6 rounded-lg">
+        <h2 class="text-xl font-bold mb-4 text-yellow-400">Real API Connectors</h2>
+        <div id="connectors-result" class="text-sm">Перевірка...</div>
+    </div>
+    
+    <div class="mt-8 bg-gray-800 p-6 rounded-lg">
+        <h2 class="text-xl font-bold mb-4 text-purple-400">Real Data Samples</h2>
+        <div id="samples-result" class="text-sm">Перевірка...</div>
+    </div>
+    
+    <script>
+        async function checkStatus() {
+            // Check Backend
+            try {
+                const backendResponse = await fetch('http://localhost:8001/health');
+                const backendData = await backendResponse.json();
+                document.getElementById('backend-result').innerHTML = `
+                    <div class="text-green-400">✅ ONLINE</div>
+                    <div>Mode: ${backendData.data.mode}</div>
+                    <div>APIs: ${backendData.data.apis}</div>
+                    <div>Time: ${backendData.data.timestamp}</div>
+                `;
+            } catch (error) {
+                document.getElementById('backend-result').innerHTML = `
+                    <div class="text-red-400">❌ OFFLINE</div>
+                    <div>${error.message}</div>
+                `;
+            }
+            
+            // Check Connectors
+            try {
+                const connectorsResponse = await fetch('http://localhost:8001/api/v1/connectors');
+                const connectorsData = await connectorsResponse.json();
+                
+                const realAPIs = connectorsData.data.filter(c => c.id.includes('real'));
+                const onlineAPIs = realAPIs.filter(c => c.status === 'ONLINE');
+                
+                document.getElementById('connectors-result').innerHTML = `
+                    <div class="text-green-400">✅ ${onlineAPIs.length}/${realAPIs.length} Real APIs Online</div>
+                    ${realAPIs.map(api => `
+                        <div class="mt-2 p-2 rounded ${api.status === 'ONLINE' ? 'bg-green-900' : 'bg-red-900'}">
+                            <div class="font-bold">${api.name}</div>
+                            <div class="text-xs">Status: ${api.status} | Latency: ${api.latency}ms</div>
+                            <div class="text-xs">Endpoint: ${api.endpoint}</div>
+                        </div>
+                    `).join('')}
+                `;
+                
+                // Show samples from online APIs
+                const samples = onlineAPIs.map(api => {
+                    if (api.data && api.data.length > 0) {
+                        return `
+                            <div class="mt-4 p-3 bg-gray-700 rounded">
+                                <div class="font-bold text-yellow-300">${api.name} - Sample Data:</div>
+                                <div class="text-xs mt-1 font-mono">
+                                    ${JSON.stringify(api.data.slice(0, 2), null, 2)}
+                                </div>
+                            </div>
+                        `;
+                    }
+                    return '';
+                }).join('');
+                
+                document.getElementById('samples-result').innerHTML = samples || '<div class="text-gray-400">No sample data available</div>';
+                
+            } catch (error) {
+                document.getElementById('connectors-result').innerHTML = `
+                    <div class="text-red-400">❌ Error</div>
+                    <div>${error.message}</div>
+                `;
+            }
+            
+            // Check Frontend (via proxy)
+            try {
+                const frontendResponse = await fetch('http://127.0.0.1:3002/api/v1/connectors');
+                if (frontendResponse.ok) {
+                    const frontendData = await frontendResponse.json();
+                    document.getElementById('frontend-result').innerHTML = `
+                        <div class="text-green-400">✅ Proxy Working</div>
+                        <div>Response: ${JSON.stringify(frontendData).substring(0, 100)}...</div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${frontendResponse.status}`);
+                }
+            } catch (error) {
+                document.getElementById('frontend-result').innerHTML = `
+                    <div class="text-yellow-400">⚠️ Proxy Not Working</div>
+                    <div>Frontend доступний, але проксі до API не працює</div>
+                    <div class="text-xs mt-2">Рішення: Перевіряйте реальні дані напряму через backend</div>
+                `;
+            }
+        }
+        
+        // Run checks
+        checkStatus();
+        
+        // Auto-refresh every 30 seconds
+        setInterval(checkStatus, 30000);
+    </script>
+</body>
+</html>

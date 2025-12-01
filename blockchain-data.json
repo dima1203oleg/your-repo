@@ -1,0 +1,5103 @@
+{
+  "chain": [
+    {
+      "index": 0,
+      "timestamp": 1764553205760,
+      "transactions": [
+        {
+          "from": "genesis",
+          "to": "predator-analytics",
+          "amount": 0,
+          "type": "system_init",
+          "data": {
+            "message": "Predator Analytics Blockchain Initialized",
+            "version": "1.0.0",
+            "creator": "autonomous-system"
+          }
+        }
+      ],
+      "nonce": 0,
+      "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "998fefed06063ab5682546eb9d5fd59d9a589882a157728bb5f8dc404c3d29b4"
+    },
+    {
+      "index": 1,
+      "timestamp": 1764553215772,
+      "transactions": [
+        {
+          "id": "5ad9d0bd5ec2bdd32f7a733491ae9cef",
+          "from": "user-h4tbfpcvt",
+          "to": "system",
+          "amount": 6.0202521603385435,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 727.6022851238247,
+            "status": "success"
+          },
+          "timestamp": 1764553210811,
+          "signature": "2c9cf4ad1c11ab485e216d6be5ee1ea6765d45ed244f8590f3934bcdae24bf2a"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 1,
+            "timestamp": 1764553215772
+          }
+        }
+      ],
+      "nonce": 66931,
+      "previousHash": "998fefed06063ab5682546eb9d5fd59d9a589882a157728bb5f8dc404c3d29b4",
+      "hash": "0000dea2af3537eaaa30991e2d74255491c6cafe24d26f6817528726e3a1e1ce"
+    },
+    {
+      "index": 2,
+      "timestamp": 1764553225771,
+      "transactions": [
+        {
+          "id": "db4adde6d9d68ca3974e62cdf8d230e3",
+          "from": "user-glcsu6qjn",
+          "to": "system",
+          "amount": 8.384546158480497,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 73.7447374181981,
+            "status": "success"
+          },
+          "timestamp": 1764553215975,
+          "signature": "44bca85f1e799daf35dae9ef9a4f19394a570e5d19a71923e53a792f91967283"
+        },
+        {
+          "id": "6533ad552401d749b8c771f625213d28",
+          "from": "user-pdqwc5vkz",
+          "to": "system",
+          "amount": 4.32742808171962,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 18.709643969881505,
+            "status": "success"
+          },
+          "timestamp": 1764553220977,
+          "signature": "62dd647ee03de723bbc644e6487f577d13711162f649f0c97c36be80691af142"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 2,
+            "timestamp": 1764553225771
+          }
+        }
+      ],
+      "nonce": 27384,
+      "previousHash": "0000dea2af3537eaaa30991e2d74255491c6cafe24d26f6817528726e3a1e1ce",
+      "hash": "00004cdf573a7db73ffcf2bab458556fd308f499e922dd254b70e4838d25dfa0"
+    },
+    {
+      "index": 3,
+      "timestamp": 1764553235772,
+      "transactions": [
+        {
+          "id": "282b40e3eea16637d9952b5accb0d263",
+          "from": "user-gr3admjek",
+          "to": "system",
+          "amount": 8.293033426856988,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 577.8110253287747,
+            "status": "success"
+          },
+          "timestamp": 1764553226151,
+          "signature": "f963e5b7bc6770192a0a3ea070aaa46be34ada6cf517d7247400d5fff0fdc785"
+        },
+        {
+          "id": "59790f02dc3a483d344aba45bf14ac6e",
+          "from": "user-0vopd94o8",
+          "to": "system",
+          "amount": 9.865532411052476,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 218.12782301966084,
+            "status": "success"
+          },
+          "timestamp": 1764553231006,
+          "signature": "1cbc4490941d9589794302d8ef715e3514bcb22614b27061cc0a430c71aba564"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 3,
+            "timestamp": 1764553235772
+          }
+        }
+      ],
+      "nonce": 56046,
+      "previousHash": "00004cdf573a7db73ffcf2bab458556fd308f499e922dd254b70e4838d25dfa0",
+      "hash": "0000ed94771fbcf9b6544183d322f168ff8e39d12a9324a80ad63a457710625f"
+    },
+    {
+      "index": 4,
+      "timestamp": 1764553245774,
+      "transactions": [
+        {
+          "id": "152aa980e626729582063c8a7342eb2b",
+          "from": "user-7jaukg3hp",
+          "to": "system",
+          "amount": 0.14436245870479647,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 430.982869325393,
+            "status": "success"
+          },
+          "timestamp": 1764553236041,
+          "signature": "9a17dd63e043aa11400d743332d0a7d682f0e28bcbef21e5f1472d6186fdb6a6"
+        },
+        {
+          "id": "cb67f4d4eaa01b8c7d0bbd9d01ce555a",
+          "from": "user-zuxrprdtf",
+          "to": "system",
+          "amount": 8.956586663212668,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 115.66758520630205,
+            "status": "success"
+          },
+          "timestamp": 1764553241045,
+          "signature": "1df3cc19146291eec143ee9ec2d5256e1cfff1a24b36e5272c9ed9c8a55e874f"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 4,
+            "timestamp": 1764553245774
+          }
+        }
+      ],
+      "nonce": 123571,
+      "previousHash": "0000ed94771fbcf9b6544183d322f168ff8e39d12a9324a80ad63a457710625f",
+      "hash": "0000456b2ad6c85509c97fd60391a9475ab22ae78383b320a61c5407bca29277"
+    },
+    {
+      "index": 5,
+      "timestamp": 1764553255781,
+      "transactions": [
+        {
+          "id": "f7f499716092ca4216de419447cc1eb8",
+          "from": "user-5m521rbd2",
+          "to": "system",
+          "amount": 5.415509570498065,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 977.5915551251937,
+            "status": "success"
+          },
+          "timestamp": 1764553246534,
+          "signature": "9e37d3f920dce48bb4689adacc704fe48e331c019c4deec47ad706e246008ee8"
+        },
+        {
+          "id": "26ad3aec06408dbda8e852e8d28e8520",
+          "from": "user-29ugwuzmq",
+          "to": "system",
+          "amount": 7.480919761205622,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 270.6791064180596,
+            "status": "success"
+          },
+          "timestamp": 1764553251537,
+          "signature": "b150732940abecb3e9ff2f3340e0a4dfb8357441681dac565229a5560547db9c"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 5,
+            "timestamp": 1764553255781
+          }
+        }
+      ],
+      "nonce": 89122,
+      "previousHash": "0000456b2ad6c85509c97fd60391a9475ab22ae78383b320a61c5407bca29277",
+      "hash": "00003cb1f0b1c8a24b215b8a91f7c85c53c0bc7388c5a6469d530954e8e4c1c6"
+    },
+    {
+      "index": 6,
+      "timestamp": 1764553265783,
+      "transactions": [
+        {
+          "id": "c66ce7cdc2b1cb8ee8f86f7988d20a24",
+          "from": "user-sbncotxly",
+          "to": "system",
+          "amount": 5.518885857501599,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 456.1054934212776,
+            "status": "success"
+          },
+          "timestamp": 1764553256597,
+          "signature": "fea9245051e750fefb2989aa19d3936677f7cd3f585bc10167fc45a5c819cea3"
+        },
+        {
+          "id": "d146e77bd0d273983a769f3ad424a6bb",
+          "from": "user-b7cj4lgia",
+          "to": "system",
+          "amount": 8.384255086060893,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 656.8818321218143,
+            "status": "success"
+          },
+          "timestamp": 1764553261599,
+          "signature": "c4fdda270f08867dd1d712929b1e2f3a2dd3d693a55dd840313d191a5f7a22a0"
+        },
+        {
+          "id": "abe946c592c20a9eb1f72047e503ba2c",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 1.966526,
+              "memory": 69.68443846538902,
+              "uptime": 60.395983542,
+              "timestamp": 1764553265778
+            },
+            "blockchainMetrics": {
+              "blockCount": 6,
+              "pendingTransactions": 2,
+              "totalTransactions": 15,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "00003cb1f0b1c8a24b215b8a91f7c85c53c0bc7388c5a6469d530954e8e4c1c6",
+              "lastBlockTimestamp": 1764553255781
+            },
+            "timestamp": 1764553265778
+          },
+          "timestamp": 1764553265779,
+          "signature": "d1a2cb8adb054c070203d847cb4202b6a537ba7a0c7b83550c0b35e17387a392"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 6,
+            "timestamp": 1764553265783
+          }
+        }
+      ],
+      "nonce": 18016,
+      "previousHash": "00003cb1f0b1c8a24b215b8a91f7c85c53c0bc7388c5a6469d530954e8e4c1c6",
+      "hash": "000096440b03bbd8439891a7a124b50c5c26946e543ecbe746aa556cfb331f72"
+    },
+    {
+      "index": 7,
+      "timestamp": 1764553276186,
+      "transactions": [
+        {
+          "id": "831fb3aad52f39cb7a0f9ceafc2c5940",
+          "from": "user-s0yp6cghb",
+          "to": "system",
+          "amount": 4.57158697034477,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 737.7532788528524,
+            "status": "success"
+          },
+          "timestamp": 1764553266604,
+          "signature": "1c12e2794ee23ccc65f3d5736945791e2f6da788fb65bab61609aeff087de139"
+        },
+        {
+          "id": "6f9c135a5ed4201d366e39e17bf4116f",
+          "from": "user-70kis6ez9",
+          "to": "system",
+          "amount": 7.249880082201732,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 67.61045437736412,
+            "status": "success"
+          },
+          "timestamp": 1764553271615,
+          "signature": "764f07383b791a093b464a18e6e24ae1d10d6bc0be27791c6496b0244e3b7e05"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 7,
+            "timestamp": 1764553276186
+          }
+        }
+      ],
+      "nonce": 19533,
+      "previousHash": "000096440b03bbd8439891a7a124b50c5c26946e543ecbe746aa556cfb331f72",
+      "hash": "00008a9c67c15b5c77c215acd69b292f76b0dccc82b4332af28f9ffcbd5445b5"
+    },
+    {
+      "index": 8,
+      "timestamp": 1764553286180,
+      "transactions": [
+        {
+          "id": "daa25e5df5d65afdce5eb41a3589d5b4",
+          "from": "user-va9rzuovk",
+          "to": "system",
+          "amount": 1.4898358708243808,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 636.7655225796345,
+            "status": "success"
+          },
+          "timestamp": 1764553276702,
+          "signature": "c37ce9887219ac7a2242c7e452762e39c683c48b2a38ccd163a840b5fb0a77f5"
+        },
+        {
+          "id": "1a55eee4a529b127c5d266928f5be2a3",
+          "from": "user-w5tmp60tu",
+          "to": "system",
+          "amount": 8.36754628228055,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 843.7812228279515,
+            "status": "success"
+          },
+          "timestamp": 1764553281710,
+          "signature": "1b083ff94e4df991c4e2cffff42ea36b27247fc6541fe4d511857db7500f8545"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 8,
+            "timestamp": 1764553286180
+          }
+        }
+      ],
+      "nonce": 118773,
+      "previousHash": "00008a9c67c15b5c77c215acd69b292f76b0dccc82b4332af28f9ffcbd5445b5",
+      "hash": "00004f7a7f2e183fa5044d479cfa6c3a184a3c478e0a35a5ecf1329b1b990012"
+    },
+    {
+      "index": 9,
+      "timestamp": 1764553296184,
+      "transactions": [
+        {
+          "id": "372670adb69a4ee32736543acd2f16aa",
+          "from": "user-v26j8q4z1",
+          "to": "system",
+          "amount": 1.604989981067917,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 998.9991235933295,
+            "status": "success"
+          },
+          "timestamp": 1764553287024,
+          "signature": "15676c26f5183eb03154129592da090d2566a4a28208031e25ad9f060d94ac2a"
+        },
+        {
+          "id": "26ff75cc350c16ceedabe36f41dec7c2",
+          "from": "user-x3old5ja1",
+          "to": "system",
+          "amount": 6.245607785999649,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 522.8369167876175,
+            "status": "success"
+          },
+          "timestamp": 1764553292026,
+          "signature": "2a0e7e23da30ae14105e93bf55c65822e9fcf6d48d33fcbe2791803953cd852a"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 9,
+            "timestamp": 1764553296184
+          }
+        }
+      ],
+      "nonce": 28485,
+      "previousHash": "00004f7a7f2e183fa5044d479cfa6c3a184a3c478e0a35a5ecf1329b1b990012",
+      "hash": "000067e6d84b8f16a753368bf1a8e1b32e38803240caa2b40e4b7e1c982d27c8"
+    },
+    {
+      "index": 10,
+      "timestamp": 1764553306189,
+      "transactions": [
+        {
+          "id": "4e811d0216554000133fabf5ccda24bd",
+          "from": "user-672rbif9k",
+          "to": "system",
+          "amount": 7.616674207180387,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 629.3024197032606,
+            "status": "success"
+          },
+          "timestamp": 1764553297034,
+          "signature": "d4cca8c231e2f10a5b6d5a1f559017e798f9473dff9746a4bcb6eaeff149adf8"
+        },
+        {
+          "id": "f07fe0c508c238d2cb2f9bb80a8ff0ae",
+          "from": "user-rzu0iaewp",
+          "to": "system",
+          "amount": 4.831847090903441,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 79.76575605822522,
+            "status": "success"
+          },
+          "timestamp": 1764553302036,
+          "signature": "6f66e6eededfd45a9df7ab9663d35973d359770f522def82425f4bfc690aec6e"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 10,
+            "timestamp": 1764553306189
+          }
+        }
+      ],
+      "nonce": 42957,
+      "previousHash": "000067e6d84b8f16a753368bf1a8e1b32e38803240caa2b40e4b7e1c982d27c8",
+      "hash": "00000872508a818c0ce60eff0457820f6289d6cd87f5b8307b947cfd3db1aff7"
+    },
+    {
+      "index": 11,
+      "timestamp": 1764553316191,
+      "transactions": [
+        {
+          "id": "561e6e47084fde0ccf782269ad373aa2",
+          "from": "user-cogenmsir",
+          "to": "system",
+          "amount": 6.602747325203051,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 409.1822635047262,
+            "status": "success"
+          },
+          "timestamp": 1764553307037,
+          "signature": "95a3b8e2ba3da7043a09d714dbd3dbc90f1abb0cbfce95dbc5c99214e516b848"
+        },
+        {
+          "id": "423ed9bf1156c0556ee9dee160201918",
+          "from": "user-2d8vrr3k2",
+          "to": "system",
+          "amount": 8.524206439880533,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 12.137149441600936,
+            "status": "success"
+          },
+          "timestamp": 1764553312041,
+          "signature": "097e8694861a21fd310a0a10666c606a219c747b5db964abc1a204e4fa975703"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 11,
+            "timestamp": 1764553316191
+          }
+        }
+      ],
+      "nonce": 86826,
+      "previousHash": "00000872508a818c0ce60eff0457820f6289d6cd87f5b8307b947cfd3db1aff7",
+      "hash": "00000103bc0fc6d335fa3b7ee4404a187874275e1eb072c81ba19ebeee4e5839"
+    },
+    {
+      "index": 12,
+      "timestamp": 1764553326192,
+      "transactions": [
+        {
+          "id": "dfd5774a97eb7085edd7cf84bf1fe689",
+          "from": "user-f4at5pqao",
+          "to": "system",
+          "amount": 0.5022658239150624,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 486.30650756368385,
+            "status": "success"
+          },
+          "timestamp": 1764553317041,
+          "signature": "ce865d59e43c8384b81e30a3485906636eb7d130604023a6070d058cb3172274"
+        },
+        {
+          "id": "b3abbdd1a345cc11a5bfb7482e256ba3",
+          "from": "user-h0jrdx40f",
+          "to": "system",
+          "amount": 9.959720347428835,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 330.1006343798425,
+            "status": "success"
+          },
+          "timestamp": 1764553322043,
+          "signature": "dcd8d95726ce73d70a1c656121bd053e4e49f603ddfd0cac039afb699be2faf7"
+        },
+        {
+          "id": "c88500727194ea269a026f0a4c372195",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 3.511081,
+              "memory": 71.60605424056065,
+              "uptime": 120.396004292,
+              "timestamp": 1764553325800
+            },
+            "blockchainMetrics": {
+              "blockCount": 12,
+              "pendingTransactions": 2,
+              "totalTransactions": 34,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "00000103bc0fc6d335fa3b7ee4404a187874275e1eb072c81ba19ebeee4e5839",
+              "lastBlockTimestamp": 1764553316191
+            },
+            "timestamp": 1764553325801
+          },
+          "timestamp": 1764553325801,
+          "signature": "446a17bb002c44f5c6b8d5e8b4cfedd79e1ba187b077ac3c4adc846c14e9efcb"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 12,
+            "timestamp": 1764553326192
+          }
+        }
+      ],
+      "nonce": 93752,
+      "previousHash": "00000103bc0fc6d335fa3b7ee4404a187874275e1eb072c81ba19ebeee4e5839",
+      "hash": "0000390b8328ec5627d3fc076721b35a1560f60022e020acea56d4099bba9ee9"
+    },
+    {
+      "index": 13,
+      "timestamp": 1764553336198,
+      "transactions": [
+        {
+          "id": "577eb3acc443fd05b60140752fd16ca6",
+          "from": "user-b0svsmuew",
+          "to": "system",
+          "amount": 9.497699634014143,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 536.5536455622142,
+            "status": "success"
+          },
+          "timestamp": 1764553327046,
+          "signature": "bfa41aa0f0c34d02b8c70adcb3f6bb461643bf53f21b26403b1681e6efc521b6"
+        },
+        {
+          "id": "e0c56a52203e6b60d7dfb60715a8273c",
+          "from": "user-otm7dt7b4",
+          "to": "system",
+          "amount": 6.887108728124087,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 691.4513939009173,
+            "status": "success"
+          },
+          "timestamp": 1764553332051,
+          "signature": "174fb8fe81c961283562a4805eac97346d61870c44c5bc21dad6876e8b929c27"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 13,
+            "timestamp": 1764553336198
+          }
+        }
+      ],
+      "nonce": 5345,
+      "previousHash": "0000390b8328ec5627d3fc076721b35a1560f60022e020acea56d4099bba9ee9",
+      "hash": "000013aebd7031476bec04032f2f65492e97a10c9b03fc26212252385f632edd"
+    },
+    {
+      "index": 14,
+      "timestamp": 1764553346199,
+      "transactions": [
+        {
+          "id": "20c7aed9a87d4840e8125ae82f13aaf8",
+          "from": "user-oi2029e2l",
+          "to": "system",
+          "amount": 6.30092471119418,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 513.3015569621382,
+            "status": "success"
+          },
+          "timestamp": 1764553337054,
+          "signature": "9d3dd67431f30f4396ac0e4e9e1e9cd74a820bee45fe2357e1719961c209f30f"
+        },
+        {
+          "id": "a56bb97b46cec925e519e54db8f1fe10",
+          "from": "user-7us5kfs1j",
+          "to": "system",
+          "amount": 7.974688376320498,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 261.7360022777886,
+            "status": "success"
+          },
+          "timestamp": 1764553342054,
+          "signature": "18eae3281ea3a9202a723e82d7398111c8bdfddc1ef8f10d2730fb0032b5a5f8"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 14,
+            "timestamp": 1764553346199
+          }
+        }
+      ],
+      "nonce": 18057,
+      "previousHash": "000013aebd7031476bec04032f2f65492e97a10c9b03fc26212252385f632edd",
+      "hash": "000026efffbef3af16b91d1aca8761c80ae079dd9a9b1339023b7ad2d4c3996e"
+    },
+    {
+      "index": 15,
+      "timestamp": 1764553356201,
+      "transactions": [
+        {
+          "id": "3efffaac307df0e40999a65349a206a8",
+          "from": "user-3uzkh8akh",
+          "to": "system",
+          "amount": 2.317976221134943,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 263.33014820336007,
+            "status": "success"
+          },
+          "timestamp": 1764553347055,
+          "signature": "7aed7ec6db466fce0cd29acd745e690a1b0c296a14697f5201c9f9c084ebfe2b"
+        },
+        {
+          "id": "47f4028117d0f05b4fb3492754f4bec1",
+          "from": "user-y9fcfyhd2",
+          "to": "system",
+          "amount": 1.0357101740672792,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 830.8449078218889,
+            "status": "success"
+          },
+          "timestamp": 1764553352057,
+          "signature": "0d95c5c5708dcabe53b5f358c6b3844a8b54afbf3aae3856fffc8359a1da0b2a"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 15,
+            "timestamp": 1764553356201
+          }
+        }
+      ],
+      "nonce": 16963,
+      "previousHash": "000026efffbef3af16b91d1aca8761c80ae079dd9a9b1339023b7ad2d4c3996e",
+      "hash": "000085210c172c2c381b5ec92ce1bc61b4e2bfe10384795cffeaa24cbd958ce2"
+    },
+    {
+      "index": 16,
+      "timestamp": 1764553366202,
+      "transactions": [
+        {
+          "id": "096cf355fa8bac905561d742214fc5a5",
+          "from": "user-q9x564v0n",
+          "to": "system",
+          "amount": 2.2791902171531664,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 957.3873829045345,
+            "status": "success"
+          },
+          "timestamp": 1764553357058,
+          "signature": "78643a24ae0c91426514acdc31505379693e67a7cff4378c9baecd9dafd1b7de"
+        },
+        {
+          "id": "c610e443647ff13a5f1abf54085cc7df",
+          "from": "user-kp5kopeh2",
+          "to": "system",
+          "amount": 1.489905417032693,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 142.65317542667043,
+            "status": "success"
+          },
+          "timestamp": 1764553362059,
+          "signature": "b3ce5b26f0c3b12f72dbde53fed20bcf85ed11b13552db197c6438eda01e61f7"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 16,
+            "timestamp": 1764553366202
+          }
+        }
+      ],
+      "nonce": 76981,
+      "previousHash": "000085210c172c2c381b5ec92ce1bc61b4e2bfe10384795cffeaa24cbd958ce2",
+      "hash": "000071ba092b276aef593e1928cbde3a28f89d255d5506c30c9c237a8bc22b69"
+    },
+    {
+      "index": 17,
+      "timestamp": 1764553376204,
+      "transactions": [
+        {
+          "id": "036911263287baf943c6658cc3957fd2",
+          "from": "user-qrpt1frb1",
+          "to": "system",
+          "amount": 1.1568004231355689,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 967.6934874051228,
+            "status": "success"
+          },
+          "timestamp": 1764553367519,
+          "signature": "b1e5b287d5bf3b339903cdbf71d8211e706cefcc1b3499172a277af4b29c4743"
+        },
+        {
+          "id": "1aca2e18ae3bb135839241f8bd6b9c8d",
+          "from": "user-3iw19o0qq",
+          "to": "system",
+          "amount": 6.765921430762532,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 714.2993225600189,
+            "status": "success"
+          },
+          "timestamp": 1764553372530,
+          "signature": "2e93840895ea966d4a0af333ade17a0e8b448135d0be6b67641f5b3adcf398bc"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 17,
+            "timestamp": 1764553376204
+          }
+        }
+      ],
+      "nonce": 107889,
+      "previousHash": "000071ba092b276aef593e1928cbde3a28f89d255d5506c30c9c237a8bc22b69",
+      "hash": "000065320451f3548c16dd30c7a6576ab56036a31cb99118ff6ee507df51d71c"
+    },
+    {
+      "index": 18,
+      "timestamp": 1764553386205,
+      "transactions": [
+        {
+          "id": "232d2a3c909200dde63af5466129c3ff",
+          "from": "user-1vkbs1fuw",
+          "to": "system",
+          "amount": 7.881963785105841,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 890.060800718423,
+            "status": "success"
+          },
+          "timestamp": 1764553377526,
+          "signature": "90df214fa12f6024b8a73507ef3ddbc539973620e265bc987a152a317ed46306"
+        },
+        {
+          "id": "e87f908cd88a816793be79976e9ec4e5",
+          "from": "user-weyexkk6a",
+          "to": "system",
+          "amount": 7.218652654367917,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 307.2466929029203,
+            "status": "success"
+          },
+          "timestamp": 1764553382532,
+          "signature": "1eb96d9adafe3ebf3d45dbe2d89bcaa896d9e132710db4d4700d8181446395eb"
+        },
+        {
+          "id": "b8ade776a5dbb64923e5d80ffbd1b259",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 5.224643,
+              "memory": 62.78023097826087,
+              "uptime": 180.3954265,
+              "timestamp": 1764553385801
+            },
+            "blockchainMetrics": {
+              "blockCount": 18,
+              "pendingTransactions": 2,
+              "totalTransactions": 53,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "000065320451f3548c16dd30c7a6576ab56036a31cb99118ff6ee507df51d71c",
+              "lastBlockTimestamp": 1764553376204
+            },
+            "timestamp": 1764553385803
+          },
+          "timestamp": 1764553385803,
+          "signature": "63cad3c2b77d52708dc5a5499cf1ad04bfbd0fc4544a38c628759d0cd8f87485"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 18,
+            "timestamp": 1764553386205
+          }
+        }
+      ],
+      "nonce": 201200,
+      "previousHash": "000065320451f3548c16dd30c7a6576ab56036a31cb99118ff6ee507df51d71c",
+      "hash": "000048c11b907ed20dfc255ad3c68ecdf43136799e187f09cdf5971f57ed49b0"
+    },
+    {
+      "index": 19,
+      "timestamp": 1764553396460,
+      "transactions": [
+        {
+          "id": "388da514b2aea49beb0a52b8ed79f532",
+          "from": "user-5io45xrtq",
+          "to": "system",
+          "amount": 0.6941991688721094,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 408.99030784268973,
+            "status": "success"
+          },
+          "timestamp": 1764553387532,
+          "signature": "7ae3186bbb11d6569f00af3df93d4ce76413820a95ad2e129056ea2472163015"
+        },
+        {
+          "id": "d7fbefa3a4c555ba21690c2abc30ef10",
+          "from": "user-c8ef6lfhq",
+          "to": "system",
+          "amount": 9.847955416592264,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 634.5481912507615,
+            "status": "success"
+          },
+          "timestamp": 1764553392535,
+          "signature": "bb529c1063ca20479a5ce3f126b2817aa1501294d835963c3b58c819934bdf8d"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 19,
+            "timestamp": 1764553396460
+          }
+        }
+      ],
+      "nonce": 59544,
+      "previousHash": "000048c11b907ed20dfc255ad3c68ecdf43136799e187f09cdf5971f57ed49b0",
+      "hash": "0000098830035a2fb77d21eae23e4c74804b329424468783ed5133d4b1fdf029"
+    },
+    {
+      "index": 20,
+      "timestamp": 1764553406430,
+      "transactions": [
+        {
+          "id": "bd09b6a83048e2e098095e02f738c0ae",
+          "from": "user-gvdauatwb",
+          "to": "system",
+          "amount": 6.310573164450122,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 931.9983985670308,
+            "status": "success"
+          },
+          "timestamp": 1764553403786,
+          "signature": "1fcc2c7bf17323031fad65c64f2b3df8c8508747fcff55d47590a176f9067b8c"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 20,
+            "timestamp": 1764553406430
+          }
+        }
+      ],
+      "nonce": 57695,
+      "previousHash": "0000098830035a2fb77d21eae23e4c74804b329424468783ed5133d4b1fdf029",
+      "hash": "0000f2b9da9df249fa35527b58eb75b0f3ff4d2bb5c5a1318cca76354b068860"
+    },
+    {
+      "index": 21,
+      "timestamp": 1764553416453,
+      "transactions": [
+        {
+          "id": "fd4e5197a7dda7ca976d8ca8a2719d45",
+          "from": "user-v7gpppx3u",
+          "to": "system",
+          "amount": 6.577082402723271,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 596.6194779768814,
+            "status": "success"
+          },
+          "timestamp": 1764553409844,
+          "signature": "ff986fb10905b710e900dd7fd73cb0ec2afaa97b2d2e295484837e959ded41c1"
+        },
+        {
+          "id": "c1fb73f3b4bc0b9f7db8e05f98fb7ae8",
+          "from": "user-ojpggotq8",
+          "to": "system",
+          "amount": 4.3617419600603125,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 115.38170123808355,
+            "status": "success"
+          },
+          "timestamp": 1764553415570,
+          "signature": "1a0ca9544cda01ee5ad2a567ddb86db22a73f79d5a35c3b356be2bdbe1a98e00"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 21,
+            "timestamp": 1764553416453
+          }
+        }
+      ],
+      "nonce": 179158,
+      "previousHash": "0000f2b9da9df249fa35527b58eb75b0f3ff4d2bb5c5a1318cca76354b068860",
+      "hash": "00008370c312398c83059e77628223e1db3a5cb3496e23d0910e8c59a40d78e1"
+    },
+    {
+      "index": 22,
+      "timestamp": 1764553432058,
+      "transactions": [
+        {
+          "id": "419edbf12507d24397c6ce2e2c1cf2c0",
+          "from": "user-9e90va0pm",
+          "to": "system",
+          "amount": 5.998980732615841,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 987.3428528674575,
+            "status": "success"
+          },
+          "timestamp": 1764553432057,
+          "signature": "28fd0ebbf3d1e3f603941287d26296cc8e90a47e606cc2556d0036738113a4b9"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 22,
+            "timestamp": 1764553432058
+          }
+        }
+      ],
+      "nonce": 9585,
+      "previousHash": "00008370c312398c83059e77628223e1db3a5cb3496e23d0910e8c59a40d78e1",
+      "hash": "00007c20cf71d13e39483060754a0e9085f817af897279af92aac504b7622172"
+    },
+    {
+      "index": 23,
+      "timestamp": 1764553442077,
+      "transactions": [
+        {
+          "id": "66cb85912eeae7ebe66d194da7e4302b",
+          "from": "user-m1f7yp7mm",
+          "to": "system",
+          "amount": 6.340342472159941,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 532.2003023901534,
+            "status": "success"
+          },
+          "timestamp": 1764553437165,
+          "signature": "c41ecc89cda6a82e9f0c8e341001c9ab8cd25337e92adaf07b2aa255762dcc74"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 23,
+            "timestamp": 1764553442077
+          }
+        }
+      ],
+      "nonce": 61597,
+      "previousHash": "00007c20cf71d13e39483060754a0e9085f817af897279af92aac504b7622172",
+      "hash": "000093e9a6bc0009b81a2baaaab1db82f04cd77e15bff187d151bc926b6ec9eb"
+    },
+    {
+      "index": 24,
+      "timestamp": 1764553452079,
+      "transactions": [
+        {
+          "id": "5bd40823ba3637aff453503cd2892042",
+          "from": "user-1ew0etayu",
+          "to": "system",
+          "amount": 4.094936749457494,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 258.0293020343174,
+            "status": "success"
+          },
+          "timestamp": 1764553442685,
+          "signature": "254815524b7ac4227630bbef02158f50f66d3e8a37f2bcfe63418f9352c341a4"
+        },
+        {
+          "id": "3af316abe606d5beaae9afa32b8fc564",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 8.960319,
+              "memory": 64.28384671767735,
+              "uptime": 240.399268042,
+              "timestamp": 1764553445806
+            },
+            "blockchainMetrics": {
+              "blockCount": 24,
+              "pendingTransactions": 1,
+              "totalTransactions": 69,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "000093e9a6bc0009b81a2baaaab1db82f04cd77e15bff187d151bc926b6ec9eb",
+              "lastBlockTimestamp": 1764553442077
+            },
+            "timestamp": 1764553445808
+          },
+          "timestamp": 1764553445809,
+          "signature": "3866140e868a4af7a727afa89169e7cf2c30f1f43818f7393dd35e4a005e3674"
+        },
+        {
+          "id": "2d1b526aa1f49f891391e5dff1db87d1",
+          "from": "user-wde21w6na",
+          "to": "system",
+          "amount": 5.588677130522976,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 782.2035109218464,
+            "status": "success"
+          },
+          "timestamp": 1764553447666,
+          "signature": "9bb5610cd86ec7fb902a6456069a95747da929a57d5a59c04fa367e9bd9cf86e"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 24,
+            "timestamp": 1764553452079
+          }
+        }
+      ],
+      "nonce": 10780,
+      "previousHash": "000093e9a6bc0009b81a2baaaab1db82f04cd77e15bff187d151bc926b6ec9eb",
+      "hash": "00005069fa7a7b1734ac9c81a1bf8023fcfbc7b132bcf9ca4adf85fa3726159c"
+    },
+    {
+      "index": 25,
+      "timestamp": 1764553462082,
+      "transactions": [
+        {
+          "id": "f1ad920c577146ed198c12b8add39f40",
+          "from": "user-qndjxz1yq",
+          "to": "system",
+          "amount": 4.444186708325068,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 98.27719136248736,
+            "status": "success"
+          },
+          "timestamp": 1764553452667,
+          "signature": "61a3e7051cb902ff3161bf47ae6086979c9d817a4374d70c06c5a597151dcebd"
+        },
+        {
+          "id": "71602e92e88ba29924566e902d6dd846",
+          "from": "user-uphhuyf5c",
+          "to": "system",
+          "amount": 9.488595955167307,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 57.3673425712482,
+            "status": "success"
+          },
+          "timestamp": 1764553457668,
+          "signature": "e2379e2332e194b5afa79034adf13053f0e67e4cf17cd7c7d0639e14617ea71a"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 25,
+            "timestamp": 1764553462082
+          }
+        }
+      ],
+      "nonce": 14053,
+      "previousHash": "00005069fa7a7b1734ac9c81a1bf8023fcfbc7b132bcf9ca4adf85fa3726159c",
+      "hash": "0000ce9c7a5b2dd1c535e16f726afe0be0962a98736a2b16042a5921c2e1fb6e"
+    },
+    {
+      "index": 26,
+      "timestamp": 1764553472084,
+      "transactions": [
+        {
+          "id": "df73cbb9bfe695e4c658570a24dec4e5",
+          "from": "user-3a6141rhi",
+          "to": "system",
+          "amount": 1.039453760695137,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 89.21719860091315,
+            "status": "success"
+          },
+          "timestamp": 1764553462669,
+          "signature": "827d2867e079044c5bb046acd45e43df6476b32578291ef32532b8fcaf655462"
+        },
+        {
+          "id": "c9e5b565c1dca17860c8977e5c13e539",
+          "from": "user-72eobn2vg",
+          "to": "system",
+          "amount": 8.963890978775419,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 339.46079102964677,
+            "status": "success"
+          },
+          "timestamp": 1764553467671,
+          "signature": "45ce2ec5e1c4525b52f741c440e989c01259d6980b05811a417abb054a392932"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 26,
+            "timestamp": 1764553472084
+          }
+        }
+      ],
+      "nonce": 172457,
+      "previousHash": "0000ce9c7a5b2dd1c535e16f726afe0be0962a98736a2b16042a5921c2e1fb6e",
+      "hash": "0000eb3763cea7f17a83a3f5be4856b0cc3e7495d519af323009b07ac453731a"
+    },
+    {
+      "index": 27,
+      "timestamp": 1764553482085,
+      "transactions": [
+        {
+          "id": "9465d22aa53eeb1472c162ad6868fa06",
+          "from": "user-ad8kd8tt2",
+          "to": "system",
+          "amount": 7.439450776075491,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 466.60691533363143,
+            "status": "success"
+          },
+          "timestamp": 1764553473134,
+          "signature": "99624046e83d8815f167f213c0626fc7eb37b47ea0b4d0805e751bc09f95c917"
+        },
+        {
+          "id": "babbdc0dbd7d1153350c30d8b6840757",
+          "from": "user-m8fc9uo2p",
+          "to": "system",
+          "amount": 0.04997838375280894,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 135.88973767346357,
+            "status": "success"
+          },
+          "timestamp": 1764553478136,
+          "signature": "54640894864a4dd3c83b4773ec8667d714212f092cda694db0e1ff1a5e2a38b3"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 27,
+            "timestamp": 1764553482085
+          }
+        }
+      ],
+      "nonce": 7415,
+      "previousHash": "0000eb3763cea7f17a83a3f5be4856b0cc3e7495d519af323009b07ac453731a",
+      "hash": "00009f06799eb236027d16708889cc4f80ce9af8ce5841b9fe0c549f45eeea73"
+    },
+    {
+      "index": 28,
+      "timestamp": 1764553492088,
+      "transactions": [
+        {
+          "id": "6b75a05438ec860e7a91587d1f7904e5",
+          "from": "user-49xd8wzhb",
+          "to": "system",
+          "amount": 8.844657981575132,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 19.27661564816696,
+            "status": "success"
+          },
+          "timestamp": 1764553483136,
+          "signature": "ffddcd91d226df1675ec67133c0e4945fcad071619f476013c2d1700811fd084"
+        },
+        {
+          "id": "485e169ec95332c1c6b32faf9ec27f6e",
+          "from": "user-gfqa29hz3",
+          "to": "system",
+          "amount": 4.290481944843161,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 824.1797442495626,
+            "status": "success"
+          },
+          "timestamp": 1764553488140,
+          "signature": "11d4b13dc16f7ce80f10a20cd142ae5a69529c33249408f88041e2c13ab77486"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 28,
+            "timestamp": 1764553492088
+          }
+        }
+      ],
+      "nonce": 19979,
+      "previousHash": "00009f06799eb236027d16708889cc4f80ce9af8ce5841b9fe0c549f45eeea73",
+      "hash": "00000df7a59bbf96783a2b38977486e5efa2ae88e963716684ac9236298857f7"
+    },
+    {
+      "index": 29,
+      "timestamp": 1764553502089,
+      "transactions": [
+        {
+          "id": "99e5c24857561a6b0fe8fe1a46465c7f",
+          "from": "user-ht7otxdwr",
+          "to": "system",
+          "amount": 4.997089895061428,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 631.1490092607943,
+            "status": "success"
+          },
+          "timestamp": 1764553493141,
+          "signature": "ddf756b0fea1c87aef8d64a52d11d4a9df630073b3a4b62fbe05916cb2e2335e"
+        },
+        {
+          "id": "7a6fc73b3a78ab9f3b3e279c61f39b83",
+          "from": "user-jue9pvclq",
+          "to": "system",
+          "amount": 7.013512398201181,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 279.70188532494,
+            "status": "success"
+          },
+          "timestamp": 1764553498145,
+          "signature": "8bcfd94b7ac678d71987862309aa107ef70ad91d104fb58dc384e95883031554"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 29,
+            "timestamp": 1764553502089
+          }
+        }
+      ],
+      "nonce": 47779,
+      "previousHash": "00000df7a59bbf96783a2b38977486e5efa2ae88e963716684ac9236298857f7",
+      "hash": "000033e83530367085ecc57ad2047a1358a7e0b25297dd9f4336c7923eb0814c"
+    },
+    {
+      "index": 30,
+      "timestamp": 1764553512091,
+      "transactions": [
+        {
+          "id": "8e17a21cc7eb28eced6a627716ae222a",
+          "from": "user-9knwcbt5z",
+          "to": "system",
+          "amount": 1.8411471539776936,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 73.75031422941692,
+            "status": "success"
+          },
+          "timestamp": 1764553503147,
+          "signature": "8513337625ef840e1f8bc37a0fd151ce58755bbc910ee2b7b7a4428fdfd03191"
+        },
+        {
+          "id": "fc04ad6d6f284efbab153264eb2d3b33",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 10.427643,
+              "memory": 67.67265267448512,
+              "uptime": 300.402128917,
+              "timestamp": 1764553505809
+            },
+            "blockchainMetrics": {
+              "blockCount": 30,
+              "pendingTransactions": 1,
+              "totalTransactions": 88,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "000033e83530367085ecc57ad2047a1358a7e0b25297dd9f4336c7923eb0814c",
+              "lastBlockTimestamp": 1764553502089
+            },
+            "timestamp": 1764553505811
+          },
+          "timestamp": 1764553505812,
+          "signature": "17db3357196d39839ae0441ca521a2cb56ee01f3d6e7c938dc25b59e06532ae9"
+        },
+        {
+          "id": "9c0d333de469aa1e899d6762912e41f6",
+          "from": "user-14ptrcprs",
+          "to": "system",
+          "amount": 7.835027959519911,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 182.17383987903025,
+            "status": "success"
+          },
+          "timestamp": 1764553508147,
+          "signature": "6942cf549b7e31d6148e7c36ef5d57a7325cf0c82914dd18d92054f52dfce30e"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 30,
+            "timestamp": 1764553512091
+          }
+        }
+      ],
+      "nonce": 154404,
+      "previousHash": "000033e83530367085ecc57ad2047a1358a7e0b25297dd9f4336c7923eb0814c",
+      "hash": "0000f2b7021cfbcba8f7fb0933500e060c27511a4bf63fd3d1e7658c0d2a9bd0"
+    },
+    {
+      "index": 31,
+      "timestamp": 1764553522093,
+      "transactions": [
+        {
+          "id": "03a16b098257092cb89b17b5ce7e31ca",
+          "from": "user-5z835r92m",
+          "to": "system",
+          "amount": 8.268608858573,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 970.6283813961005,
+            "status": "success"
+          },
+          "timestamp": 1764553513148,
+          "signature": "1090becb0e3eff921e3f77f9de6697ec7a7c536f05bd62f52f0831d8ae702a43"
+        },
+        {
+          "id": "64b41e31a9370e55bb4291f7f3d97510",
+          "from": "user-2pcxk25no",
+          "to": "system",
+          "amount": 7.406834768430704,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 166.55093618723993,
+            "status": "success"
+          },
+          "timestamp": 1764553518150,
+          "signature": "399a485912fecc47a32b3424ba4c1b5ee3d28c336545d29a04a22dc7cb54a09e"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 31,
+            "timestamp": 1764553522093
+          }
+        }
+      ],
+      "nonce": 5556,
+      "previousHash": "0000f2b7021cfbcba8f7fb0933500e060c27511a4bf63fd3d1e7658c0d2a9bd0",
+      "hash": "000057c201d776d749f03037916468b75a24becc1a74358020cc1a2f0792fe39"
+    },
+    {
+      "index": 32,
+      "timestamp": 1764553532095,
+      "transactions": [
+        {
+          "id": "b953a42ae9c188094b5eedeeedaf1038",
+          "from": "user-7p5m93ymh",
+          "to": "system",
+          "amount": 9.669601822217516,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 953.7221440455307,
+            "status": "success"
+          },
+          "timestamp": 1764553523151,
+          "signature": "ffcffa9297892bf99dd3f09f47be8de342a955657b64288cd0329e9a34b16108"
+        },
+        {
+          "id": "240614902456d9b289822e3ab4470efa",
+          "from": "user-7barbc4rn",
+          "to": "system",
+          "amount": 1.5278016367235958,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 598.6858058560158,
+            "status": "success"
+          },
+          "timestamp": 1764553528153,
+          "signature": "5915ab8a03ff602b45ed543377569dc4e230fe7dc9f6c61997d119e193ca5797"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 32,
+            "timestamp": 1764553532095
+          }
+        }
+      ],
+      "nonce": 56177,
+      "previousHash": "000057c201d776d749f03037916468b75a24becc1a74358020cc1a2f0792fe39",
+      "hash": "00007415222c72fa87a32f802334888fb026e1d6fe7951ef9f867dcf0b5a1f84"
+    },
+    {
+      "index": 33,
+      "timestamp": 1764553542096,
+      "transactions": [
+        {
+          "id": "8c6c47b01fdf6f911b379e1ee8ffd40f",
+          "from": "user-v5gj5a8sl",
+          "to": "system",
+          "amount": 1.1637393806474838,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 732.0072032376474,
+            "status": "success"
+          },
+          "timestamp": 1764553533155,
+          "signature": "158b19ba2cef7780fdeae7fb657d14028e61d0fc0bbe401a6c187098d7bda00e"
+        },
+        {
+          "id": "47bcf5f67de8f2397acd6b468d8babb8",
+          "from": "user-f7z6yamwf",
+          "to": "system",
+          "amount": 1.4422869110149739,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 491.81177709667503,
+            "status": "success"
+          },
+          "timestamp": 1764553538157,
+          "signature": "10dc56134109fb0852c63ac2493821cc9e049984dbaae8f645f017e7b0f3efda"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 33,
+            "timestamp": 1764553542096
+          }
+        }
+      ],
+      "nonce": 106924,
+      "previousHash": "00007415222c72fa87a32f802334888fb026e1d6fe7951ef9f867dcf0b5a1f84",
+      "hash": "00003280d5bd19902ac06b4c6aab7f4f673ab59400f7f63b3e0e303322a51894"
+    },
+    {
+      "index": 34,
+      "timestamp": 1764553552104,
+      "transactions": [
+        {
+          "id": "172a3a99ed9c5aec8708e9fb78e6720c",
+          "from": "user-j8rdsi8qr",
+          "to": "system",
+          "amount": 4.166137723211298,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 711.497703720902,
+            "status": "success"
+          },
+          "timestamp": 1764553543158,
+          "signature": "17d09aa239cb227e490acda140a8794d992f177efa343886033354df53b3b170"
+        },
+        {
+          "id": "72fc3c26fbb07055cbd7f5702dfd083c",
+          "from": "user-llqf388l5",
+          "to": "system",
+          "amount": 7.850222473276178,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 844.9390572980973,
+            "status": "success"
+          },
+          "timestamp": 1764553548164,
+          "signature": "abcd91fdc478c9e369735a292477b243411a9dd0e37825e5226153afd542dd5c"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 34,
+            "timestamp": 1764553552104
+          }
+        }
+      ],
+      "nonce": 26441,
+      "previousHash": "00003280d5bd19902ac06b4c6aab7f4f673ab59400f7f63b3e0e303322a51894",
+      "hash": "00008bef91f257083cf2063782440e786b6d2fdbe430155cbcc0bc656060d11e"
+    },
+    {
+      "index": 35,
+      "timestamp": 1764553562105,
+      "transactions": [
+        {
+          "id": "362a9ac7c193f045b87f8af5af275194",
+          "from": "user-3s0bae5gg",
+          "to": "system",
+          "amount": 6.714889431250657,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 844.2202104008035,
+            "status": "success"
+          },
+          "timestamp": 1764553553165,
+          "signature": "fdec78f056a194b7c40c746c836de36ab0320eec7543b841996085fd074c8849"
+        },
+        {
+          "id": "f826db3069a838f7b839b8a7f60c874d",
+          "from": "user-cqq4yqy1o",
+          "to": "system",
+          "amount": 4.8733830370555715,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 636.8775988605191,
+            "status": "success"
+          },
+          "timestamp": 1764553558167,
+          "signature": "06471dd4383ff7de4e33990336c2badc326ca242bd3d4dd5866b68ae46a959a2"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 35,
+            "timestamp": 1764553562105
+          }
+        }
+      ],
+      "nonce": 149489,
+      "previousHash": "00008bef91f257083cf2063782440e786b6d2fdbe430155cbcc0bc656060d11e",
+      "hash": "000097a00a928670ae6d6325224ee59b7a80110d475ad469c7f669c88086a6ec"
+    },
+    {
+      "index": 36,
+      "timestamp": 1764553572106,
+      "transactions": [
+        {
+          "id": "0ea71c2d44487011098dcfd0c020b12f",
+          "from": "user-brsxlfzci",
+          "to": "system",
+          "amount": 8.042249965319295,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 942.6326076636302,
+            "status": "success"
+          },
+          "timestamp": 1764553563168,
+          "signature": "a2c9413db8fe376fe822338f6f2313e8671a6296b03e98bc26300fd19315fef6"
+        },
+        {
+          "id": "2668b71fa855fe54ff64668add59b175",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 13.172945,
+              "memory": 63.452539509439355,
+              "uptime": 360.403652542,
+              "timestamp": 1764553565812
+            },
+            "blockchainMetrics": {
+              "blockCount": 36,
+              "pendingTransactions": 1,
+              "totalTransactions": 107,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "000097a00a928670ae6d6325224ee59b7a80110d475ad469c7f669c88086a6ec",
+              "lastBlockTimestamp": 1764553562105
+            },
+            "timestamp": 1764553565813
+          },
+          "timestamp": 1764553565813,
+          "signature": "c8eb093159931d56fb7f21a5c4948b031630f030bb02d49c829821b219b8ba8a"
+        },
+        {
+          "id": "53e057af0b57a0c54905c45042d5672a",
+          "from": "user-xx1cdvlj4",
+          "to": "system",
+          "amount": 8.584962914019128,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 966.4748746978578,
+            "status": "success"
+          },
+          "timestamp": 1764553568175,
+          "signature": "bdc03605810a16a99829ef97a7f7a48e42832e75d2e1e575f535f581fc14bdee"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 36,
+            "timestamp": 1764553572106
+          }
+        }
+      ],
+      "nonce": 118043,
+      "previousHash": "000097a00a928670ae6d6325224ee59b7a80110d475ad469c7f669c88086a6ec",
+      "hash": "00000f5f81b17ef3b4c5784ddd9c9f67cf211d5bb16319aca38d9ae4a09f3908"
+    },
+    {
+      "index": 37,
+      "timestamp": 1764553582111,
+      "transactions": [
+        {
+          "id": "ea394f07df0c55d78a6416f7db564d06",
+          "from": "user-o1jdab95j",
+          "to": "system",
+          "amount": 1.9486384672952206,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 389.3420662230911,
+            "status": "success"
+          },
+          "timestamp": 1764553573347,
+          "signature": "adf97cc26bc71c02cfbb5f9679d0c290f7d8bf057bf10c68cde6c9a0af2357b9"
+        },
+        {
+          "id": "e935f7334242fd00add0697fb3b2f1e7",
+          "from": "user-slaa1zxmv",
+          "to": "system",
+          "amount": 8.575029910973655,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 378.60362987292297,
+            "status": "success"
+          },
+          "timestamp": 1764553578349,
+          "signature": "d7086fc3618c1faf99a57be45fcdcb243a9f1868389f9ef2224dea0b21e0f37d"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 37,
+            "timestamp": 1764553582111
+          }
+        }
+      ],
+      "nonce": 66755,
+      "previousHash": "00000f5f81b17ef3b4c5784ddd9c9f67cf211d5bb16319aca38d9ae4a09f3908",
+      "hash": "0000326ee3df23c6a2cabf9824fa7cf25375945e24b0bece7611809ba6df0410"
+    },
+    {
+      "index": 38,
+      "timestamp": 1764553592113,
+      "transactions": [
+        {
+          "id": "44ad2b3cbe7d956975031d26d2e2083c",
+          "from": "user-0sovac7sv",
+          "to": "system",
+          "amount": 5.544295202305058,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 74.14479308978339,
+            "status": "success"
+          },
+          "timestamp": 1764553583351,
+          "signature": "39b576e1b6db69589897582c17a8d4b5e86d377a8568254a616acd4a80293852"
+        },
+        {
+          "id": "48a8054b68b9678954c5fdbbc99fc6c2",
+          "from": "user-pu32yps2z",
+          "to": "system",
+          "amount": 6.722353740270959,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 646.7038086294164,
+            "status": "success"
+          },
+          "timestamp": 1764553588353,
+          "signature": "ff6ce671e35ed5755bd03d584f9f082bb89aabf9d6eb3bace41c8fe71b3e06c5"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 38,
+            "timestamp": 1764553592113
+          }
+        }
+      ],
+      "nonce": 42861,
+      "previousHash": "0000326ee3df23c6a2cabf9824fa7cf25375945e24b0bece7611809ba6df0410",
+      "hash": "0000db365b772434629d5c26a4f01fc8967784018f84dafb03dd884a0ad6c280"
+    },
+    {
+      "index": 39,
+      "timestamp": 1764553602116,
+      "transactions": [
+        {
+          "id": "3825404fff1880d2fc6d1d81f2772acf",
+          "from": "user-5v85zbum0",
+          "to": "system",
+          "amount": 8.821405684077344,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 134.53959399329028,
+            "status": "success"
+          },
+          "timestamp": 1764553593353,
+          "signature": "514ef945d071609a736d25f89bb32c809aeb829d11337527d4862503c2b6143e"
+        },
+        {
+          "id": "df82392a035d08b58e82c8c92848537f",
+          "from": "user-s6y3zizbb",
+          "to": "system",
+          "amount": 5.395178050226277,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 466.81668884320726,
+            "status": "success"
+          },
+          "timestamp": 1764553598358,
+          "signature": "ce2d03a71bee6491b6eb1e9edf2cb6140b9286e9b6b51daab33227c5c4807258"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 39,
+            "timestamp": 1764553602116
+          }
+        }
+      ],
+      "nonce": 7291,
+      "previousHash": "0000db365b772434629d5c26a4f01fc8967784018f84dafb03dd884a0ad6c280",
+      "hash": "0000b17ff0e885375546321cb02ac80002cbaccd70e60981b7b97e8d382f41cb"
+    },
+    {
+      "index": 40,
+      "timestamp": 1764553612119,
+      "transactions": [
+        {
+          "id": "95373584192de8f338cc5e220e4ffb7d",
+          "from": "user-rt5gnm4rj",
+          "to": "system",
+          "amount": 8.180356487464008,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 788.4666758765591,
+            "status": "success"
+          },
+          "timestamp": 1764553603361,
+          "signature": "bdf7a0a8026516d30e84a3e67c5613d5a3b836c5e65906577826da6e5144eece"
+        },
+        {
+          "id": "5d1bd38b5b3df950a96b98676e4074e9",
+          "from": "user-0j60u76o8",
+          "to": "system",
+          "amount": 1.7193971857690316,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 129.31371426360295,
+            "status": "success"
+          },
+          "timestamp": 1764553608368,
+          "signature": "40f7ecb622c0302471b9ce38ecc29e93112a15acc9137bf71f81f4ab0f3b813a"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 40,
+            "timestamp": 1764553612119
+          }
+        }
+      ],
+      "nonce": 18865,
+      "previousHash": "0000b17ff0e885375546321cb02ac80002cbaccd70e60981b7b97e8d382f41cb",
+      "hash": "0000593133e9f6966f3a526d5f5e43166e6cfa64c13040bf61e8daa35c9ba650"
+    },
+    {
+      "index": 41,
+      "timestamp": 1764553622120,
+      "transactions": [
+        {
+          "id": "9799a2518bd49a803be9c0138f0d3d79",
+          "from": "user-l55qbut1h",
+          "to": "system",
+          "amount": 6.142817931272829,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 26.056057628372375,
+            "status": "success"
+          },
+          "timestamp": 1764553613375,
+          "signature": "721612759b176c7b38b7cb7cc8b270dc2f6ee4b6552e05b71615d0b25d3b1f55"
+        },
+        {
+          "id": "48ac03f43d3c898e80676b37fb7cba7b",
+          "from": "user-xibelkw2e",
+          "to": "system",
+          "amount": 7.354494727431562,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 645.0651842975965,
+            "status": "success"
+          },
+          "timestamp": 1764553618379,
+          "signature": "99969de433e5bd82f60fe2340d0cb3ac9f1351fa2ac2441245896856b9c870b3"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 41,
+            "timestamp": 1764553622120
+          }
+        }
+      ],
+      "nonce": 96828,
+      "previousHash": "0000593133e9f6966f3a526d5f5e43166e6cfa64c13040bf61e8daa35c9ba650",
+      "hash": "0000ad5d5bd276250e77d26328ea6e35da9bc010dc86f5240b47e2d7f3402360"
+    },
+    {
+      "index": 42,
+      "timestamp": 1764553632123,
+      "transactions": [
+        {
+          "id": "ee40e25c4ebdd3200ad6cd030746d156",
+          "from": "user-vmacnudzg",
+          "to": "system",
+          "amount": 5.028036559482225,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 987.8134264401219,
+            "status": "success"
+          },
+          "timestamp": 1764553623379,
+          "signature": "c48bb8fd16fa5e0a93e6949dcd513af3d69a16bade7b8ba481fbb28e5f90248f"
+        },
+        {
+          "id": "4b20792321f46e98678084217188d229",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 15.437356,
+              "memory": 73.95237414187643,
+              "uptime": 420.406689584,
+              "timestamp": 1764553625815
+            },
+            "blockchainMetrics": {
+              "blockCount": 42,
+              "pendingTransactions": 1,
+              "totalTransactions": 126,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "0000ad5d5bd276250e77d26328ea6e35da9bc010dc86f5240b47e2d7f3402360",
+              "lastBlockTimestamp": 1764553622120
+            },
+            "timestamp": 1764553625817
+          },
+          "timestamp": 1764553625817,
+          "signature": "134db0fcce06bd0f4e834dfc9cdfdedc54440c75fa0b3ab0ddb79890fc0470d3"
+        },
+        {
+          "id": "6e440da00f031943774c91a7048af72f",
+          "from": "user-n4mqneq8z",
+          "to": "system",
+          "amount": 4.342925807956739,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 199.81431609404575,
+            "status": "success"
+          },
+          "timestamp": 1764553628379,
+          "signature": "628661d15b911adf428f3e5d55a073f41052c42664f93d09a86c1d8e475856c8"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 42,
+            "timestamp": 1764553632123
+          }
+        }
+      ],
+      "nonce": 27250,
+      "previousHash": "0000ad5d5bd276250e77d26328ea6e35da9bc010dc86f5240b47e2d7f3402360",
+      "hash": "0000e68577c00226808d69cfe913bd86a58644633de650c09c1e469385959f20"
+    },
+    {
+      "index": 43,
+      "timestamp": 1764553642125,
+      "transactions": [
+        {
+          "id": "2fc65309fc68ae08864b97dda97119ec",
+          "from": "user-mjsrmkgzu",
+          "to": "system",
+          "amount": 9.164668889136848,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 504.44517093296605,
+            "status": "success"
+          },
+          "timestamp": 1764553633381,
+          "signature": "8003c391a2cf5966fec9deb0963967195720bb7791b416d3c88885cea2eb5075"
+        },
+        {
+          "id": "d3638838a90dc662abe1b0fd933568b8",
+          "from": "user-1qdk248e6",
+          "to": "system",
+          "amount": 8.016480506805221,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 970.0418977268208,
+            "status": "success"
+          },
+          "timestamp": 1764553638382,
+          "signature": "209942eef1a2a883ad646753ec3fd2050105a03b392a430186d692d621d979c8"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 43,
+            "timestamp": 1764553642125
+          }
+        }
+      ],
+      "nonce": 140997,
+      "previousHash": "0000e68577c00226808d69cfe913bd86a58644633de650c09c1e469385959f20",
+      "hash": "0000c16470bc6869f6776768a384a45276b1112b9e6c5506aa16400f0f7e7b1b"
+    },
+    {
+      "index": 44,
+      "timestamp": 1764553652127,
+      "transactions": [
+        {
+          "id": "cd4596d3ec98c8a6b7d9ff32dfe4a8cf",
+          "from": "user-3vbwi090y",
+          "to": "system",
+          "amount": 9.611609083946739,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 769.2153646498159,
+            "status": "success"
+          },
+          "timestamp": 1764553643383,
+          "signature": "00084913209f07d933effb27237c471e57971424d20c95338a7b313456409cae"
+        },
+        {
+          "id": "0956251381954bded32c420bf40d8a45",
+          "from": "user-ndvkwtztd",
+          "to": "system",
+          "amount": 2.4942807735725636,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 710.246225941866,
+            "status": "success"
+          },
+          "timestamp": 1764553648387,
+          "signature": "5fc813dfbc337f2707dc61dc0058a20c3f1fd150f5089533a3903052ca14ad65"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 44,
+            "timestamp": 1764553652127
+          }
+        }
+      ],
+      "nonce": 21599,
+      "previousHash": "0000c16470bc6869f6776768a384a45276b1112b9e6c5506aa16400f0f7e7b1b",
+      "hash": "000075047e4ed7cc8e1219cb55c76a928ae35d3287c288661b346b35b0c1996a"
+    },
+    {
+      "index": 45,
+      "timestamp": 1764553662128,
+      "transactions": [
+        {
+          "id": "c0cee6bb40905d4327443b617a9b971d",
+          "from": "user-ytsu0iweo",
+          "to": "system",
+          "amount": 5.613980059556541,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 607.42782224688,
+            "status": "success"
+          },
+          "timestamp": 1764553653388,
+          "signature": "4d86a804c9f107a47ffe8075f8cdbb0398775d2336fda44d16ced8e3f6187b78"
+        },
+        {
+          "id": "786ffb6dda8d9413c5fee149cb675929",
+          "from": "user-g80xkg6gj",
+          "to": "system",
+          "amount": 8.52022299460338,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 276.95974228732445,
+            "status": "success"
+          },
+          "timestamp": 1764553658389,
+          "signature": "aca7c07a821e89d061fa385b564fde314488a76708a0781bbd0110fd82efbb21"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 45,
+            "timestamp": 1764553662128
+          }
+        }
+      ],
+      "nonce": 46349,
+      "previousHash": "000075047e4ed7cc8e1219cb55c76a928ae35d3287c288661b346b35b0c1996a",
+      "hash": "0000a7e22bd780c07ca67561a3284a4c5dd0a807b2cfbe7867cf2b83f08c662b"
+    },
+    {
+      "index": 46,
+      "timestamp": 1764553672130,
+      "transactions": [
+        {
+          "id": "6197d6f0688f91793b0387909a40cb3a",
+          "from": "user-jozpytpc9",
+          "to": "system",
+          "amount": 6.547302517403093,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 466.3328365161705,
+            "status": "success"
+          },
+          "timestamp": 1764553663390,
+          "signature": "0f68d0219bdc975b296183ec1681192f446c9092406fa9e7ea93848179033260"
+        },
+        {
+          "id": "181c49ae7520851f7054ca039b727d21",
+          "from": "user-1i04pj5j7",
+          "to": "system",
+          "amount": 3.263237691763101,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 9.042782453674958,
+            "status": "success"
+          },
+          "timestamp": 1764553668442,
+          "signature": "d0ad215fc845b11e4ef40feeb18008bd1016497ed0815dbacbcf6b44f518a652"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 46,
+            "timestamp": 1764553672130
+          }
+        }
+      ],
+      "nonce": 44712,
+      "previousHash": "0000a7e22bd780c07ca67561a3284a4c5dd0a807b2cfbe7867cf2b83f08c662b",
+      "hash": "000003d2b7ad1ad5dea6b7f7ff5b704cdd7fe4a97513f0c7daca64d7ca0e7711"
+    },
+    {
+      "index": 47,
+      "timestamp": 1764553682142,
+      "transactions": [
+        {
+          "id": "7dfcb612f91bf3ee48edd46514d6796b",
+          "from": "user-nd3vnxmyu",
+          "to": "system",
+          "amount": 5.453088506704025,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 674.7005586610888,
+            "status": "success"
+          },
+          "timestamp": 1764553673426,
+          "signature": "2c1efd2e4e7e026facdbc38e25262dfda13d9774774b63b84870cb70c2592906"
+        },
+        {
+          "id": "f1a9e32ddedcb0039a69c3becdd3475d",
+          "from": "user-xsu08y0ec",
+          "to": "system",
+          "amount": 5.770972740593939,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 268.17764680784006,
+            "status": "success"
+          },
+          "timestamp": 1764553678428,
+          "signature": "6d375ddf594c7e7ed95e3324e303bd9eca303e616520451a4771f01e70bf7c2f"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 47,
+            "timestamp": 1764553682142
+          }
+        }
+      ],
+      "nonce": 33378,
+      "previousHash": "000003d2b7ad1ad5dea6b7f7ff5b704cdd7fe4a97513f0c7daca64d7ca0e7711",
+      "hash": "000000ad19bdfa91c07c703dc33f389b8acf0412c5efb2b4dda7386709f073c4"
+    },
+    {
+      "index": 48,
+      "timestamp": 1764553692147,
+      "transactions": [
+        {
+          "id": "7477b782fff1c4379cdd0fcd16fec436",
+          "from": "user-n2yailzju",
+          "to": "system",
+          "amount": 1.0331868891020113,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 739.7047295480961,
+            "status": "success"
+          },
+          "timestamp": 1764553683431,
+          "signature": "15385872fb9efec9ef1466140615d71cfa55ceae07a48176416e7c347875826f"
+        },
+        {
+          "id": "f0ec64f663213cc997dfb082b0283151",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 16.989175,
+              "memory": 68.6161416618993,
+              "uptime": 480.406242875,
+              "timestamp": 1764553685816
+            },
+            "blockchainMetrics": {
+              "blockCount": 48,
+              "pendingTransactions": 1,
+              "totalTransactions": 145,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "000000ad19bdfa91c07c703dc33f389b8acf0412c5efb2b4dda7386709f073c4",
+              "lastBlockTimestamp": 1764553682142
+            },
+            "timestamp": 1764553685817
+          },
+          "timestamp": 1764553685817,
+          "signature": "8e35426933ecceaedbd5b6a9a3a0348cd57c109b474507ead0e632a779f28896"
+        },
+        {
+          "id": "7e5f72f59c79650e49f7dc945fd096d0",
+          "from": "user-tbmkxm923",
+          "to": "system",
+          "amount": 6.392270096071659,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 919.8636526065085,
+            "status": "success"
+          },
+          "timestamp": 1764553688433,
+          "signature": "d6cdd524623e4050fbc5bdf9312aa8409445d708d2c4b81a3016278f550a4649"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 48,
+            "timestamp": 1764553692147
+          }
+        }
+      ],
+      "nonce": 46268,
+      "previousHash": "000000ad19bdfa91c07c703dc33f389b8acf0412c5efb2b4dda7386709f073c4",
+      "hash": "000025baa1f139239628a1f8fd5823d0d81577b0e24cfdcffc629a95b1cb1f90"
+    },
+    {
+      "index": 49,
+      "timestamp": 1764553702149,
+      "transactions": [
+        {
+          "id": "4038e4a4f1c1c19a50a36ad91b1128c8",
+          "from": "user-q08uiw0l8",
+          "to": "system",
+          "amount": 8.93607344159238,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 680.1299984515001,
+            "status": "success"
+          },
+          "timestamp": 1764553693435,
+          "signature": "8865965911dcb4710852b9343f88b84fafd14df48964803de439447346c189f5"
+        },
+        {
+          "id": "1be549a8ad26a2b17315d792406ff1f7",
+          "from": "user-274yby8he",
+          "to": "system",
+          "amount": 1.6203362158276935,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 701.7722825941192,
+            "status": "success"
+          },
+          "timestamp": 1764553698436,
+          "signature": "a48bd13b01f9b06f79b8ad4d3c09a49e7387b6828633681846d2b177e7f69ea5"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 49,
+            "timestamp": 1764553702149
+          }
+        }
+      ],
+      "nonce": 26445,
+      "previousHash": "000025baa1f139239628a1f8fd5823d0d81577b0e24cfdcffc629a95b1cb1f90",
+      "hash": "0000587d1d7b2e166b8ba8ea43d54b19abb6621969e239b9b13316263868b023"
+    },
+    {
+      "index": 50,
+      "timestamp": 1764553712150,
+      "transactions": [
+        {
+          "id": "6bbdc275d5d76acf799d8f983bdb57f1",
+          "from": "user-8jxynqi3k",
+          "to": "system",
+          "amount": 2.851013874450554,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 968.8687977315584,
+            "status": "success"
+          },
+          "timestamp": 1764553703442,
+          "signature": "3c21650d8af8f450aa56f5032ccc723e55a2bc342a4d90ab6db287a0c16887b8"
+        },
+        {
+          "id": "92c95cb92bc4111b259f4c9638bf8bf9",
+          "from": "user-44bf4v9a4",
+          "to": "system",
+          "amount": 9.99483955364687,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 698.3399765233622,
+            "status": "success"
+          },
+          "timestamp": 1764553708452,
+          "signature": "db098f05daa3f1cbfa14ef496b3ba8e383cf72f8659cdf633ebe118c908be8b6"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 50,
+            "timestamp": 1764553712150
+          }
+        }
+      ],
+      "nonce": 21515,
+      "previousHash": "0000587d1d7b2e166b8ba8ea43d54b19abb6621969e239b9b13316263868b023",
+      "hash": "0000458a20cd1561576f1e54af045b93f2f5533cd555fc0701b764635475e902"
+    },
+    {
+      "index": 51,
+      "timestamp": 1764553722152,
+      "transactions": [
+        {
+          "id": "61569df213f5dde07780d8e08ab864da",
+          "from": "user-amrmwo2vu",
+          "to": "system",
+          "amount": 6.449914408221861,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 14.20520858560792,
+            "status": "success"
+          },
+          "timestamp": 1764553713452,
+          "signature": "cae52ac31bd5bd3a58ef003527fe88ea7edd6579c8e69d86bf8e8d83bca6388f"
+        },
+        {
+          "id": "f4c4e9b267417549364dfce8236881a3",
+          "from": "user-ddsx9dy8p",
+          "to": "system",
+          "amount": 3.7206435376453206,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 849.1605340800585,
+            "status": "success"
+          },
+          "timestamp": 1764553718454,
+          "signature": "4e6f76c8f7323c1f2b003d558463364bdf4e3eecabe53730e4910182aec21b13"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 51,
+            "timestamp": 1764553722152
+          }
+        }
+      ],
+      "nonce": 29103,
+      "previousHash": "0000458a20cd1561576f1e54af045b93f2f5533cd555fc0701b764635475e902",
+      "hash": "000009169d93038c7e81fd55409d98d5b02f81ae5e55c5bf49e8c348d82289ad"
+    },
+    {
+      "index": 52,
+      "timestamp": 1764553732158,
+      "transactions": [
+        {
+          "id": "25f9eb3c83e4eb1cdc55c2b5c0580a1c",
+          "from": "user-7sdokt2ty",
+          "to": "system",
+          "amount": 8.45468069630909,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 200.33429393480895,
+            "status": "success"
+          },
+          "timestamp": 1764553723456,
+          "signature": "62e59ea2442f03ec7f083d057e88ef74711063419d5eef37fd673b42a6b6e328"
+        },
+        {
+          "id": "b88bcc6626aa4fe526412d39efb4974b",
+          "from": "user-mnclof3k7",
+          "to": "system",
+          "amount": 1.6710206517185577,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 118.75243004660607,
+            "status": "success"
+          },
+          "timestamp": 1764553728457,
+          "signature": "f8224aee66565e29920f3d5c06cfa8a904811785fd183d5baf508727b6ab3471"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 52,
+            "timestamp": 1764553732158
+          }
+        }
+      ],
+      "nonce": 133603,
+      "previousHash": "000009169d93038c7e81fd55409d98d5b02f81ae5e55c5bf49e8c348d82289ad",
+      "hash": "0000bf8a6e01dc602af7a57d830176d9f9a3122e42b30c0e230d023246268dc3"
+    },
+    {
+      "index": 53,
+      "timestamp": 1764553742159,
+      "transactions": [
+        {
+          "id": "7366f32c010126faf4e3ea3f896c324e",
+          "from": "user-cjd7glwe7",
+          "to": "system",
+          "amount": 4.438436286613705,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 754.0470258067921,
+            "status": "success"
+          },
+          "timestamp": 1764553733466,
+          "signature": "9170db009b70c6d8b66ce880ce98c76f6c363730d89909cfa30c992380114196"
+        },
+        {
+          "id": "401ccd95fa7b6342c9dfa62922b33a5a",
+          "from": "user-yni25wn1s",
+          "to": "system",
+          "amount": 5.4104658862467865,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 640.1502932591263,
+            "status": "success"
+          },
+          "timestamp": 1764553738467,
+          "signature": "dd012467db6c271e223f36ca6147d6f74bb1f0d3a9a00396a665a03d2d8837a4"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 53,
+            "timestamp": 1764553742159
+          }
+        }
+      ],
+      "nonce": 60451,
+      "previousHash": "0000bf8a6e01dc602af7a57d830176d9f9a3122e42b30c0e230d023246268dc3",
+      "hash": "0000f72da46aafd6240da92b4f0824db1d23f9803a95504c74f0517fc85ff8c4"
+    },
+    {
+      "index": 54,
+      "timestamp": 1764553752363,
+      "transactions": [
+        {
+          "id": "b69114a2b2e4cdc1f9c67adc4d49fd6f",
+          "from": "user-fczmdghhx",
+          "to": "system",
+          "amount": 8.083307744050519,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 234.79731371978409,
+            "status": "success"
+          },
+          "timestamp": 1764553743469,
+          "signature": "5c87506977b7679eb3a6a322c4b7abc1ed6573e0e2f2b8ffb63f8ef4b6124f3d"
+        },
+        {
+          "id": "87b784304b28820f856aabe3febcef75",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 18.93385,
+              "memory": 70.28166118421053,
+              "uptime": 540.408272292,
+              "timestamp": 1764553745819
+            },
+            "blockchainMetrics": {
+              "blockCount": 54,
+              "pendingTransactions": 1,
+              "totalTransactions": 164,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "0000f72da46aafd6240da92b4f0824db1d23f9803a95504c74f0517fc85ff8c4",
+              "lastBlockTimestamp": 1764553742159
+            },
+            "timestamp": 1764553745819
+          },
+          "timestamp": 1764553745820,
+          "signature": "8a816dc2ba8fcf957c8619ffa8502a8bebb5ac0ecd9b2a4c4d4c812305c09634"
+        },
+        {
+          "id": "922c98ec30a076f78c45b8d2ff5c8218",
+          "from": "user-cy10ccowt",
+          "to": "system",
+          "amount": 8.861379040399518,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 614.0347886373354,
+            "status": "success"
+          },
+          "timestamp": 1764553748472,
+          "signature": "01f5f3d4108ff276482eec3022272405acc44a63f711da5b74a5c1c319a2e1e4"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 54,
+            "timestamp": 1764553752363
+          }
+        }
+      ],
+      "nonce": 2511,
+      "previousHash": "0000f72da46aafd6240da92b4f0824db1d23f9803a95504c74f0517fc85ff8c4",
+      "hash": "0000cd870c20f13f568827c2bf38998ce8a1e91b87adf69d86c350a897f7dcf2"
+    },
+    {
+      "index": 55,
+      "timestamp": 1764553762367,
+      "transactions": [
+        {
+          "id": "5ffd67e3e2503d49a82059189815bcaa",
+          "from": "user-4jez57d2o",
+          "to": "system",
+          "amount": 9.693099583129534,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 814.409259762017,
+            "status": "success"
+          },
+          "timestamp": 1764553753498,
+          "signature": "ed3e5985ae67ee25558f726e51fb01cfdeddc350a3d5adc496a42eb133e3c1db"
+        },
+        {
+          "id": "ad1a9ccfe583db7744e4d6780a96b237",
+          "from": "user-c0ebjnjld",
+          "to": "system",
+          "amount": 0.9755249224897455,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 579.1371882991336,
+            "status": "success"
+          },
+          "timestamp": 1764553758532,
+          "signature": "25d679b81835b0b51023c3c289b360f6c95c48943026232e0b614811eca00235"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 55,
+            "timestamp": 1764553762367
+          }
+        }
+      ],
+      "nonce": 155195,
+      "previousHash": "0000cd870c20f13f568827c2bf38998ce8a1e91b87adf69d86c350a897f7dcf2",
+      "hash": "0000f57357a0e75ef9e331a29479e12aeea5422399d8db9424045f88aa311042"
+    },
+    {
+      "index": 56,
+      "timestamp": 1764553772400,
+      "transactions": [
+        {
+          "id": "b798a4b005c6ccfad56118addf0049a8",
+          "from": "user-aawuxf6xo",
+          "to": "system",
+          "amount": 2.0348428612117764,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 545.2135852134177,
+            "status": "success"
+          },
+          "timestamp": 1764553764831,
+          "signature": "85761cdb3ad6b46967a148116d522d65c0eefb8df0911dc2dcfc927b7142b7c0"
+        },
+        {
+          "id": "c02b82c858954e01a9a6ef32e9867576",
+          "from": "user-t0f8xtuts",
+          "to": "system",
+          "amount": 5.989715887904032,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 598.2610947684555,
+            "status": "success"
+          },
+          "timestamp": 1764553769837,
+          "signature": "336fef0a9164ce42fa6b3aebe9e0fe135da0584ff4acb3786c7202bfa8e78d02"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 56,
+            "timestamp": 1764553772400
+          }
+        }
+      ],
+      "nonce": 115,
+      "previousHash": "0000f57357a0e75ef9e331a29479e12aeea5422399d8db9424045f88aa311042",
+      "hash": "000028f76da3eb6f8d8062a94fd5cce484aac04d2332c7eadae4ca8c0c095724"
+    },
+    {
+      "index": 57,
+      "timestamp": 1764553782472,
+      "transactions": [
+        {
+          "id": "73c69e36456d64ed9cf625f2c557c2dd",
+          "from": "user-5d9z5cm7e",
+          "to": "system",
+          "amount": 4.027632288946272,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 183.67975121396984,
+            "status": "success"
+          },
+          "timestamp": 1764553774846,
+          "signature": "7438fa6eadff7e3c76bce8482c3fa9701f6bb25175f063b928480a778ed127fa"
+        },
+        {
+          "id": "101bb162b570b7e4ddd9632cffdce0d8",
+          "from": "user-wus210y09",
+          "to": "system",
+          "amount": 0.8366320459317445,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 547.9288625305569,
+            "status": "success"
+          },
+          "timestamp": 1764553780170,
+          "signature": "66b69594066bed964c9fc03f6575ce6df20b7058b6b2d4ae600d239369838ae8"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 57,
+            "timestamp": 1764553782472
+          }
+        }
+      ],
+      "nonce": 45130,
+      "previousHash": "000028f76da3eb6f8d8062a94fd5cce484aac04d2332c7eadae4ca8c0c095724",
+      "hash": "0000420e3e9dcf130ffb559fd2020d13dff62cd94df4423c7b9b0ad6b865b3e9"
+    },
+    {
+      "index": 58,
+      "timestamp": 1764553792773,
+      "transactions": [
+        {
+          "id": "e7b9e1e111623cd279270fa508c32cb8",
+          "from": "user-qg6kglqhh",
+          "to": "system",
+          "amount": 9.243699148998349,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 641.3348860095487,
+            "status": "success"
+          },
+          "timestamp": 1764553790529,
+          "signature": "2bc0a6d545eeab56fc26557a1be84fbcbdbe15172ac46ac0447ccea456b52328"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 58,
+            "timestamp": 1764553792773
+          }
+        }
+      ],
+      "nonce": 9828,
+      "previousHash": "0000420e3e9dcf130ffb559fd2020d13dff62cd94df4423c7b9b0ad6b865b3e9",
+      "hash": "00005e9ff3b9cdbaa0b64375c20cfe14aa2f3d86f5d1834638faede05dfd8c2c"
+    },
+    {
+      "index": 59,
+      "timestamp": 1764553804470,
+      "transactions": [
+        {
+          "id": "373d45e2d95859e6922ca534a5eed173",
+          "from": "user-cb8k4869y",
+          "to": "system",
+          "amount": 0.3153002061526333,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 633.6271751980573,
+            "status": "success"
+          },
+          "timestamp": 1764553795539,
+          "signature": "b243321b7e567bf1ec24549ae94c2b27556e21ac2db7b0f7233ff4e847ae2520"
+        },
+        {
+          "id": "4138aa239395e920c02658bda7d38429",
+          "from": "user-vtgq7qdfo",
+          "to": "system",
+          "amount": 2.465752956512941,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 701.2137690887816,
+            "status": "success"
+          },
+          "timestamp": 1764553801232,
+          "signature": "74ac00e0623e4e4c033744a64dda57d94b7a41bfcba0ad4b9db30ce88f801004"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 59,
+            "timestamp": 1764553804470
+          }
+        }
+      ],
+      "nonce": 88469,
+      "previousHash": "00005e9ff3b9cdbaa0b64375c20cfe14aa2f3d86f5d1834638faede05dfd8c2c",
+      "hash": "00007ca4039723504a9d1e65dfb0a45966cc2e2f0c1f550e9b47689b639520aa"
+    },
+    {
+      "index": 60,
+      "timestamp": 1764553826867,
+      "transactions": [
+        {
+          "id": "2623c099b96aa8d60d9f30b8b3be71ce",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 21.270623,
+              "memory": 67.21096431636155,
+              "uptime": 621.444976,
+              "timestamp": 1764553826856
+            },
+            "blockchainMetrics": {
+              "blockCount": 60,
+              "pendingTransactions": 0,
+              "totalTransactions": 182,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "00007ca4039723504a9d1e65dfb0a45966cc2e2f0c1f550e9b47689b639520aa",
+              "lastBlockTimestamp": 1764553804470
+            },
+            "timestamp": 1764553826862
+          },
+          "timestamp": 1764553826862,
+          "signature": "64b4d7a95636f21bdec954594c975fc5b426559fc2499ca5f8552ff82b585663"
+        },
+        {
+          "id": "19c2e15950f65888316e91d937d4e112",
+          "from": "user-n8k0ner5q",
+          "to": "system",
+          "amount": 9.865113395214149,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 780.8392785224949,
+            "status": "success"
+          },
+          "timestamp": 1764553826867,
+          "signature": "83c6c4f2d095e48bdadff8d60696151d0dce1cbbee27b8388a3a365714dfe9eb"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 60,
+            "timestamp": 1764553826867
+          }
+        }
+      ],
+      "nonce": 27069,
+      "previousHash": "00007ca4039723504a9d1e65dfb0a45966cc2e2f0c1f550e9b47689b639520aa",
+      "hash": "0000f1827529588ecddf607320b9d9819b60a3fe320b1a5d6da374edfcef9c4e"
+    },
+    {
+      "index": 61,
+      "timestamp": 1764553837239,
+      "transactions": [
+        {
+          "id": "e809c66e08d4a509b31b196565332f98",
+          "from": "user-ba8nwazrr",
+          "to": "system",
+          "amount": 8.746584990048838,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 405.0937781055117,
+            "status": "success"
+          },
+          "timestamp": 1764553833498,
+          "signature": "a03013c793daed3da35dd7633ae72304cc41d55ef85cac90e8ad511dd7198474"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 61,
+            "timestamp": 1764553837239
+          }
+        }
+      ],
+      "nonce": 5849,
+      "previousHash": "0000f1827529588ecddf607320b9d9819b60a3fe320b1a5d6da374edfcef9c4e",
+      "hash": "00008a154215df915eabcc64f228ad062bf1be166a6b816221b93dbfc9cee354"
+    },
+    {
+      "index": 62,
+      "timestamp": 1764553847352,
+      "transactions": [
+        {
+          "id": "161b9f7415dcd01c68762468379fbe2d",
+          "from": "user-1pw47kpmr",
+          "to": "system",
+          "amount": 3.346793940877504,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 557.5233507801753,
+            "status": "success"
+          },
+          "timestamp": 1764553838538,
+          "signature": "bed715de7d7e7ca65d0e2f18097a9afb3191291741d005778593d6a1bea2bf06"
+        },
+        {
+          "id": "3c33b702a7b8143b96cd75deff2503ff",
+          "from": "user-qasetnk3e",
+          "to": "system",
+          "amount": 0.02487207355272414,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 527.5876804544523,
+            "status": "success"
+          },
+          "timestamp": 1764553844355,
+          "signature": "aa96e5697405bb1f7e40cb546f94cc3124d9bf458e62e94cfa85e393dbeb9370"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 62,
+            "timestamp": 1764553847352
+          }
+        }
+      ],
+      "nonce": 61548,
+      "previousHash": "00008a154215df915eabcc64f228ad062bf1be166a6b816221b93dbfc9cee354",
+      "hash": "00005452ae56898d87cb8856a1e3d0fed25e097f34b786a7b406fdc432b2c64f"
+    },
+    {
+      "index": 63,
+      "timestamp": 1764553857349,
+      "transactions": [
+        {
+          "id": "1e5f8ef1b72ade133c9bc0c404d9da2c",
+          "from": "user-c3om0jdcq",
+          "to": "system",
+          "amount": 6.139306184677609,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 444.7693503336152,
+            "status": "success"
+          },
+          "timestamp": 1764553856643,
+          "signature": "1274706958b594f1bce35cbf234a6ce1a209ef2198642ea3b59270f15e9190c7"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 63,
+            "timestamp": 1764553857349
+          }
+        }
+      ],
+      "nonce": 31582,
+      "previousHash": "00005452ae56898d87cb8856a1e3d0fed25e097f34b786a7b406fdc432b2c64f",
+      "hash": "000003c47ae9cc248a183f55a3a12f4d8a610f795c36d82f569ec2996df88789"
+    },
+    {
+      "index": 64,
+      "timestamp": 1764553867830,
+      "transactions": [
+        {
+          "id": "b7546bbadf9f7f3f9f7a45e8d6caf11e",
+          "from": "user-3uz34wz65",
+          "to": "system",
+          "amount": 2.704026920672047,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 646.2140060699784,
+            "status": "success"
+          },
+          "timestamp": 1764553862749,
+          "signature": "451f3cfd354495ce8d87ab0c6863cb54d5c6b1ad3310ff84286ea552d01a5efe"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 64,
+            "timestamp": 1764553867830
+          }
+        }
+      ],
+      "nonce": 49683,
+      "previousHash": "000003c47ae9cc248a183f55a3a12f4d8a610f795c36d82f569ec2996df88789",
+      "hash": "0000f5edca44696805f7e3a569d4249ffd756e17f3b740d03f3647823752e07f"
+    },
+    {
+      "index": 65,
+      "timestamp": 1764553877850,
+      "transactions": [
+        {
+          "id": "2a3de3de78333a840206dde7c56a688d",
+          "from": "user-atfbywx5k",
+          "to": "system",
+          "amount": 5.248238369105893,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 717.2114239909178,
+            "status": "success"
+          },
+          "timestamp": 1764553875680,
+          "signature": "6075c77d9b9f3d071d1f81ec9bdf6c9d1b6048dcd3a9e177d7e7398b0cee5eb6"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 65,
+            "timestamp": 1764553877850
+          }
+        }
+      ],
+      "nonce": 179029,
+      "previousHash": "0000f5edca44696805f7e3a569d4249ffd756e17f3b740d03f3647823752e07f",
+      "hash": "0000855b714d817ccdbf9f2e1ec9e5b2012f9c0feaf64324c9837d421ee3d813"
+    },
+    {
+      "index": 66,
+      "timestamp": 1764553887851,
+      "transactions": [
+        {
+          "id": "dc3896f405428041a706f9d4473aacbc",
+          "from": "user-njkug4po3",
+          "to": "system",
+          "amount": 1.7422130537794067,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 42.813599575535655,
+            "status": "success"
+          },
+          "timestamp": 1764553883421,
+          "signature": "142f764abd4bdc63a28c9c11dd63482fd1ee99446fb1d08d1e92a1b0d01781cf"
+        },
+        {
+          "id": "e79986cb7146dd19babc39a25cf4aa9b",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 23.559352,
+              "memory": 69.61024653175058,
+              "uptime": 681.458819125,
+              "timestamp": 1764553886871
+            },
+            "blockchainMetrics": {
+              "blockCount": 66,
+              "pendingTransactions": 1,
+              "totalTransactions": 196,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "0000855b714d817ccdbf9f2e1ec9e5b2012f9c0feaf64324c9837d421ee3d813",
+              "lastBlockTimestamp": 1764553877850
+            },
+            "timestamp": 1764553886909
+          },
+          "timestamp": 1764553886910,
+          "signature": "2005d21ae9189e5274d274122f2dcdcbc72885c898d4e4760570b6e07a6daef5"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 66,
+            "timestamp": 1764553887851
+          }
+        }
+      ],
+      "nonce": 39878,
+      "previousHash": "0000855b714d817ccdbf9f2e1ec9e5b2012f9c0feaf64324c9837d421ee3d813",
+      "hash": "0000d9c1196d635e1a03b7fa1af25827fd2e30844f1bf8280ce8e62e1f48043f"
+    },
+    {
+      "index": 67,
+      "timestamp": 1764553897876,
+      "transactions": [
+        {
+          "id": "9f493671459a3d7ba214f011d02b73c5",
+          "from": "user-ou77zv4sg",
+          "to": "system",
+          "amount": 9.294875076279077,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 911.5889910880701,
+            "status": "success"
+          },
+          "timestamp": 1764553888515,
+          "signature": "15f0bed0f3b91fdec9d79bdec492af35d2c1f867751d241980225a794e814f56"
+        },
+        {
+          "id": "d820073e15b04c96db62780cc9d8f586",
+          "from": "user-5qv1esrb7",
+          "to": "system",
+          "amount": 8.300950624981155,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 237.6875581774407,
+            "status": "success"
+          },
+          "timestamp": 1764553893518,
+          "signature": "d21d651d177b165192d20cf19f9529498ccb169211f47a6195615227b0e2f96c"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 67,
+            "timestamp": 1764553897876
+          }
+        }
+      ],
+      "nonce": 122151,
+      "previousHash": "0000d9c1196d635e1a03b7fa1af25827fd2e30844f1bf8280ce8e62e1f48043f",
+      "hash": "00006c5cd7252c23120a0d9283ebc766ee71d6c03d5405b1bcc122b29b957884"
+    },
+    {
+      "index": 68,
+      "timestamp": 1764553908017,
+      "transactions": [
+        {
+          "id": "d550e56d3d3299dafb1b2b136ffa29d0",
+          "from": "user-a6xz3hz7h",
+          "to": "system",
+          "amount": 8.14207272977667,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 803.1118314474994,
+            "status": "success"
+          },
+          "timestamp": 1764553900055,
+          "signature": "2a2763b855703105f080fc7bde6d0aea0eb5a2ef2f9523bf80b0879679235d1e"
+        },
+        {
+          "id": "3575fdf7bbee9b89fa070827a032cc6c",
+          "from": "user-mk3iewrmu",
+          "to": "system",
+          "amount": 6.98011025441266,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 695.6516060981297,
+            "status": "success"
+          },
+          "timestamp": 1764553905062,
+          "signature": "59addb426eda3864bb01fc8db4e9423caaac8359b90159085e55e417d374509f"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 68,
+            "timestamp": 1764553908017
+          }
+        }
+      ],
+      "nonce": 82256,
+      "previousHash": "00006c5cd7252c23120a0d9283ebc766ee71d6c03d5405b1bcc122b29b957884",
+      "hash": "00003243882cdaac366d9b496ba6f341f7b36123b785d4e4201f657c1ac2ee14"
+    },
+    {
+      "index": 69,
+      "timestamp": 1764553918019,
+      "transactions": [
+        {
+          "id": "33c3aedcf5284120ead194c35c4d2834",
+          "from": "user-yfehuzxuk",
+          "to": "system",
+          "amount": 2.633972194342389,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 490.4608475943755,
+            "status": "success"
+          },
+          "timestamp": 1764553910092,
+          "signature": "31b788716374eee5b73d857ec60755bf0ef04108aeb1bbc44edfa70e056c369d"
+        },
+        {
+          "id": "6a6d872f2d46a975f4ac80bff706b66d",
+          "from": "user-3v4tt04tl",
+          "to": "system",
+          "amount": 3.385011182933706,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 755.4592549392664,
+            "status": "success"
+          },
+          "timestamp": 1764553915388,
+          "signature": "f8dd5070847a3e88df9fd912970b11a24d46bfcda8e9219ee01963147177c3ac"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 69,
+            "timestamp": 1764553918019
+          }
+        }
+      ],
+      "nonce": 60486,
+      "previousHash": "00003243882cdaac366d9b496ba6f341f7b36123b785d4e4201f657c1ac2ee14",
+      "hash": "00000174c69225e8bbb7fcd36cbc29a750d25c3158a1ce2793290930d8c750f8"
+    },
+    {
+      "index": 70,
+      "timestamp": 1764553928020,
+      "transactions": [
+        {
+          "id": "a4d48affbba902b47ef8c2ec67f6b697",
+          "from": "user-va8n44m39",
+          "to": "system",
+          "amount": 8.770010469333142,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 161.37589129228047,
+            "status": "success"
+          },
+          "timestamp": 1764553920372,
+          "signature": "b27d0b1c950b4049914be8c987996cdf188f14390010be31187b10c4889e9af3"
+        },
+        {
+          "id": "d249c8b07c453ff4891aeb12d75a60c6",
+          "from": "user-56twqxslp",
+          "to": "system",
+          "amount": 5.790619122060212,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 287.03820408884417,
+            "status": "success"
+          },
+          "timestamp": 1764553925804,
+          "signature": "f4278789e50ff67033ae824b3be283cc6ca936054264bd38668c587b34d288e9"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 70,
+            "timestamp": 1764553928020
+          }
+        }
+      ],
+      "nonce": 19645,
+      "previousHash": "00000174c69225e8bbb7fcd36cbc29a750d25c3158a1ce2793290930d8c750f8",
+      "hash": "0000f06518dc2880953df8b09685552425328ea9fe9b19de30af1bd42e0e1ec6"
+    },
+    {
+      "index": 71,
+      "timestamp": 1764553938023,
+      "transactions": [
+        {
+          "id": "3a275d4bf0bdc328ebe7610157e61df3",
+          "from": "user-djna5klmd",
+          "to": "system",
+          "amount": 3.178173864516718,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 215.48509883938794,
+            "status": "success"
+          },
+          "timestamp": 1764553930685,
+          "signature": "53a046c0767491acd0dd945801f1863ee85a96e905ef8099b57b9fb84c29b11f"
+        },
+        {
+          "id": "a49552b20e2e739026993140ddc5f9d6",
+          "from": "user-qa4qk5gc7",
+          "to": "system",
+          "amount": 3.559686946272138,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 535.9914791586973,
+            "status": "success"
+          },
+          "timestamp": 1764553935690,
+          "signature": "205c0e8031edcd9b7440008d5757b9c9897b0c5e5b03bc396660e6ae0df340bc"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 71,
+            "timestamp": 1764553938023
+          }
+        }
+      ],
+      "nonce": 30436,
+      "previousHash": "0000f06518dc2880953df8b09685552425328ea9fe9b19de30af1bd42e0e1ec6",
+      "hash": "0000ccd5c8fecb10d13e993d413e6edde071e96ec9f996e03204ca48c95df329"
+    },
+    {
+      "index": 72,
+      "timestamp": 1764553948024,
+      "transactions": [
+        {
+          "id": "99fe19a600bb1cdff7c630e37b5d5088",
+          "from": "user-wwyb4fqnm",
+          "to": "system",
+          "amount": 5.25362479195314,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 222.7642933895808,
+            "status": "success"
+          },
+          "timestamp": 1764553940689,
+          "signature": "46c61cc3891c86542a317312beec88c9104ba68c78ad1ad58e4958d6901b35b8"
+        },
+        {
+          "id": "f70b297da299f817c0a9dd6f76141ac6",
+          "from": "user-67u1asx45",
+          "to": "system",
+          "amount": 2.7092341353085003,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 158.15332581656793,
+            "status": "success"
+          },
+          "timestamp": 1764553945694,
+          "signature": "810f5d70d6e4aa84d9017ab6bfa315e02c69f39ef1105b2a22b404191a92d944"
+        },
+        {
+          "id": "cad19f9590efa5bc883513fa5afd0621",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 26.142591,
+              "memory": 69.93394236270024,
+              "uptime": 741.448963834,
+              "timestamp": 1764553946862
+            },
+            "blockchainMetrics": {
+              "blockCount": 72,
+              "pendingTransactions": 2,
+              "totalTransactions": 214,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "0000ccd5c8fecb10d13e993d413e6edde071e96ec9f996e03204ca48c95df329",
+              "lastBlockTimestamp": 1764553938023
+            },
+            "timestamp": 1764553946864
+          },
+          "timestamp": 1764553946864,
+          "signature": "6b1fcfaf61e804f05e23b7ba8dcb925803c5a8607500ef0db0c6a2a2e445a982"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 72,
+            "timestamp": 1764553948024
+          }
+        }
+      ],
+      "nonce": 133259,
+      "previousHash": "0000ccd5c8fecb10d13e993d413e6edde071e96ec9f996e03204ca48c95df329",
+      "hash": "0000fe58a0060f52aa543c286e0b95f435647020a22156c2ade50d0b09aeab73"
+    },
+    {
+      "index": 73,
+      "timestamp": 1764553958025,
+      "transactions": [
+        {
+          "id": "60d0d89bd902927c59f8beb64071499a",
+          "from": "user-kcaymmb6w",
+          "to": "system",
+          "amount": 8.133826744199402,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 10.36456330918023,
+            "status": "success"
+          },
+          "timestamp": 1764553950693,
+          "signature": "fa591f3b2e7850c0d07bb4ff0a197463897836b1bd2171284087e41d2c73ce21"
+        },
+        {
+          "id": "c24a8f698d1f4656b114e8bb9bb34f99",
+          "from": "user-06w0fojzq",
+          "to": "system",
+          "amount": 9.035252205620953,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 700.4951635661309,
+            "status": "success"
+          },
+          "timestamp": 1764553955696,
+          "signature": "4554b56e5a22f56eeccd74bb678ab6e5fc6d2688c1e78e15ee3e177101e415dd"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 73,
+            "timestamp": 1764553958025
+          }
+        }
+      ],
+      "nonce": 3901,
+      "previousHash": "0000fe58a0060f52aa543c286e0b95f435647020a22156c2ade50d0b09aeab73",
+      "hash": "0000b41df953bf10a0121db6fdd857bd8d16fdd90471a195a897971ca76c88bf"
+    },
+    {
+      "index": 74,
+      "timestamp": 1764553968026,
+      "transactions": [
+        {
+          "id": "849179c570295a6ab150c80ee3b8f3d1",
+          "from": "user-wcqpvj2pq",
+          "to": "system",
+          "amount": 9.474190062811665,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 621.4276009949862,
+            "status": "success"
+          },
+          "timestamp": 1764553960697,
+          "signature": "a81cc97203d8a993b46170aa7ce7ae5c4eccf3f2e6ed05553b1500982ffed5b1"
+        },
+        {
+          "id": "339b8eb7fdb3a20bdd481b15f1d5f380",
+          "from": "user-lo91wq6pa",
+          "to": "system",
+          "amount": 5.334957305338097,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 57.70660763907398,
+            "status": "success"
+          },
+          "timestamp": 1764553965788,
+          "signature": "6c65f4e75dd27d737c675b1fd5d1aad0d91664a2bcfeddc895bf8df775c173bc"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 74,
+            "timestamp": 1764553968026
+          }
+        }
+      ],
+      "nonce": 26237,
+      "previousHash": "0000b41df953bf10a0121db6fdd857bd8d16fdd90471a195a897971ca76c88bf",
+      "hash": "0000217b621da445d5a3feb38522aba2b0ebac4bb543a4db9473c327578c3db7"
+    },
+    {
+      "index": 75,
+      "timestamp": 1764553978027,
+      "transactions": [
+        {
+          "id": "4cb54bcd3a321831be37cb0c1023961f",
+          "from": "user-d4mx1ck5p",
+          "to": "system",
+          "amount": 0.5563358853357347,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 333.01520633250936,
+            "status": "success"
+          },
+          "timestamp": 1764553970772,
+          "signature": "f2a63334daea7cc6c11c126c42d05980bb7e85478eb18dba994e84d3515c1785"
+        },
+        {
+          "id": "a9de4d8ad058fd9adbbba232f5871f2d",
+          "from": "user-l11aqqoia",
+          "to": "system",
+          "amount": 6.715339921065819,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 572.2624865007548,
+            "status": "success"
+          },
+          "timestamp": 1764553975775,
+          "signature": "95e3e724bb563520a7474e9981197a49e190aba33406fe616cbd70e9cf0f3fb2"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 75,
+            "timestamp": 1764553978027
+          }
+        }
+      ],
+      "nonce": 12791,
+      "previousHash": "0000217b621da445d5a3feb38522aba2b0ebac4bb543a4db9473c327578c3db7",
+      "hash": "00003aa24eb35fe445d8ec6f8dc4a3ed8d87fa402097e753d41fec298da73359"
+    },
+    {
+      "index": 76,
+      "timestamp": 1764553988030,
+      "transactions": [
+        {
+          "id": "e3603f77b0fd4f56157102afe6b31a70",
+          "from": "user-02ft7l2y7",
+          "to": "system",
+          "amount": 2.4424513266788095,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 757.3887105566515,
+            "status": "success"
+          },
+          "timestamp": 1764553980778,
+          "signature": "f052dfb30f8b58d308d710bfa8e43217ec477c7068635074f861eb0b8dd757a0"
+        },
+        {
+          "id": "405f5a2bd4ae3d1e2c597728d8724fdd",
+          "from": "user-cjkperl2f",
+          "to": "system",
+          "amount": 6.39245537784239,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 1.7590499002697602,
+            "status": "success"
+          },
+          "timestamp": 1764553985779,
+          "signature": "52ac1cf7f5c2590e1bca4d86141b486a605dbfa33eb68a9216a9a97fa441921d"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 76,
+            "timestamp": 1764553988030
+          }
+        }
+      ],
+      "nonce": 98622,
+      "previousHash": "00003aa24eb35fe445d8ec6f8dc4a3ed8d87fa402097e753d41fec298da73359",
+      "hash": "00005368d779e2bd5bc14e301bdf04451c26c038b741685dec574587a905ef5a"
+    },
+    {
+      "index": 77,
+      "timestamp": 1764553998032,
+      "transactions": [
+        {
+          "id": "84fd58d559bd8cdc8cc8671b029a5cab",
+          "from": "user-fays4hgv0",
+          "to": "system",
+          "amount": 0.7257503187069037,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 414.9423932992733,
+            "status": "success"
+          },
+          "timestamp": 1764553990783,
+          "signature": "df457ad9c23b374ca5367dee70ee690073c95e6475e339784a61b7ffe76f8f38"
+        },
+        {
+          "id": "62d39b5247d267c3dfb56a12304b0a88",
+          "from": "user-tcih2ecxr",
+          "to": "system",
+          "amount": 0.055228154553892406,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 559.805198847886,
+            "status": "success"
+          },
+          "timestamp": 1764553995784,
+          "signature": "35c0d979cf6ef7cd06df0d93cd871e1021f38067c3249992860bf507ab4a4257"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 77,
+            "timestamp": 1764553998032
+          }
+        }
+      ],
+      "nonce": 58836,
+      "previousHash": "00005368d779e2bd5bc14e301bdf04451c26c038b741685dec574587a905ef5a",
+      "hash": "00001e6f27e68ab33ed00514c235585f02131689c9e111ea11cab8a6da794ddc"
+    },
+    {
+      "index": 78,
+      "timestamp": 1764554008032,
+      "transactions": [
+        {
+          "id": "d3668c95047bd21710241c2ded597bbb",
+          "from": "user-gqc6g6gqa",
+          "to": "system",
+          "amount": 2.7659115171137882,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 756.1472587523452,
+            "status": "success"
+          },
+          "timestamp": 1764554000787,
+          "signature": "e78e991229768ec1f76220f8bf37c8627b2e5f708db0acf2673980ae54ea4886"
+        },
+        {
+          "id": "a26cc84e97f830dbcf257c48553667e7",
+          "from": "user-eroo5ysdf",
+          "to": "system",
+          "amount": 8.830025543443936,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 164.41305033548082,
+            "status": "success"
+          },
+          "timestamp": 1764554005789,
+          "signature": "f90b92a64b5222c71f8e655dbad46007a8a4675bf8dc3f94550dbd36ea23f381"
+        },
+        {
+          "id": "a1142123ca6de07ca892cb9d31bf76fb",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 27.925214,
+              "memory": 67.33661189742153,
+              "uptime": 801.450213375,
+              "timestamp": 1764554006864
+            },
+            "blockchainMetrics": {
+              "blockCount": 78,
+              "pendingTransactions": 2,
+              "totalTransactions": 233,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "00001e6f27e68ab33ed00514c235585f02131689c9e111ea11cab8a6da794ddc",
+              "lastBlockTimestamp": 1764553998032
+            },
+            "timestamp": 1764554006865
+          },
+          "timestamp": 1764554006865,
+          "signature": "7b1fabc93cc7a57c7b2c3f7d9193b152d0f34f639665941492e3c6bb1735949b"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 78,
+            "timestamp": 1764554008032
+          }
+        }
+      ],
+      "nonce": 39562,
+      "previousHash": "00001e6f27e68ab33ed00514c235585f02131689c9e111ea11cab8a6da794ddc",
+      "hash": "0000e34beaf7c243b87c5323e52774f70f848f7b3f8a8cafccb9c39768b95df7"
+    },
+    {
+      "index": 79,
+      "timestamp": 1764554018033,
+      "transactions": [
+        {
+          "id": "a385b6ed24bf4f5c8f03a33d4d4a8133",
+          "from": "user-1u9yfk8w4",
+          "to": "system",
+          "amount": 4.733354291768133,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 680.5317225164096,
+            "status": "success"
+          },
+          "timestamp": 1764554010790,
+          "signature": "9187206c6968f5176b0311329daebef664fa4b66db61e684d3b853a4deb7f351"
+        },
+        {
+          "id": "bbd6114d4e632de000c86e36c5e26866",
+          "from": "user-raryywm2d",
+          "to": "system",
+          "amount": 6.085008344692275,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 917.4743533257614,
+            "status": "success"
+          },
+          "timestamp": 1764554015791,
+          "signature": "d7ebf99a587fe15a1ff02534d9328827e58108b223aee6718b3168bd81a9bb24"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 79,
+            "timestamp": 1764554018033
+          }
+        }
+      ],
+      "nonce": 13741,
+      "previousHash": "0000e34beaf7c243b87c5323e52774f70f848f7b3f8a8cafccb9c39768b95df7",
+      "hash": "00006e010ba118dd7916d2fdc896f6405e7053dbe96f3d23dccfac5c568138ac"
+    },
+    {
+      "index": 80,
+      "timestamp": 1764554028033,
+      "transactions": [
+        {
+          "id": "6ce5a1c2e04f2c5c5fa5506ef19ca643",
+          "from": "user-3v0k33ijn",
+          "to": "system",
+          "amount": 6.623098068657485,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 808.7347140281038,
+            "status": "success"
+          },
+          "timestamp": 1764554020793,
+          "signature": "78b9c527283c45b63b268ccaa3559f9ef19ac42d693cfff06ae8503e26e71d2e"
+        },
+        {
+          "id": "3e002ecec4d217246461b49d2a2e36c3",
+          "from": "user-gqoak6ird",
+          "to": "system",
+          "amount": 2.573740453920208,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 647.8206604820938,
+            "status": "success"
+          },
+          "timestamp": 1764554025795,
+          "signature": "6dcd022bd9e06c9cd052c9fd685399e8e6bb2a94f2ad71dbdee812ba4d2f39fc"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 80,
+            "timestamp": 1764554028033
+          }
+        }
+      ],
+      "nonce": 9930,
+      "previousHash": "00006e010ba118dd7916d2fdc896f6405e7053dbe96f3d23dccfac5c568138ac",
+      "hash": "0000d991ca425d137c04e5d5268d0f18a8e4ad27f72da62a95fdf66a0c0aad07"
+    },
+    {
+      "index": 81,
+      "timestamp": 1764554038033,
+      "transactions": [
+        {
+          "id": "49546d5722147f454002746eca854846",
+          "from": "user-55o5y91ga",
+          "to": "system",
+          "amount": 2.628695786559321,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 688.7838799691813,
+            "status": "success"
+          },
+          "timestamp": 1764554030798,
+          "signature": "333996dc599d878cc7435a1f69792d2afeb31f0ff390ff07a9eff7e6138fe327"
+        },
+        {
+          "id": "d8c2ce2fc0eba8a7f493be0702687173",
+          "from": "user-cfy4wuo8l",
+          "to": "system",
+          "amount": 2.380689181692266,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 185.092365332566,
+            "status": "success"
+          },
+          "timestamp": 1764554035799,
+          "signature": "eb5bf2ef006957e97c84d2932a67d30984092a3fa40d300f3afff38572cce70b"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 81,
+            "timestamp": 1764554038033
+          }
+        }
+      ],
+      "nonce": 98912,
+      "previousHash": "0000d991ca425d137c04e5d5268d0f18a8e4ad27f72da62a95fdf66a0c0aad07",
+      "hash": "0000a30c283865dc2d06b5c85595482c0f0857388d589961b38fbf8dce50a487"
+    },
+    {
+      "index": 82,
+      "timestamp": 1764554048035,
+      "transactions": [
+        {
+          "id": "cb449e7adf4e7e7aa0964d0c5385b794",
+          "from": "user-5vm0kb7f3",
+          "to": "system",
+          "amount": 2.7778557021884764,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 970.7616075535741,
+            "status": "success"
+          },
+          "timestamp": 1764554040802,
+          "signature": "d1ca73164e585248b1076c568d14f646942a2c616ec949000a60c4e629a73a1f"
+        },
+        {
+          "id": "b0ba58db3a6c3c721171eade835267f0",
+          "from": "user-rv7ewqz9r",
+          "to": "system",
+          "amount": 4.964988537599469,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 705.9860292562583,
+            "status": "success"
+          },
+          "timestamp": 1764554045813,
+          "signature": "b01993de7eb3659c864899193f52644c7a94473c87d9ad0e34b2014fae31b4cd"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 82,
+            "timestamp": 1764554048035
+          }
+        }
+      ],
+      "nonce": 17428,
+      "previousHash": "0000a30c283865dc2d06b5c85595482c0f0857388d589961b38fbf8dce50a487",
+      "hash": "0000cbde66e2baeee93a595dddc99968e4b90402ab51ad99726c89076fd56380"
+    },
+    {
+      "index": 83,
+      "timestamp": 1764554058039,
+      "transactions": [
+        {
+          "id": "573e448e3db67aa2de2e3aa9c572018b",
+          "from": "user-omb5tmx0w",
+          "to": "system",
+          "amount": 8.855038849164519,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 328.94779443357345,
+            "status": "success"
+          },
+          "timestamp": 1764554050811,
+          "signature": "de7465b8b552e60fa82e558a8bf2c0b53ee26096beeb6359214c5402faa43d32"
+        },
+        {
+          "id": "eecfdc3b14b9acab17fd0f554ee3ca2f",
+          "from": "user-httdim5zh",
+          "to": "system",
+          "amount": 0.42557373686083366,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 585.0075343068113,
+            "status": "success"
+          },
+          "timestamp": 1764554055812,
+          "signature": "66dad1aad681dab26bc1a67e71e4fdfaed95a70c7e7639222df0dab32c70708d"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 83,
+            "timestamp": 1764554058039
+          }
+        }
+      ],
+      "nonce": 145510,
+      "previousHash": "0000cbde66e2baeee93a595dddc99968e4b90402ab51ad99726c89076fd56380",
+      "hash": "000017dc8681bf757f3b2acaed5cca0527a237ca426f0744396b48c2281d5aa3"
+    },
+    {
+      "index": 84,
+      "timestamp": 1764554068040,
+      "transactions": [
+        {
+          "id": "87a4058df0ac8a887756157fa205414e",
+          "from": "user-o7o1kxpqf",
+          "to": "system",
+          "amount": 0.2559652895437381,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 350.9347380415495,
+            "status": "success"
+          },
+          "timestamp": 1764554060813,
+          "signature": "e4f3fcc3f28a61df9015ec19323d047a6357cdf256b2eec27c0dae0ccd49cae0"
+        },
+        {
+          "id": "c4d47ed1f161572b1dbc770c00622f98",
+          "from": "user-cccjq1tn1",
+          "to": "system",
+          "amount": 1.325654014887383,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 53.005633751962655,
+            "status": "success"
+          },
+          "timestamp": 1764554065816,
+          "signature": "e99f733f4f179207ca354485f8862d62dffbcdb4efc809b96f8b01b6543be654"
+        },
+        {
+          "id": "e9bee139f6d96cc0744fcbc987e798d0",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 29.586084,
+              "memory": 72.46323658211884,
+              "uptime": 861.451870917,
+              "timestamp": 1764554066866
+            },
+            "blockchainMetrics": {
+              "blockCount": 84,
+              "pendingTransactions": 2,
+              "totalTransactions": 252,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "000017dc8681bf757f3b2acaed5cca0527a237ca426f0744396b48c2281d5aa3",
+              "lastBlockTimestamp": 1764554058039
+            },
+            "timestamp": 1764554066868
+          },
+          "timestamp": 1764554066868,
+          "signature": "ab6b3bebe7317d37b7b8b6a4625de98eb9f2f0d914d1e5c3566f65740e502ce8"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 84,
+            "timestamp": 1764554068040
+          }
+        }
+      ],
+      "nonce": 65421,
+      "previousHash": "000017dc8681bf757f3b2acaed5cca0527a237ca426f0744396b48c2281d5aa3",
+      "hash": "0000b11fa816fb9db0af9d7278709b752ba1ee22364f2286b8a7ffcb3fcd4a6d"
+    },
+    {
+      "index": 85,
+      "timestamp": 1764554078041,
+      "transactions": [
+        {
+          "id": "d524e1bb0d78dc779d3cab05a3916237",
+          "from": "user-45rryptk8",
+          "to": "system",
+          "amount": 9.112542836293853,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 758.6711900847523,
+            "status": "success"
+          },
+          "timestamp": 1764554070821,
+          "signature": "6ad67d83637f7cd880a18560430c9edd0b4fb2c6d057baaeb9b8b1235802b24d"
+        },
+        {
+          "id": "9de38b6da9a60f817649dcadf3c4ea47",
+          "from": "user-4ssez802c",
+          "to": "system",
+          "amount": 9.255231679248395,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 840.4441000487948,
+            "status": "success"
+          },
+          "timestamp": 1764554075823,
+          "signature": "845fb97a643c3ff903dfc1da293a8c1be9161ac487671856736d8af25eda3e9f"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 85,
+            "timestamp": 1764554078041
+          }
+        }
+      ],
+      "nonce": 31106,
+      "previousHash": "0000b11fa816fb9db0af9d7278709b752ba1ee22364f2286b8a7ffcb3fcd4a6d",
+      "hash": "000093917fe1b36c16c930a88d9ab80526041b910160e40a6d3043377557ef54"
+    },
+    {
+      "index": 86,
+      "timestamp": 1764554088042,
+      "transactions": [
+        {
+          "id": "c950eeb1fea65d1cc44ea1b294a91b6f",
+          "from": "user-qp1zwnazr",
+          "to": "system",
+          "amount": 4.173853398099709,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 723.5492981083545,
+            "status": "success"
+          },
+          "timestamp": 1764554080824,
+          "signature": "ed043326a9489da32c7690fab517bb18e02946f81f39dec04ee21289ad844f86"
+        },
+        {
+          "id": "a3c1a4ec8cd33b3a26eea630909f824d",
+          "from": "user-bfwfzmv8e",
+          "to": "system",
+          "amount": 2.896785299787348,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 383.7336866580976,
+            "status": "success"
+          },
+          "timestamp": 1764554085824,
+          "signature": "e7cf80974e1e5acadb6c4b2bbad430f714d401829e1eae951172f8a134912f33"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 86,
+            "timestamp": 1764554088042
+          }
+        }
+      ],
+      "nonce": 67849,
+      "previousHash": "000093917fe1b36c16c930a88d9ab80526041b910160e40a6d3043377557ef54",
+      "hash": "0000f487cccdfe4393b9f40c5baea696c8e74a490447642dacaec4ef5ee04559"
+    },
+    {
+      "index": 87,
+      "timestamp": 1764554098044,
+      "transactions": [
+        {
+          "id": "8afd08ec1eb1b87b7df175c502379f81",
+          "from": "user-bxeqrzsbr",
+          "to": "system",
+          "amount": 9.169306588990253,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 792.197520212615,
+            "status": "success"
+          },
+          "timestamp": 1764554090826,
+          "signature": "4c275e4829d3a339e215bf819541f8958bad4ba19a2b292c62a827a86bab29d8"
+        },
+        {
+          "id": "da3af63f90b730bac011f88c258ccee4",
+          "from": "user-z6lr79u1x",
+          "to": "system",
+          "amount": 4.043847729793391,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 777.4502461305943,
+            "status": "success"
+          },
+          "timestamp": 1764554095828,
+          "signature": "c456bccf4378e47e30ad83c13d18bee0508b110d2391b7a456bb2b15f5dae765"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 87,
+            "timestamp": 1764554098044
+          }
+        }
+      ],
+      "nonce": 18219,
+      "previousHash": "0000f487cccdfe4393b9f40c5baea696c8e74a490447642dacaec4ef5ee04559",
+      "hash": "0000d7bdc37938b7c13e768589c94c437403c11668fd894af9dfec5e10238f8e"
+    },
+    {
+      "index": 88,
+      "timestamp": 1764554108046,
+      "transactions": [
+        {
+          "id": "0c489ced76a3164d315ad3399d8891c1",
+          "from": "user-6gsfzifi1",
+          "to": "system",
+          "amount": 5.874875172024625,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 458.5723648679303,
+            "status": "success"
+          },
+          "timestamp": 1764554100829,
+          "signature": "7ef07d1f52e288c4524d4fb7d00de60a62b7ddb6070cacf91798b13cb7144190"
+        },
+        {
+          "id": "4ddf720f5008eb63bd494cc4fbccde99",
+          "from": "user-mgpyttkfv",
+          "to": "system",
+          "amount": 5.370589958755467,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 265.4650608136238,
+            "status": "success"
+          },
+          "timestamp": 1764554105830,
+          "signature": "f11414bae5560eefb38f4a32b4b2991b1318e455e006b3aa00d91a8f92294899"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 88,
+            "timestamp": 1764554108046
+          }
+        }
+      ],
+      "nonce": 118631,
+      "previousHash": "0000d7bdc37938b7c13e768589c94c437403c11668fd894af9dfec5e10238f8e",
+      "hash": "000062c38433faaff7a37af92dd25e4fa97cc079bbd577737b4ac0b7980aee90"
+    },
+    {
+      "index": 89,
+      "timestamp": 1764554118046,
+      "transactions": [
+        {
+          "id": "95e2cec0a55ed2ebf1693b2d431104c5",
+          "from": "user-odfx2a0mm",
+          "to": "system",
+          "amount": 3.2838067166331375,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 441.2755415355185,
+            "status": "success"
+          },
+          "timestamp": 1764554110831,
+          "signature": "d57658e04a13316a970a16400bce10ddbfeda2f70e8e8d75baefdcbbe902f253"
+        },
+        {
+          "id": "3a6851389d717c0c8c7b2010d7a013e2",
+          "from": "user-u8y852hy4",
+          "to": "system",
+          "amount": 2.4084908993704346,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 821.7724826797759,
+            "status": "success"
+          },
+          "timestamp": 1764554115832,
+          "signature": "a26bc9a9f8703c3a220807956e57fd11eecc8898467710d524fc24485369b98f"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 89,
+            "timestamp": 1764554118046
+          }
+        }
+      ],
+      "nonce": 8763,
+      "previousHash": "000062c38433faaff7a37af92dd25e4fa97cc079bbd577737b4ac0b7980aee90",
+      "hash": "0000052c2a12e33ab9df63616e4f90e408ac7900d9c9fa596da38182901e31f8"
+    },
+    {
+      "index": 90,
+      "timestamp": 1764554128047,
+      "transactions": [
+        {
+          "id": "2d25df98e5181a67793ca1da5b7925b9",
+          "from": "user-yv47gilki",
+          "to": "system",
+          "amount": 3.7513640789970393,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 329.49528272336306,
+            "status": "success"
+          },
+          "timestamp": 1764554120835,
+          "signature": "1e13728ab9c839fb69d910ac0b5bdb62cd846eb8670c3bd2eacc2b5dca5b26c1"
+        },
+        {
+          "id": "863eb3b70825df1a25de3ea0102f294d",
+          "from": "user-84cijkoe6",
+          "to": "system",
+          "amount": 5.722770688119894,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 435.04914845268996,
+            "status": "success"
+          },
+          "timestamp": 1764554125837,
+          "signature": "07f1b91f938b76b500e507a3458e42b92b361e4b8557785b4491687ccc0f7d26"
+        },
+        {
+          "id": "be46abbf56fad6d4715c21446858cbeb",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 31.05496,
+              "memory": 64.19727828023758,
+              "uptime": 921.452550125,
+              "timestamp": 1764554126868
+            },
+            "blockchainMetrics": {
+              "blockCount": 90,
+              "pendingTransactions": 2,
+              "totalTransactions": 271,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "0000052c2a12e33ab9df63616e4f90e408ac7900d9c9fa596da38182901e31f8",
+              "lastBlockTimestamp": 1764554118046
+            },
+            "timestamp": 1764554126870
+          },
+          "timestamp": 1764554126870,
+          "signature": "27233599bfcdc48ad4a0e6e8acce54bab31be54b055e6eef35e1e2015530a7db"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 90,
+            "timestamp": 1764554128047
+          }
+        }
+      ],
+      "nonce": 79959,
+      "previousHash": "0000052c2a12e33ab9df63616e4f90e408ac7900d9c9fa596da38182901e31f8",
+      "hash": "00005e34b24edb5a11e522105ba2c02d1fd36275592f43c3d2b41ade34c45ac5"
+    },
+    {
+      "index": 91,
+      "timestamp": 1764554138048,
+      "transactions": [
+        {
+          "id": "7ebedd5d90a1e8e1ec0e0b2b82d86dfc",
+          "from": "user-99o1ofyf4",
+          "to": "system",
+          "amount": 6.9189877789144205,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 840.9007971888105,
+            "status": "success"
+          },
+          "timestamp": 1764554130942,
+          "signature": "82926338a5e48deee5acbe3091ee1406c7e16246efb2d54102996b9cfcd34f2d"
+        },
+        {
+          "id": "0759497190c03b67391bf6859fa1de00",
+          "from": "user-pe61tw0cd",
+          "to": "system",
+          "amount": 8.261550295430686,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 595.1586945240246,
+            "status": "success"
+          },
+          "timestamp": 1764554135863,
+          "signature": "3cd530324bd2cec9c5b8126d860d17950bfefd447ff4545e9959a6daca472ee4"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 91,
+            "timestamp": 1764554138048
+          }
+        }
+      ],
+      "nonce": 7548,
+      "previousHash": "00005e34b24edb5a11e522105ba2c02d1fd36275592f43c3d2b41ade34c45ac5",
+      "hash": "0000fb9b4baba560c5dd1409d6131af1eab738b9def8eab38a14429be26d3e62"
+    },
+    {
+      "index": 92,
+      "timestamp": 1764554148050,
+      "transactions": [
+        {
+          "id": "6c8aaf18b2aeeba4cb9997ef04276e58",
+          "from": "user-53ynu5imt",
+          "to": "system",
+          "amount": 0.6566687522918335,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 342.9987893173951,
+            "status": "success"
+          },
+          "timestamp": 1764554140865,
+          "signature": "5623a778adf811da9d0c890ccbf9b37dc52618534a38e845852c5a330a7ac9d3"
+        },
+        {
+          "id": "de1e7d759bdb68f765c0a434e9f089d9",
+          "from": "user-zv86kfc8m",
+          "to": "system",
+          "amount": 9.840294509948341,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 64.92353439020127,
+            "status": "success"
+          },
+          "timestamp": 1764554145877,
+          "signature": "b69ec68822471d5484d8d1aa2c631df9da83a8e410e5445ad3eb8f1d9505797d"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 92,
+            "timestamp": 1764554148050
+          }
+        }
+      ],
+      "nonce": 9993,
+      "previousHash": "0000fb9b4baba560c5dd1409d6131af1eab738b9def8eab38a14429be26d3e62",
+      "hash": "00005e0bc69b9d49054d2e67b1d06e04bcd2e3a4cb19b94b3fa3a001dc1ff875"
+    },
+    {
+      "index": 93,
+      "timestamp": 1764554158154,
+      "transactions": [
+        {
+          "id": "2db5da071e2bc722e7c3ce697f269ee2",
+          "from": "user-djm52hzki",
+          "to": "system",
+          "amount": 5.402656768012455,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 62.61265002903982,
+            "status": "success"
+          },
+          "timestamp": 1764554150896,
+          "signature": "2a4fbc69ff96fe4978532c62fa352b396c219bc656587c8bbd2f4d3517f17c70"
+        },
+        {
+          "id": "d3d8c4049279fee21e37c11a0ee04acc",
+          "from": "user-f5pdv0chy",
+          "to": "system",
+          "amount": 0.7804589355991154,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 940.3370062503329,
+            "status": "success"
+          },
+          "timestamp": 1764554155986,
+          "signature": "6e94b09079b9a54191b0507b8980df62cc85ce0cd99a9840cd0d11ee232a025a"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 93,
+            "timestamp": 1764554158154
+          }
+        }
+      ],
+      "nonce": 63305,
+      "previousHash": "00005e0bc69b9d49054d2e67b1d06e04bcd2e3a4cb19b94b3fa3a001dc1ff875",
+      "hash": "00004b0066c64fa75bf570a4812a69f163f413a11c7859f7fd2592351d9073d6"
+    },
+    {
+      "index": 94,
+      "timestamp": 1764554168158,
+      "transactions": [
+        {
+          "id": "04ed5bd3563499e05b6ed88fbb4a07e8",
+          "from": "user-02fv5849t",
+          "to": "system",
+          "amount": 0.23043746661296494,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 453.80871821832613,
+            "status": "success"
+          },
+          "timestamp": 1764554163789,
+          "signature": "e76c8248db193de2fb88533a7b73d5b301c9d948b02d1aa73cb02a69b76156e9"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 94,
+            "timestamp": 1764554168158
+          }
+        }
+      ],
+      "nonce": 68269,
+      "previousHash": "00004b0066c64fa75bf570a4812a69f163f413a11c7859f7fd2592351d9073d6",
+      "hash": "0000115f7b0a743d03c8a2c5383fa7797f4b061d5987cbdc4ae8c32e4a708f2a"
+    },
+    {
+      "index": 95,
+      "timestamp": 1764554178159,
+      "transactions": [
+        {
+          "id": "448ed807c98a1494ed94660d2e66645e",
+          "from": "user-vpb1e5tni",
+          "to": "system",
+          "amount": 4.520330312180974,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 122.53338731355635,
+            "status": "success"
+          },
+          "timestamp": 1764554168791,
+          "signature": "59f837325a7a4b90b6ad7df11ef42136b286abc7f4a31da6d6c71f46478d3b5d"
+        },
+        {
+          "id": "a4ef463b512f5c9ba55af2d73b793ed1",
+          "from": "user-voh4kr2gn",
+          "to": "system",
+          "amount": 1.0941706695951536,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 166.24699150794564,
+            "status": "success"
+          },
+          "timestamp": 1764554173792,
+          "signature": "ce832e99257c89d501b53947c5515a8320a999bc1ef3753efa0503784d48cd7a"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 95,
+            "timestamp": 1764554178159
+          }
+        }
+      ],
+      "nonce": 11302,
+      "previousHash": "0000115f7b0a743d03c8a2c5383fa7797f4b061d5987cbdc4ae8c32e4a708f2a",
+      "hash": "0000fd2aeb0181bbb008622c1aab905a46f88fec56bc09527f6a62eaea44166f"
+    },
+    {
+      "index": 96,
+      "timestamp": 1764554188160,
+      "transactions": [
+        {
+          "id": "2b6bc2c8dedb8d5b20954e7f2a5c0ff1",
+          "from": "user-bkn3amqqm",
+          "to": "system",
+          "amount": 4.197286459110301,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 477.5107218915828,
+            "status": "success"
+          },
+          "timestamp": 1764554178793,
+          "signature": "33fbade6981367867c61190c1eb0ac300fd3381de63c85194a7a43c80d82e7f0"
+        },
+        {
+          "id": "b758623fce91eba19bab2400c4e5fca3",
+          "from": "user-kq78ufgy7",
+          "to": "system",
+          "amount": 6.795665345336452,
+          "type": "api_call",
+          "data": {
+            "endpoint": "/api/v1/connectors/prozorro",
+            "responseTime": 239.44616495555883,
+            "status": "success"
+          },
+          "timestamp": 1764554183794,
+          "signature": "1f324c328a089e7a8a0ec32b1e4116fbd0fe25778d0b96c4e8dc828b3cdbca6e"
+        },
+        {
+          "id": "0d46467d7e095e6d639b3543128346ac",
+          "from": "system-audit",
+          "to": "audit-log",
+          "amount": 0,
+          "type": "audit_entry",
+          "data": {
+            "systemMetrics": {
+              "cpu": 32.572647,
+              "memory": 64.6026611328125,
+              "uptime": 981.457079167,
+              "timestamp": 1764554186873
+            },
+            "blockchainMetrics": {
+              "blockCount": 96,
+              "pendingTransactions": 2,
+              "totalTransactions": 289,
+              "difficulty": 4,
+              "isValid": true,
+              "lastBlockHash": "0000fd2aeb0181bbb008622c1aab905a46f88fec56bc09527f6a62eaea44166f",
+              "lastBlockTimestamp": 1764554178159
+            },
+            "timestamp": 1764554186876
+          },
+          "timestamp": 1764554186876,
+          "signature": "eb4d9d39f8f0f1516c66ad46d556b9af7ad7faea33ab0b526a7e9ded8a5cd6ea"
+        },
+        {
+          "from": "network",
+          "to": "predator-miner",
+          "amount": 100,
+          "type": "mining_reward",
+          "data": {
+            "blockIndex": 96,
+            "timestamp": 1764554188160
+          }
+        }
+      ],
+      "nonce": 35146,
+      "previousHash": "0000fd2aeb0181bbb008622c1aab905a46f88fec56bc09527f6a62eaea44166f",
+      "hash": "00007afa10aef23d3703905a3b27cc00f6b7ac29c507b00f0cb48247b78d8882"
+    }
+  ],
+  "pendingTransactions": [],
+  "difficulty": 4,
+  "miningReward": 100,
+  "auditLogs": [
+    {
+      "systemMetrics": {
+        "cpu": 1.966526,
+        "memory": 69.68443846538902,
+        "uptime": 60.395983542,
+        "timestamp": 1764553265778
+      },
+      "blockchainMetrics": {
+        "blockCount": 6,
+        "pendingTransactions": 2,
+        "totalTransactions": 15,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "00003cb1f0b1c8a24b215b8a91f7c85c53c0bc7388c5a6469d530954e8e4c1c6",
+        "lastBlockTimestamp": 1764553255781
+      },
+      "timestamp": 1764553265778
+    },
+    {
+      "systemMetrics": {
+        "cpu": 3.511081,
+        "memory": 71.60605424056065,
+        "uptime": 120.396004292,
+        "timestamp": 1764553325800
+      },
+      "blockchainMetrics": {
+        "blockCount": 12,
+        "pendingTransactions": 2,
+        "totalTransactions": 34,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "00000103bc0fc6d335fa3b7ee4404a187874275e1eb072c81ba19ebeee4e5839",
+        "lastBlockTimestamp": 1764553316191
+      },
+      "timestamp": 1764553325801
+    },
+    {
+      "systemMetrics": {
+        "cpu": 5.224643,
+        "memory": 62.78023097826087,
+        "uptime": 180.3954265,
+        "timestamp": 1764553385801
+      },
+      "blockchainMetrics": {
+        "blockCount": 18,
+        "pendingTransactions": 2,
+        "totalTransactions": 53,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "000065320451f3548c16dd30c7a6576ab56036a31cb99118ff6ee507df51d71c",
+        "lastBlockTimestamp": 1764553376204
+      },
+      "timestamp": 1764553385803
+    },
+    {
+      "systemMetrics": {
+        "cpu": 8.960319,
+        "memory": 64.28384671767735,
+        "uptime": 240.399268042,
+        "timestamp": 1764553445806
+      },
+      "blockchainMetrics": {
+        "blockCount": 24,
+        "pendingTransactions": 1,
+        "totalTransactions": 69,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "000093e9a6bc0009b81a2baaaab1db82f04cd77e15bff187d151bc926b6ec9eb",
+        "lastBlockTimestamp": 1764553442077
+      },
+      "timestamp": 1764553445808
+    },
+    {
+      "systemMetrics": {
+        "cpu": 10.427643,
+        "memory": 67.67265267448512,
+        "uptime": 300.402128917,
+        "timestamp": 1764553505809
+      },
+      "blockchainMetrics": {
+        "blockCount": 30,
+        "pendingTransactions": 1,
+        "totalTransactions": 88,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "000033e83530367085ecc57ad2047a1358a7e0b25297dd9f4336c7923eb0814c",
+        "lastBlockTimestamp": 1764553502089
+      },
+      "timestamp": 1764553505811
+    },
+    {
+      "systemMetrics": {
+        "cpu": 13.172945,
+        "memory": 63.452539509439355,
+        "uptime": 360.403652542,
+        "timestamp": 1764553565812
+      },
+      "blockchainMetrics": {
+        "blockCount": 36,
+        "pendingTransactions": 1,
+        "totalTransactions": 107,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "000097a00a928670ae6d6325224ee59b7a80110d475ad469c7f669c88086a6ec",
+        "lastBlockTimestamp": 1764553562105
+      },
+      "timestamp": 1764553565813
+    },
+    {
+      "systemMetrics": {
+        "cpu": 15.437356,
+        "memory": 73.95237414187643,
+        "uptime": 420.406689584,
+        "timestamp": 1764553625815
+      },
+      "blockchainMetrics": {
+        "blockCount": 42,
+        "pendingTransactions": 1,
+        "totalTransactions": 126,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "0000ad5d5bd276250e77d26328ea6e35da9bc010dc86f5240b47e2d7f3402360",
+        "lastBlockTimestamp": 1764553622120
+      },
+      "timestamp": 1764553625817
+    },
+    {
+      "systemMetrics": {
+        "cpu": 16.989175,
+        "memory": 68.6161416618993,
+        "uptime": 480.406242875,
+        "timestamp": 1764553685816
+      },
+      "blockchainMetrics": {
+        "blockCount": 48,
+        "pendingTransactions": 1,
+        "totalTransactions": 145,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "000000ad19bdfa91c07c703dc33f389b8acf0412c5efb2b4dda7386709f073c4",
+        "lastBlockTimestamp": 1764553682142
+      },
+      "timestamp": 1764553685817
+    },
+    {
+      "systemMetrics": {
+        "cpu": 18.93385,
+        "memory": 70.28166118421053,
+        "uptime": 540.408272292,
+        "timestamp": 1764553745819
+      },
+      "blockchainMetrics": {
+        "blockCount": 54,
+        "pendingTransactions": 1,
+        "totalTransactions": 164,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "0000f72da46aafd6240da92b4f0824db1d23f9803a95504c74f0517fc85ff8c4",
+        "lastBlockTimestamp": 1764553742159
+      },
+      "timestamp": 1764553745819
+    },
+    {
+      "systemMetrics": {
+        "cpu": 21.270623,
+        "memory": 67.21096431636155,
+        "uptime": 621.444976,
+        "timestamp": 1764553826856
+      },
+      "blockchainMetrics": {
+        "blockCount": 60,
+        "pendingTransactions": 0,
+        "totalTransactions": 182,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "00007ca4039723504a9d1e65dfb0a45966cc2e2f0c1f550e9b47689b639520aa",
+        "lastBlockTimestamp": 1764553804470
+      },
+      "timestamp": 1764553826862
+    },
+    {
+      "systemMetrics": {
+        "cpu": 23.559352,
+        "memory": 69.61024653175058,
+        "uptime": 681.458819125,
+        "timestamp": 1764553886871
+      },
+      "blockchainMetrics": {
+        "blockCount": 66,
+        "pendingTransactions": 1,
+        "totalTransactions": 196,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "0000855b714d817ccdbf9f2e1ec9e5b2012f9c0feaf64324c9837d421ee3d813",
+        "lastBlockTimestamp": 1764553877850
+      },
+      "timestamp": 1764553886909
+    },
+    {
+      "systemMetrics": {
+        "cpu": 26.142591,
+        "memory": 69.93394236270024,
+        "uptime": 741.448963834,
+        "timestamp": 1764553946862
+      },
+      "blockchainMetrics": {
+        "blockCount": 72,
+        "pendingTransactions": 2,
+        "totalTransactions": 214,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "0000ccd5c8fecb10d13e993d413e6edde071e96ec9f996e03204ca48c95df329",
+        "lastBlockTimestamp": 1764553938023
+      },
+      "timestamp": 1764553946864
+    },
+    {
+      "systemMetrics": {
+        "cpu": 27.925214,
+        "memory": 67.33661189742153,
+        "uptime": 801.450213375,
+        "timestamp": 1764554006864
+      },
+      "blockchainMetrics": {
+        "blockCount": 78,
+        "pendingTransactions": 2,
+        "totalTransactions": 233,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "00001e6f27e68ab33ed00514c235585f02131689c9e111ea11cab8a6da794ddc",
+        "lastBlockTimestamp": 1764553998032
+      },
+      "timestamp": 1764554006865
+    },
+    {
+      "systemMetrics": {
+        "cpu": 29.586084,
+        "memory": 72.46323658211884,
+        "uptime": 861.451870917,
+        "timestamp": 1764554066866
+      },
+      "blockchainMetrics": {
+        "blockCount": 84,
+        "pendingTransactions": 2,
+        "totalTransactions": 252,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "000017dc8681bf757f3b2acaed5cca0527a237ca426f0744396b48c2281d5aa3",
+        "lastBlockTimestamp": 1764554058039
+      },
+      "timestamp": 1764554066868
+    },
+    {
+      "systemMetrics": {
+        "cpu": 31.05496,
+        "memory": 64.19727828023758,
+        "uptime": 921.452550125,
+        "timestamp": 1764554126868
+      },
+      "blockchainMetrics": {
+        "blockCount": 90,
+        "pendingTransactions": 2,
+        "totalTransactions": 271,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "0000052c2a12e33ab9df63616e4f90e408ac7900d9c9fa596da38182901e31f8",
+        "lastBlockTimestamp": 1764554118046
+      },
+      "timestamp": 1764554126870
+    },
+    {
+      "systemMetrics": {
+        "cpu": 32.572647,
+        "memory": 64.6026611328125,
+        "uptime": 981.457079167,
+        "timestamp": 1764554186873
+      },
+      "blockchainMetrics": {
+        "blockCount": 96,
+        "pendingTransactions": 2,
+        "totalTransactions": 289,
+        "difficulty": 4,
+        "isValid": true,
+        "lastBlockHash": "0000fd2aeb0181bbb008622c1aab905a46f88fec56bc09527f6a62eaea44166f",
+        "lastBlockTimestamp": 1764554178159
+      },
+      "timestamp": 1764554186876
+    }
+  ],
+  "config": {
+    "enableMining": true,
+    "enableAuditLogging": true,
+    "enableProofOfWork": true,
+    "blockInterval": 10000,
+    "maxTransactionsPerBlock": 10,
+    "enableSmartContracts": true,
+    "enableDigitalSignatures": true
+  },
+  "timestamp": 1764554188361
+}

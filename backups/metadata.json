@@ -1,0 +1,48 @@
+[
+  {
+    "id": "2025-12-01T01-13-15-463Z-obni5b",
+    "type": "full",
+    "timestamp": "2025-12-01T01:13:15.612Z",
+    "duration": 142,
+    "error": "Failed to create full backup: Command failed: du -b backups/full/2025-12-01T01-13-15-463Z-obni5b.tar\ndu: invalid option -- b\nusage: du [-Aclnx] [-H | -L | -P] [-g | -h | -k | -m] [-a | -s | -d depth] [-B blocksize] [-I mask] [-t threshold] [file ...]\n",
+    "status": "failed"
+  },
+  {
+    "id": "2025-12-01T01-13-33-424Z-u6dmhg",
+    "type": "full",
+    "timestamp": "2025-12-01T01:13:33.577Z",
+    "duration": 152,
+    "error": "Failed to create full backup: Assignment to constant variable.",
+    "status": "failed"
+  },
+  {
+    "id": "2025-12-01T01-13-41-181Z-1s9g9h",
+    "type": "full",
+    "timestamp": "2025-12-01T01:13:41.305Z",
+    "duration": 123,
+    "error": "Failed to create full backup: Assignment to constant variable.",
+    "status": "failed"
+  },
+  {
+    "id": "2025-12-01T01-13-54-886Z-kgq0xr",
+    "type": "full",
+    "timestamp": "2025-12-01T01:13:55.038Z",
+    "duration": 151,
+    "size": 288844,
+    "files": [
+      "./package.json",
+      "./package-lock.json",
+      "./tsconfig.json",
+      "./vite.config.ts",
+      "./real-backend",
+      "./services",
+      "./components",
+      "./views",
+      "./context",
+      "./types.ts",
+      "./App.tsx",
+      "./index.tsx"
+    ],
+    "status": "success"
+  }
+]
