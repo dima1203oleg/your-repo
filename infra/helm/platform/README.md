@@ -59,6 +59,31 @@ Recommended quick install (ExternalSecrets operator)
 
 After installing the operator, create the `ClusterSecretStore` (e.g. `clustersecretstore-vault.yaml`) and then create `ExternalSecret` objects in target namespaces (examples included).
 
+Example: pa-dev (ExternalSecret)
+--------------------------------
+We include a ready-to-apply example for the `pa-dev` namespace that maps secrets from Vault into the `predator-secrets` K8s Secret. See `infra/helm/platform/examples/external-secret-predator-pa-dev.yaml`.
+
+CI workflow notes
+-----------------
+We provide a CI workflow `.github/workflows/create-predator-secret.yml` as a safe, non-git approach to populate `predator-secrets` in the target cluster *before* ArgoCD syncs.
+
+   - Add these GitHub secrets to the repository:
+      - KUBE_CONFIG_DATA (base64-encoded kubeconfig with write access to pa-dev + argocd namespace)
+      - PREDATOR_DATABASE_URL
+      - PREDATOR_REDIS_URL
+      - PREDATOR_POSTGRES_PASSWORD
+      - PREDATOR_REDIS_PASSWORD
+      - PREDATOR_GRAFANA_ADMIN_PASSWORD
+   - Optional: if you'd like the workflow to trigger an ArgoCD sync using the argocd CLI from the runner, provide:
+      - ARGOCD_SERVER
+      - ARGOCD_AUTH_TOKEN
+
+The workflow will:
+   1. Create/overwrite `predator-secrets` in `pa-dev` from the repo secrets.
+   2. Poll until the Secret is present.
+   3. Annotate the ArgoCD Application `pa-platform-dev-local` to trigger a repo-server refresh.
+   4. Optionally call `argocd app sync` if ARGOCD_SERVER/ARGOCD_AUTH_TOKEN are provided.
+
 Developer convenience: dev-only secret creation
 ---------------------------------------------
 If you are running a local dev cluster and prefer the chart to create a non-production `predator-secrets`
