@@ -53,9 +53,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run quick integration tests (contract)
-        # Run a focused Jest integration test against the running real-backend
-        run: npx jest tests/integration/systemMonitoring.test.js --runInBand --reporters=default
+      - name: Run integration tests (contract)
+        # Run focused Jest integration tests against the running real-backend
+        run: npx jest tests/integration --runInBand --reporters=default
 
       - name: Run Playwright E2E
         env:
