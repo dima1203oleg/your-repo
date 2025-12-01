@@ -170,7 +170,11 @@ agents:
 postgresql:
   enabled: true
   auth:
-    postgresPassword: "predator123"
+    # Do NOT store passwords in git. Reference an existing pre-created secret instead.
+    existingSecret: "predator-secrets"
+    secretKeys:
+      adminPasswordKey: postgres-password
+      userPasswordKey: postgres-password
     username: "predator"
     database: "predator_analytics"
   primary:
@@ -191,7 +195,9 @@ redis:
   enabled: true
   auth:
     enabled: true
-    password: "redis123"
+    # read Redis password from existing secret 'predator-secrets'
+    existingSecret: "predator-secrets"
+    existingSecretPasswordKey: redis-password
   master:
     persistence:
       enabled: true
@@ -235,7 +241,9 @@ monitoring:
         memory: 256Mi
   grafana:
     enabled: true
-    adminPassword: "predator123"
+    adminPassword: null
+    existingSecret: "predator-secrets"
+    existingSecretAdminPasswordKey: grafana-admin-password
     resources:
       limits:
         cpu: 300m

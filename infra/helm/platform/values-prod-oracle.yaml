@@ -235,7 +235,9 @@ monitoring:
     retention: "30d"
   grafana:
     enabled: true
-    adminPassword: "predator123"
+    adminPassword: null
+    existingSecret: "predator-secrets"
+    existingSecretAdminPasswordKey: grafana-admin-password
     resources:
       limits:
         cpu: 1000m

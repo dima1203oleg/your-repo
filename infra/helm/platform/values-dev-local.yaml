@@ -22,9 +22,15 @@ backend:
   
   env:
     - name: DATABASE_URL
-      value: "postgresql://predator:predator123@postgresql:5432/predator_analytics"
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: database-url
     - name: REDIS_URL
-      value: "redis://:redis123@redis-master:6379/0"
+      valueFrom:
+        secretKeyRef:
+          name: predator-secrets
+          key: redis-url
     - name: LOG_LEVEL
       value: "DEBUG"
     - name: ENVIRONMENT
@@ -98,7 +104,12 @@ agents:
 postgresql:
   enabled: true
   auth:
-    postgresPassword: "predator123"
+    # Use ExternalSecrets / pre-created K8s Secret named 'predator-secrets' in the target namespace.
+    # Replace plaintext passwords with references to existing secrets.
+    existingSecret: "predator-secrets"
+    secretKeys:
+      adminPasswordKey: postgres-password
+      userPasswordKey: postgres-password
     username: "predator"
     database: "predator_analytics"
   primary:
@@ -118,7 +129,9 @@ redis:
   enabled: true
   auth:
     enabled: true
-    password: "redis123"
+    # Use existing secret 'predator-secrets', key 'redis-password'
+    existingSecret: "predator-secrets"
+    existingSecretPasswordKey: redis-password
   master:
     persistence:
       enabled: true
@@ -166,7 +179,10 @@ monitoring:
         memory: 128Mi
   grafana:
     enabled: true
-    adminPassword: "predator123"
+    # Use existing secret 'predator-secrets' with key 'grafana-admin-password'
+    adminPassword: null
+    existingSecret: "predator-secrets"
+    existingSecretAdminPasswordKey: grafana-admin-password
     service:
       type: NodePort
       nodePort: 30100
