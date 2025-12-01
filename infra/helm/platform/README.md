@@ -7,6 +7,8 @@ Recommended approaches:
 1. HashiCorp Vault + ExternalSecrets (preferred)
    - Install ExternalSecrets operator in your cluster (see docs/devops/03_clusters_and_argocd.md)
    - Create ExternalSecret manifest(s) that fetch secrets from Vault and write K8s `Secret` named `predator-secrets` in the target namespace.
+    - Install the ExternalSecrets operator (external-secrets) and create a ClusterSecretStore/SecretStore that connects to Vault.
+       Example manifests live under `infra/helm/platform/examples/` (ClusterSecretStore: `clustersecretstore-vault.yaml`, example ExternalSecret: `external-secret-predator.yaml`).
 
 2. Pre-create Kubernetes Secret (quick local dev option)
    - Create a pre-populated Kubernetes Secret with the keys used by the chart:
@@ -34,6 +36,16 @@ Why this change?
 - The chart supports `existingSecret` / `existingSecretPasswordKey` patterns and ExternalSecrets integration; prefer those.
 
 If you need help creating ExternalSecret manifests for Vault in this repo, I can add an example `infra/helm/platform/examples/external-secret-predator.yaml` next.
+
+Recommended quick install (ExternalSecrets operator)
+-------------------------------------------------
+- Install ExternalSecrets Helm chart or operator in your cluster, for example:
+
+   helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets
+   helm repo update
+   helm upgrade --install external-secrets external-secrets/kubernetes-external-secrets -n external-secrets --create-namespace --set controller.create=true
+
+After installing the operator, create the `ClusterSecretStore` (e.g. `clustersecretstore-vault.yaml`) and then create `ExternalSecret` objects in target namespaces (examples included).
 
 Developer convenience: dev-only secret creation
 ---------------------------------------------
