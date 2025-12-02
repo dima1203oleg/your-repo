@@ -14,8 +14,9 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
-// Mock matchMedia
-Object.defineProperty(window, 'matchMedia', {
+// Mock matchMedia (only in environments that have window, e.g. jsdom)
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
     matches: false,
@@ -29,13 +30,13 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Mock getComputedStyle
-window.getComputedStyle = jest.fn().mockReturnValue({
+  // Mock getComputedStyle
+  window.getComputedStyle = jest.fn().mockReturnValue({
   getPropertyValue: jest.fn(),
 });
 
-// Mock localStorage
-const localStorageMock = {
+  // Mock localStorage
+  const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
@@ -43,13 +44,13 @@ const localStorageMock = {
   length: 0,
   key: jest.fn(),
 };
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-  writable: true,
-});
+  Object.defineProperty(window, 'localStorage', {
+    value: localStorageMock,
+    writable: true,
+  });
 
-// Mock sessionStorage
-const sessionStorageMock = {
+  // Mock sessionStorage
+  const sessionStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
@@ -57,10 +58,10 @@ const sessionStorageMock = {
   length: 0,
   key: jest.fn(),
 };
-Object.defineProperty(window, 'sessionStorage', {
-  value: sessionStorageMock,
-  writable: true,
-});
+  Object.defineProperty(window, 'sessionStorage', {
+    value: sessionStorageMock,
+    writable: true,
+  });
 
 // Mock performance API
 global.performance = {
@@ -75,14 +76,41 @@ global.performance = {
 // Mock fetch
 global.fetch = jest.fn();
 
-// Mock URL methods
-global.URL = {
-  createObjectURL: jest.fn(),
-  revokeObjectURL: jest.fn(),
-} as any;
+  // Mock URL methods but don't overwrite the constructor — axios and other libs rely on
+// `new URL()` being available. Only add the browser-specific helper functions if
+// they don't exist.
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const globalAny: any = global;
+if (!globalAny.URL) {
+  // In Node environments URL should exist; as a fallback import the Node URL
+  // constructor so tests that rely on `new URL()` keep working.
+  try {
+    // eslint-disable-next-line global-require
+    const { URL: NodeURL } = require('url');
+    globalAny.URL = NodeURL;
+  } catch (err) {
+    // If import fails, create a minimal constructor so code using `new URL()`
+    // doesn't crash during tests.
+    // (Very few tests exercise full URL parsing — this is a safe fallback.)
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    globalAny.URL = function (input: string) {
+      return { href: String(input) };
+    } as unknown as Function;
+  }
+  }
 
-// Mock canvas
-HTMLCanvasElement.prototype.getContext = jest.fn().mockReturnValue({
+  if (typeof globalAny.URL.createObjectURL !== 'function') {
+    globalAny.URL.createObjectURL = jest.fn();
+  }
+  if (typeof globalAny.URL.revokeObjectURL !== 'function') {
+    globalAny.URL.revokeObjectURL = jest.fn();
+  }
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+// Mock canvas (only in environments that provide HTMLCanvasElement, e.g. jsdom)
+if (typeof HTMLCanvasElement !== 'undefined') {
+  HTMLCanvasElement.prototype.getContext = jest.fn().mockReturnValue({
   fillRect: jest.fn(),
   clearRect: jest.fn(),
   getImageData: jest.fn(),
@@ -115,6 +143,7 @@ HTMLCanvasElement.prototype.getContext = jest.fn().mockReturnValue({
   measureText: jest.fn(() => ({ width: 0 })),
   strokeText: jest.fn(),
 });
+}
 
 // Mock requestAnimationFrame
 global.requestAnimationFrame = jest.fn(cb => setTimeout(cb, 0));
